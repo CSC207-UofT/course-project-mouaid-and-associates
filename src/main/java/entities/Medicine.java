@@ -1,4 +1,8 @@
-package Entities;
+package entities;
+
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.List;
 
 public class Medicine {
 
@@ -16,6 +20,25 @@ public class Medicine {
         this.methodOfAdministration = methodOfAdministration;
         this.extraInstructions = extraInstructions;
         this.idNumber = 0;
+    }
+
+    /**
+     * Adds a new MedicineSchedule to this Medicine object.
+     * @param times The times to take this medication.
+     */
+    public void addMedicineSchedule(Dictionary<String, List<Double>> times){
+        // Make an event
+        String description = new String(methodOfAdministration + " " + medicineName);
+        Event event = new Event(medicineName, description, times);
+        List<Event> events = new ArrayList<>();
+        events.add(event);
+
+        // Make a schedule
+        this.myMedicineSchedule = new MedicineSchedule(medicineName, idNumber, events);
+    }
+
+    public MedicineSchedule getMyMedicineSchedule() {
+        return myMedicineSchedule;
     }
 
     public String getMedicineName(){

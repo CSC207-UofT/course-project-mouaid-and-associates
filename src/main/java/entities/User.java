@@ -1,7 +1,6 @@
-package Entities;
+package entities;
 
 import java.util.HashMap;
-import Entities.Medicine;
 
 public class User {
 
@@ -12,7 +11,7 @@ public class User {
     public User(String name, String userName){
         this.name = name;
         this.userName = userName;
-        this.medicineList = new HashMap<String,  Medicine>();
+        this.medicineList = new HashMap<>();
     }
 
     public String getName(){
