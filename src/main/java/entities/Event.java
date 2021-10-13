@@ -7,7 +7,7 @@ public class Event {
      * Instance Attributes:
      * name: The name of the current event
      * description: The description of the current event.
-     * times: The time this event takes place. Maps a day to an hour the event takes
+     * time: The time this event takes place. Maps a day to an hour the event takes
      *        place during that day.
      *        e.g.
      *        {"Monday": 8} means the event is on Monday at 8:00.
@@ -22,6 +22,7 @@ public class Event {
      */
     private String name;
     private String description;
+
     private Dictionary<String, Double> timeStamp;
 
 

@@ -49,5 +49,4 @@ public class Schedule {
     public boolean removeEvent(Event event){
         return this.events.remove(event);
     }
-
 }

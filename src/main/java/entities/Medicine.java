@@ -38,7 +38,6 @@ public class Medicine {
             Event event = new Event(medicineName, description, time);
             events.add(event);
         }
-
         // Make a schedule
         this.myMedicineSchedule = new MedicineSchedule(medicineName, idNumber, events);
     }
