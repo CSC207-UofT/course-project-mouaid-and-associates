@@ -3,6 +3,9 @@ package application_business_rules;
 import entities.Medicine;
 import entities.User;
 
+import java.util.Dictionary;
+import java.util.List;
+
 public class UserManager {
     /**
      * Instance Attributes:
@@ -35,9 +38,12 @@ public class UserManager {
      * @param amount The amount of this medicine
      * @param methodOfAdministration The method of administration for this medicine
      * @param extraInstructions Extra instructions for this medicine
+     * @param times The times to take this medication.
      */
     public Medicine CreateMedicine(String medicineName, int amount,
-                                   String methodOfAdministration, String extraInstructions){
-        return this.medicineManager.createNewMedicine(medicineName, amount, methodOfAdministration, extraInstructions);
+                                   String methodOfAdministration, String extraInstructions,
+                                   List<Dictionary<String, Double>> times){
+        return this.medicineManager.createNewMedicine(medicineName, amount, methodOfAdministration, extraInstructions,
+                times);
     }
 }

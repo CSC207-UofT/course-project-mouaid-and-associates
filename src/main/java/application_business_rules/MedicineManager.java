@@ -3,6 +3,9 @@ package application_business_rules;
 import entities.Medicine;
 import entities.MedicineSchedule;
 
+import java.util.Dictionary;
+import java.util.List;
+
 public class MedicineManager {
     /**
      * A class that manages medicines
@@ -18,10 +21,17 @@ public class MedicineManager {
      * @param amount The amount of this medicine
      * @param methodOfAdministration The method of administration for this medicine
      * @param extraInstructions Extra instructions for this medicine
+     * @param times The times to take this medicine
      */
     public Medicine createNewMedicine(String medicineName, int amount,
-                                      String methodOfAdministration, String extraInstructions){
-        return new Medicine(medicineName, amount, methodOfAdministration, extraInstructions);
+                                      String methodOfAdministration, String extraInstructions,
+                                      List<Dictionary<String, Double>> times){
+        Medicine medicine = new Medicine(medicineName, amount, methodOfAdministration, extraInstructions);
+
+        // Add a medicine schedule
+        medicine.addMedicineSchedule(times);
+
+        return medicine;
     }
 
     /**
