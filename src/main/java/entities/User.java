@@ -1,7 +1,6 @@
-package Entities;
+package entities;
 
 import java.util.HashMap;
-import Entities.Medicine;
 
 public class User {
 
