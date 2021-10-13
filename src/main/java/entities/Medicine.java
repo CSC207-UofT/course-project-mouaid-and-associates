@@ -25,12 +25,19 @@ public class Medicine {
      * Adds a new MedicineSchedule to this Medicine object.
      * @param times The times to take this medication.
      */
-    public void addMedicineSchedule(Dictionary<String, List<Double>> times){
+    public void addMedicineSchedule(List<Dictionary<String, Double>> times){
         // Make an event
         String description = new String(methodOfAdministration + " " + medicineName);
-        Event event = new Event(medicineName, description, times);
+
         List<Event> events = new ArrayList<>();
-        events.add(event);
+
+        // Iterate through the list of times
+        for(Dictionary<String, Double> time : times){
+
+            // Make an event for each time stamp and add that to the list of events.
+            Event event = new Event(medicineName, description, time);
+            events.add(event);
+        }
 
         // Make a schedule
         this.myMedicineSchedule = new MedicineSchedule(medicineName, idNumber, events);

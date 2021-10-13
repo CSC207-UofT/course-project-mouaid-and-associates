@@ -1,21 +1,20 @@
 package entities;
 
 import java.util.Dictionary;
-import java.util.List;
 
 public class Event {
     /**
      * Instance Attributes:
      * name: The name of the current event
      * description: The description of the current event.
-     * times: The times this event takes place. Maps a day to a list of hours the events take
+     * times: The time this event takes place. Maps a day to an hour the event takes
      *        place during that day.
      *        e.g.
-     *        {"Monday": {8, 16, 23}} means the event is on Mondays at 8:00, 16:00 and 23:00.
+     *        {"Monday": 8} means the event is on Monday at 8:00.
      *
      * Representation Invariants:
-     *  - Each value in times is between 0 and 24, inclusive.
-     *  - Each key in times is an element of the set {"Monday", "Tuesday", "Wednesday", "Thursday",
+     *  - Each value in time is between 0 and 24, inclusive.
+     *  - Each key in time is an element of the set {"Monday", "Tuesday", "Wednesday", "Thursday",
      *                                                  "Friday", "Saturday", "Sunday"}
      *  - name is not an empty string
      *  - description is not an empty string.
@@ -23,19 +22,19 @@ public class Event {
      */
     private String name;
     private String description;
-    private Dictionary<String, List<Double>> times;
+    private Dictionary<String, Double> timeStamp;
 
 
     /**
      *
      * @param name          The name of the event
      * @param description   The description of the event.
-     * @param times         The times the event takes place.
+     * @param timeStamp         The times the event takes place.
      */
-    public Event(String name, String description, Dictionary<String, List<Double>> times){
+    public Event(String name, String description, Dictionary<String, Double> timeStamp){
         this.name = name;
         this.description = description;
-        this.times = times;
+        this.timeStamp = timeStamp;
     }
 
     /**
@@ -71,18 +70,18 @@ public class Event {
     }
 
     /**
-     * Gets the times an event takes place.
-     * @return the times an event takes place.
+     * Gets the time an event takes place.
+     * @return the time an event takes place.
      */
-    public Dictionary<String, List<Double>> getTimes() {
-        return times;
+    public Dictionary<String, Double> getTimeStamp() {
+        return timeStamp;
     }
 
     /**
-     * Sets the times an event takes place.
-     * @param times The times an event takes place.
+     * Sets the time an event takes place.
+     * @param times The time an event takes place.
      */
-    public void setTimes(Dictionary<String, List<Double>> times) {
-        this.times = times;
+    public void setTimeStamp(Dictionary<String, Double> time) {
+        this.timeStamp = time;
     }
 }
