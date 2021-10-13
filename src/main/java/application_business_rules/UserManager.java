@@ -3,8 +3,8 @@ package application_business_rules;
 import entities.Medicine;
 import entities.User;
 
-import java.util.Dictionary;
 import java.util.List;
+import java.util.Map;
 
 public class UserManager {
     /**
@@ -40,9 +40,9 @@ public class UserManager {
      * @param extraInstructions Extra instructions for this medicine
      * @param times The times to take this medication.
      */
-    public Medicine CreateMedicine(String medicineName, int amount,
+    public Medicine createMedicine(String medicineName, int amount,
                                    String methodOfAdministration, String extraInstructions,
-                                   List<Dictionary<String, Double>> times){
+                                   List<Map<String, Double>> times){
         return this.medicineManager.createNewMedicine(medicineName, amount, methodOfAdministration, extraInstructions,
                 times);
     }
