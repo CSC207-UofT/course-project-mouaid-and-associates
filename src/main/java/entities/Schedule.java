@@ -33,12 +33,12 @@ public class Schedule {
     }
 
     /**
-     *  Adds an event to this schedule.
-     * @param event An event to be added to the schedule.
+     *  Adds a list of events to this schedule.
+     * @param events List of events to be added to the schedule.
      * @return A boolean indicating if the item has been added.
      */
-    public boolean addEvent(Event event){
-        return this.events.add(event);
+    public boolean addEvents(List<Event> events){
+        return this.events.addAll(events);
     }
 
     /**
@@ -49,5 +49,4 @@ public class Schedule {
     public boolean removeEvent(Event event){
         return this.events.remove(event);
     }
-
 }
