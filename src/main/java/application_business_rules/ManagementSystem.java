@@ -42,13 +42,7 @@ public class ManagementSystem {
      * @return returns a User object
      */
     public Object findUser(String username){
-        try {
-             return this.userDatabase.get(username);
-        }catch (Exception e){
-            return "The given username does not exist";
-        }
-
-
+        return this.userDatabase.get(username);
     }
 
     /**
