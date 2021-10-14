@@ -1,6 +1,6 @@
 package entities;
 
-import java.util.List;
+import java.util.*;
 
 public class Schedule {
     /**
@@ -49,4 +49,77 @@ public class Schedule {
     public boolean removeEvent(Event event){
         return this.events.remove(event);
     }
+
+
+    @Override
+    public String toString() {
+        Map<String, List<Event>> sortedEvents = sortEvents();
+        StringBuilder scheduleRep = new StringBuilder();
+
+        for (String day: sortedEvents.keySet()){
+            scheduleRep.append(day).append(": \n");
+            for (Event event: sortedEvents.get(day)){
+                String eventName = new String ("    " + event.getName() + "\n");
+                String eventDescription = new String(event.getDescription() + " \n");
+                String eventHour = new String("    " + event.decimalToHourFormat());
+
+                // Add the strings to the string builder.
+                scheduleRep.append(eventName);
+                scheduleRep.append(eventHour);
+                scheduleRep.append(" - ").append(eventDescription);
+
+            }
+        }
+
+        return scheduleRep.toString();
+    }
+
+    public Map<String, List<Event>> sortEvents(){
+        // Sort the events by day.
+        Map<String, List<Event>> newDictOfEvents = sortEventsByDay();
+
+        // Sort the events by hour:
+        for (String day: newDictOfEvents.keySet()){
+            // get the list of events for that day.
+            List<Event> eventList = newDictOfEvents.get(day);
+
+            //sort the list.
+            Collections.sort(eventList);
+        }
+
+        return newDictOfEvents;
+    }
+
+    /**
+     * Sorts the events in the events attribute into a dictionary mapping a
+     * day to events taking place on that day.
+     *
+     * @return The dictionary made from organizing the events by day.
+     */
+    private Map<String, List<Event>> sortEventsByDay() {
+        // Start and accumulator collection. This is a dictionary mapping
+        // days to events occurring on that day.
+        Map<String, List<Event>> newDictOfEvents = new HashMap<>();
+
+        // iterate through the list of events:
+        for(Event event : this.events){
+            // First get the Event's day.
+            String day = event.getDay();
+
+            // Check if the key already exists in the mapping
+            if (newDictOfEvents.containsKey(day)){
+                // if it exists, add to it.
+                newDictOfEvents.get(day).add(event);
+            } else {
+                // if it doesn't, make a new mapping.
+                List<Event> eventList = new ArrayList<>();
+                eventList.add(event);
+                newDictOfEvents.put(day, eventList);
+            }
+        }
+
+        return newDictOfEvents;
+    }
+
+
 }
