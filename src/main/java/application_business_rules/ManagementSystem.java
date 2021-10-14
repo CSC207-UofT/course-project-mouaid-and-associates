@@ -3,6 +3,9 @@ package application_business_rules;
 import java.util.*;
 
 import entities.User;
+
+import javax.lang.model.type.NullType;
+
 public class ManagementSystem {
     /**
      * The main manager class that manages all the other manager classes
@@ -38,14 +41,8 @@ public class ManagementSystem {
      * @param username the username that the user uses
      * @return returns a User object
      */
-    public User findUser(String username){
-        if (this.userDatabase.containsKey(username)){
-            return this.userDatabase.get(username);
-        }else{
-            //TODO: What to return if the user entity doesn't exist?
-            //TODO: Will be discussed at discord
-        }
-
+    public Object findUser(String username){
+        return this.userDatabase.get(username);
     }
 
     /**
