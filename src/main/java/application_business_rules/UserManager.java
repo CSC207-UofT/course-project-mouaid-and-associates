@@ -3,6 +3,7 @@ package application_business_rules;
 import entities.Medicine;
 import entities.User;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,5 +46,11 @@ public class UserManager {
                                    List<Map<String, Double>> times){
         return this.medicineManager.createNewMedicine(medicineName, amount, methodOfAdministration, extraInstructions,
                 times);
+    }
+    public User getUser(){
+        return this.user;
+    }
+    public HashMap<String, Medicine> getMedicineUser(){
+        return this.user.getMedicineList();
     }
 }
