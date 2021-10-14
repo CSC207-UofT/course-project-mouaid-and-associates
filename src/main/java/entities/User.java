@@ -11,7 +11,7 @@ public class User {
     public User(String name, String userName){
         this.name = name;
         this.userName = userName;
-        this.medicineList = new HashMap<String,  Medicine>();
+        this.medicineList = new HashMap<String, Medicine>();
     }
 
     public String getName(){
