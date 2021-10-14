@@ -2,6 +2,8 @@ package application_business_rules;
 
 import java.util.*;
 
+import entities.Medicine;
+import entities.Schedule;
 import entities.User;
 
 import javax.lang.model.type.NullType;
@@ -57,5 +59,15 @@ public class ManagementSystem {
         info.add(username);
         info.add(user.getMedicineList());
         return info;
+    }
+
+    /**
+     *
+     */
+    public Schedule makeSchedule(){
+        HashMap<String, Medicine> medicinesDict = userManager.getMedicineUser();
+        List<Medicine> medicineList = new ArrayList<Medicine>(medicinesDict.values());
+        Schedule completeSchedule = scheduleManager.compileSchedule(medicineList);
+        return completeSchedule;
     }
 }
