@@ -67,7 +67,11 @@ public class ManagementSystem {
     public Schedule makeSchedule(){
         HashMap<String, Medicine> medicinesDict = userManager.getMedicineUser();
         List<Medicine> medicineList = new ArrayList<Medicine>(medicinesDict.values());
-        Schedule completeSchedule = scheduleManager.compileSchedule(medicineList);
+        List<Schedule> scheduleList = new ArrayList<Schedule>();
+        for (Medicine meds: medicineList){
+            scheduleList.add(meds.getMyMedicineSchedule());
+        }
+        Schedule completeSchedule = scheduleManager.compileSchedule(scheduleList);
         return completeSchedule;
     }
 }
