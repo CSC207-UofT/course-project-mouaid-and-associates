@@ -1,10 +1,7 @@
 package application_business_rules;
 
-import entities.Medicine;
-import entities.MedicineSchedule;
 import entities.Schedule;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleManager {

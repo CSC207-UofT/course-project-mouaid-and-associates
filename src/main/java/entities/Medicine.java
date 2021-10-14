@@ -1,8 +1,8 @@
 package entities;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.List;
+import java.util.Map;
 
 public class Medicine {
 
@@ -25,14 +25,14 @@ public class Medicine {
      * Adds a new MedicineSchedule to this Medicine object.
      * @param times The times to take this medication.
      */
-    public void addMedicineSchedule(List<Dictionary<String, Double>> times){
+    public void addMedicineSchedule(List<Map<String, Double>> times){
         // Make an event
         String description = new String(methodOfAdministration + " " + medicineName);
 
         List<Event> events = new ArrayList<>();
 
         // Iterate through the list of times
-        for(Dictionary<String, Double> time : times){
+        for(Map<String, Double> time : times){
 
             // Make an event for each time stamp and add that to the list of events.
             Event event = new Event(medicineName, description, time);

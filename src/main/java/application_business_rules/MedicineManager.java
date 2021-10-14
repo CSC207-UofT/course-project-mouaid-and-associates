@@ -3,8 +3,8 @@ package application_business_rules;
 import entities.Medicine;
 import entities.MedicineSchedule;
 
-import java.util.Dictionary;
 import java.util.List;
+import java.util.Map;
 
 public class MedicineManager {
     /**
@@ -25,7 +25,7 @@ public class MedicineManager {
      */
     public Medicine createNewMedicine(String medicineName, int amount,
                                       String methodOfAdministration, String extraInstructions,
-                                      List<Dictionary<String, Double>> times){
+                                      List<Map<String, Double>> times){
         Medicine medicine = new Medicine(medicineName, amount, methodOfAdministration, extraInstructions);
 
         // Add a medicine schedule

@@ -1,8 +1,10 @@
 package entities;
 
-import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class Event {
+public class Event implements Comparable<Event>{
     /**
      * Instance Attributes:
      * name: The name of the current event
@@ -23,16 +25,15 @@ public class Event {
     private String name;
     private String description;
 
-    private Dictionary<String, Double> timeStamp;
+    private Map<String, Double> timeStamp;
 
 
     /**
-     *
-     * @param name          The name of the event
+     *  @param name          The name of the event
      * @param description   The description of the event.
      * @param timeStamp         The times the event takes place.
      */
-    public Event(String name, String description, Dictionary<String, Double> timeStamp){
+    public Event(String name, String description, Map<String, Double> timeStamp){
         this.name = name;
         this.description = description;
         this.timeStamp = timeStamp;
@@ -71,18 +72,57 @@ public class Event {
     }
 
     /**
-     * Gets the time an event takes place.
-     * @return the time an event takes place.
+     * Returns the specific day this event takes place.
+     * @return  The day this event takes place.
      */
-    public Dictionary<String, Double> getTimeStamp() {
-        return timeStamp;
+    public String getDay(){
+        return (String) timeStamp.keySet().toArray()[0];
+    }
+
+    /**
+     * Returns the hour of the day this event takes place.
+     * @return  The hour this event takes place.
+     */
+    public Double getHour(){
+        return (Double) timeStamp.values().toArray()[0];
     }
 
     /**
      * Sets the time an event takes place.
-     * @param times The time an event takes place.
+     * @param day The time an event takes place.
+     * @param hour The hour this event takes place.
      */
-    public void setTimeStamp(Dictionary<String, Double> time) {
-        this.timeStamp = time;
+    public void setTimeStamp(String day, Double hour) {
+        this.timeStamp = new HashMap<>();
+        this.timeStamp.put(day, hour);
+    }
+
+    /**
+     * Compares this Event with the specified Event for order.  Returns a
+     * negative integer, zero, or a positive integer as this Event is less
+     * than, equal to, or greater than the specified Event.
+     *
+     * @param o the object to be compared.
+     * @return a negative integer, zero, or a positive integer as this object
+     * is less than, equal to, or greater than the specified object.
+     * @throws NullPointerException if the specified object is null
+     * @throws ClassCastException   if the specified object's type prevents it
+     *                              from being compared to this object.
+     */
+    @Override
+    public int compareTo(Event o) {
+        return this.getHour().compareTo(o.getHour());
+    }
+
+    /**
+     * Changes the format of the hour into proper hour attribute.
+     * @return  The hour in normal time format.
+     */
+    public String decimalToHourFormat(){
+        double time = this.getHour();
+        int min = (int) ((((time * 100) % 100) / 100.0) * 60);
+        int hour = (int) (((time * 100) - min) / 100.0);
+
+        return (hour + ":" + min);
     }
 }
