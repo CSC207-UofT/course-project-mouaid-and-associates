@@ -62,7 +62,7 @@ public class ManagementSystem {
     }
 
     /**
-     *
+     * Uses the userManager to get a list of medicines and merges it with the master schedule
      */
     public Schedule makeSchedule(){
         HashMap<String, Medicine> medicinesDict = userManager.getMedicineUser();
