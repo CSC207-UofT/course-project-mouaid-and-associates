@@ -2,9 +2,7 @@ package interface_adapters;
 
 import application_business_rules.ManagementSystem;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AppManager {
     /** This is the main class that runs the entire app.
@@ -76,8 +74,8 @@ public class AppManager {
 
         this.accounts.put(username, password);
 
-        //TODO: call managementSystem.createNewUser, with name and username as parameters
-//        managementSystem.createNewUser(name, username);
+        //Done: call managementSystem.createNewUser, with name and username as parameters
+        managementSystem.createNewUser(name, username);
 
         //Done: call showAccountWindow()
         showAccountWindow();

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class AddMedicineWindow implements Window {
 
     Console cnsl = System.console();
-
     @Override
     public String[] getUserInput() {
         String name = cnsl.readLine("Name of the medicine?");
