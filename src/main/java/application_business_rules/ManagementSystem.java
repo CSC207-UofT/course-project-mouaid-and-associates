@@ -80,7 +80,7 @@ public class ManagementSystem {
      * @return the compiled schedule.
      */
     public String makeSchedule(){
-        HashMap<String, Medicine> medicinesDict = userManager.getMedicineUser();
+        HashMap<String, Medicine> medicinesDict = userManager.getMedicines();
         List<Medicine> medicineList = new ArrayList<>(medicinesDict.values());
         List<Schedule> scheduleList = new ArrayList<>();
         for (Medicine meds: medicineList){
@@ -89,6 +89,19 @@ public class ManagementSystem {
         return scheduleManager.compileSchedule(scheduleList).toString();
     }
 
+    /** Creates a new instance of Medicine. Takes in the parameters necessary
+     * to create the new Medicine.
+     *
+     * @param medicineName             The name of the medicine.
+     * @param amount                   The amount of the medicine.
+     * @param methodOfAdministration   How the medicine should be administered (e.g. drink, inject, swallow)
+     * @param extraInstructions        Any extra instructions with this medication.
+     * @param times                    A list of times to take the medication. Each element is a mapping
+     *                                 of a day of the week to an hour. See Event's documentation for more
+     *                                 details as the format of day and hour. Each element in the list corresponds
+     *                                 to one time stamp. Thus taking the same medication multiple times leads to
+     *                                 multiple time stamps, hence the list.
+     */
     public void addNewMedicine(String medicineName, int amount,
                                String methodOfAdministration, String extraInstructions,
                                List<Map<String, Double>> times) {

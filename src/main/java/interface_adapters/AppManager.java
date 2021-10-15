@@ -47,27 +47,34 @@ public class AppManager {
 
     public void showStartScreenWindow(){
 
-        //TODO make a call to StartScreenWindow to show information and get user input
-        windows.get("Start Screen Window").showOptions();       // Currently, a placeholder
-        windows.get("Start Screen Window").getUserInput();      // Currently, placeholder.
+        //Done make a call to StartScreenWindow to show information and get user input
+        String[] choice = windows.get("Start Screen Window").getUserInput();      // Currently, placeholder.
 
-        // FOR FUTURE: Add a control flow section so that we can also go to login window.
-        //Done make a call to createNewAccount
-        createNewAccount();
+
+        if (choice[0].equals("1")){
+            login();
+        } else {
+            createNewAccount();
+        }
+
+    }
+
+    public void login(){
+        //TODO: FUTURE: Fill this out later
     }
 
     public void createNewAccount() {
-        //TODO: call CreateAccountWindow to show information and get user input
-        Window createAccountWindow = windows.get("Create Account Window");     // Place holder.
+        //DONE: call CreateAccountWindow to show information and get user input
+        Window createAccountWindow = windows.get("Create Account Window");
+        String[] inputInfo = createAccountWindow.getUserInput();
 
-        //TODO: obtain name, username and password
-//        String name;
-//        String username;
-//        String password;
-//        name, username, password = createAccountWindow.getUserInput();        // Place holder.
+        //DONE: obtain name, username and password
+        String name = inputInfo[0];
+        String username = inputInfo[1];
+        String password = inputInfo[2];
+        //DONE: Add username and password to accounts.
 
-        //TODO: Add username and password to accounts.
-//        accounts.put(username, password);
+        this.accounts.put(username, password);
 
         //TODO: call managementSystem.createNewUser, with name and username as parameters
 //        managementSystem.createNewUser(name, username);
@@ -77,27 +84,37 @@ public class AppManager {
     }
     public void showAccountWindow(){
         //Done: call managementSystem.getUserInfo() to get user information.
-        List<String> userInfo = managementSystem.getUserInfo();
+        String[] userInfo = managementSystem.getUserInfo().toArray(new String[0]);
         Window viewAccountWindow = windows.get("View Account Window");
 
-        //TODO: call ViewAccountWindow and pass the user information as parameters so that
-        //      they can display it.
+        // create a new array for properly formatted strings.
+        String[] formattedUserInfo = new String[userInfo.length + 1];
 
-//        viewAccountWindow.showOptions(userInfo);
+        formattedUserInfo[0] = "Name" + userInfo[0];
+        formattedUserInfo[1] = "Username" + userInfo[1];
+        formattedUserInfo[2] = "List of Medicines: ";
 
-        int choice;     // place holder for user's choice.
+        // Format the list of medicines names and add them.
+        for (int i = 3; i < formattedUserInfo.length; i++){
+            formattedUserInfo[i] = (" - " + userInfo[i - 1]);
+        }
+
+        if (viewAccountWindow instanceof DisplayEntityInformation){
+            ((DisplayEntityInformation) viewAccountWindow).displayInfo(formattedUserInfo);
+        }
+
+
+        String choice = viewAccountWindow.getUserInput()[0];     // place holder for user's choice.
 
 //        choice = (int) viewAccountWindow.getUserInput();
 
         //Done: Add conditional flow statements so that the user can select between logging out,
         //      adding medication and viewing the timetable.
 
-        if (choice == 1){
-            addMedicine();
-        } else if (choice == 2) {
-            logOut();
-        } else {
-            showFinalSchedule();
+        switch (choice) {
+            case "add" -> addMedicine();
+            case "logout" -> logOut();
+            case "view timetable" -> showFinalSchedule();
         }
 
     }
@@ -108,11 +125,18 @@ public class AppManager {
 
         //TODO: gets user input on the name, and type of medicine. Also the method of administration,
         //      extra instructions, as well as times to take the medicine.
-        String name;
-        String type;
-        String methodOfAdmin;
-        String extraInstruct;
-        List<Map<String, Double>> times;
+
+        String[] data = addMedicineWindow.getUserInput();
+
+        String name = data[0];
+        String methodOfAdmin = data[1];
+        int amount = Integer.parseInt(data[2]);
+        String extraInstruct = data[3];
+        HashMap<String, Double> times = new HashMap<>();
+        for(int i = 0; i < (data.length - 4); i++){
+            times.put("Tuesday", Double.parseDouble(data[i + 4]);
+
+        }
 
         //TODO: Add a method that properly formats times from user input.
 
@@ -124,16 +148,19 @@ public class AppManager {
 
     public void showFinalSchedule() {
         //Done: call managementSystem.makeSchedule
-        String schedule = managementSystem.makeSchedule();
-        //TODO: get the schedule and pass it into as a parameter for TimeTableWindow.showOptions() or whatever
-        //      method is used to display information.
-//        windows.get("TimeTable Window").showOptions(schedule);
+        String[] schedule = new String[]{managementSystem.makeSchedule()};
 
-        //TODO: get user input from TimeTableWindow and call ViewAccountWindow.
-//        windows.get("TimeTable Window").getUserInput()
+        if (window instanceof DisplayEntityInformation)
+            ((DisplayEntityInformation) window).displayInfo(schedule);
 
-//        showAccountWindow();
+        //Done: get user input from TimeTableWindow and call ViewAccountWindow.
+        windows.get("TimeTable Window").getUserInput();
+
+        // For now, we only have one option, which is to take the user back to the account page.
+
+        showAccountWindow();
     }
+
     public void logOut() {}
 
 }

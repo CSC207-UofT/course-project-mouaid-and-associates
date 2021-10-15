@@ -1,8 +1,10 @@
-package interface_adapters;
+package frameworks_and_drivers;
+
+import interface_adapters.Window;
 
 import java.io.*;
 
-public class StartScreenWindow implements  Window{
+public class StartScreenWindow implements Window {
 
     private Console cnsl = System.console();
 
@@ -21,24 +23,6 @@ public class StartScreenWindow implements  Window{
                 returnList[0] = "1";
                 return returnList;
             }
-        }
-    }
-
-
-    /**
-    * Probably no need since the run method will take care of this.
-     **/
-    public void showOptions(){
-        if (getUserInput().equals("0")){
-
-             //Starts the LoginWindow
-
-        }
-        else{
-
-             //Starts the CreateAccountWindow
-
-
         }
     }
 

@@ -1,10 +1,13 @@
-package interface_adapters;
+package frameworks_and_drivers;
+
+import interface_adapters.DisplayEntityInformation;
+import interface_adapters.Window;
 
 import java.io.Console;
 import java.util.List;
 import java.util.Objects;
 
-public class ViewAccountWindow implements Window{
+public class ViewAccountWindow implements Window, DisplayEntityInformation {
 
     Console cnsl = System.console();
 
@@ -16,12 +19,11 @@ public class ViewAccountWindow implements Window{
     public String[] getUserInput() {
         if (selectAction().equals("yes")){
             returnList[0] = selectMedicineAction();
-            return returnList;
         }
         else{
             returnList[0] = "no";
-            return returnList;
         }
+        return returnList;
 
     }
 
@@ -31,8 +33,8 @@ public class ViewAccountWindow implements Window{
     public String selectAction(){
 
         while (true){
-            String input = cnsl.readLine("Do you want to add a new medicine, remove a medicine, edit their medicine or " +
-                    "look at their medication timetable.? Type yes or no");
+            String input = cnsl.readLine("Do you want to add a new medicine, remove a medicine, edit a medicine, " +
+                    "look the medication timetable or logout? Type yes or no");
             if (input.equals("yes") || input.equals("no")) {
                 return input;
             }
@@ -40,7 +42,7 @@ public class ViewAccountWindow implements Window{
 
     }
     /**
-     * @return "add" or "edit" or "remove"
+     * @return "add" or "edit" or "remove" or "logout" or "view timetable"
      **/
     public String selectMedicineAction(){
 
@@ -51,27 +53,20 @@ public class ViewAccountWindow implements Window{
             }
         }
 
+        //TODO: Add the options for logging out and viewing time table.
+
     }
 
-    /** Shows the account informaton of the user
-     * @param username the username the user uses
-     * @param name the name of the user
-     * @param medicine the list of the medcines the user uses
+    /**
+     * This is an interface that allows classes in frameworks_and_drivers to get information
+     * from classes in the inner levels, and display that information.
+     *
+     * @param info  Information to be displayed onto the screen.
      */
-    public void showAccountInfo(String username, String name, List<String> medicine){
-
-        System.out.println("Username: " + username);
-        System.out.println("Name: " + name);
-
-        StringBuilder medicine_list = new StringBuilder();
-
-        for (String x: medicine){
-            medicine_list.append(x);
-            medicine_list.append(", ");
+    @Override
+    public void displayInfo(String[] info) {
+        for (String pieceOfInfo : info){
+            System.out.println(pieceOfInfo);
         }
-
-        System.out.println("List of medicines:" + medicine_list);
-
     }
-
 }
