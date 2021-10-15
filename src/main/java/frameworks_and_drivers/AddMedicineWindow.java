@@ -12,8 +12,7 @@ public class AddMedicineWindow implements Window {
     @Override
     public String[] getUserInput() {
         String name = cnsl.readLine("Name of the medicine?");
-        String type = cnsl.readLine("Type of the medicine?");
-        String wdm = selectWDM(); // Weekly, daily, or monthly
+        String methodOfAdministration = cnsl.readLine("Method of administration");
         String amount = cnsl.readLine("Amount of the medicine should be taken");
         String extra = cnsl.readLine("Any Extra Instructions?");
 
@@ -49,14 +48,33 @@ public class AddMedicineWindow implements Window {
         return times;
     }
 
-    public String selectWDM() {
+    public String selectWD() {
 
         while (true) {
-            String input = cnsl.readLine("Weekly, daily or monthly?");
-            if (input.equals("weekly") || input.equals("daily") || input.equals("monthly")) {
+            String input = cnsl.readLine("Weekly or daily?");
+            if (input.equals("weekly") || input.equals("daily")) {
                 return input;
             }
         }
     }
+    public String selectHowManyTimes() {
+
+        while (true) {
+            String input = cnsl.readLine("How many times?");
+            if (isNumeric(input)) {
+                return input;
+            }
+        }
+    }
+
+    private  boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
+
 }
 
