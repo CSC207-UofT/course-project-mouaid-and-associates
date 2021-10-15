@@ -20,37 +20,62 @@ public class UserManager {
     private User user;
     private MedicineManager medicineManager;
 
-    public UserManager(User user, MedicineManager medicineManager){
+    public UserManager(User user){
         this.user = user;
-        this.medicineManager = medicineManager;
+        this.medicineManager = new MedicineManager();
     }
 
     /**
-     * Returns a new user entity (Object)
+     * Creates a new instance of UserManager, with no user defined yet.
+     * A user needs to added using addNewUser().
+     */
+    public UserManager(){
+        this.medicineManager = new MedicineManager();
+    }
+
+    /**
+     * Returns a new user entity (Object). Also stores this instance.
      * @param name The name of the user.
      * @param username the username of the account
      */
     public User addNewUser(String name,String username){
-        return new User(name, username);
+        this.user = new User(name, username);
+        return this.user;
     }
+
     /**
-     * Returns a new medicine entity (Object)
+     * Creates a new medicine entity (Object). Adds the medicine to User's list of medicine.
      * @param medicineName The name of the medicine
      * @param amount The amount of this medicine
      * @param methodOfAdministration The method of administration for this medicine
      * @param extraInstructions Extra instructions for this medicine
      * @param times The times to take this medication.
      */
-    public Medicine createMedicine(String medicineName, int amount,
+    public void createMedicine(String medicineName, int amount,
                                    String methodOfAdministration, String extraInstructions,
                                    List<Map<String, Double>> times){
-        return this.medicineManager.createNewMedicine(medicineName, amount, methodOfAdministration, extraInstructions,
-                times);
+
+        user.addMedicine(this.medicineManager.createNewMedicine(medicineName, amount,
+                methodOfAdministration, extraInstructions,
+                times));
     }
+
     public User getUser(){
         return this.user;
     }
     public HashMap<String, Medicine> getMedicineUser(){
+        return this.user.getMedicineList();
+    }
+
+    public String getName(){
+        return this.user.getName();
+    }
+
+    public String getUserName(){
+        return this.user.getUserName();
+    }
+
+    public HashMap<String, Medicine> getMedicines(){
         return this.user.getMedicineList();
     }
 }

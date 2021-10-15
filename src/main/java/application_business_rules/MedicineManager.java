@@ -11,9 +11,7 @@ public class MedicineManager {
      * A class that manages medicines
      */
 
-    public MedicineManager(){
-
-    }
+    public MedicineManager(){}
 
     /**
      * Creates a new medicine object
