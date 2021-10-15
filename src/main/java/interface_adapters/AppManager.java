@@ -146,7 +146,12 @@ public class AppManager {
         showAccountWindow();
     }
 
+    /**
+     * Shows the final schedule by using managementSystem to make the schedule and using the TimeTableWindow class
+     * to display the final schedule. It then gets user input from TimeTableWindow and calls ViewAccountWindow
+     */
     public void showFinalSchedule() {
+        Window window = windows.get("TimeTable Window");
         //Done: call managementSystem.makeSchedule
         String[] schedule = new String[]{managementSystem.makeSchedule()};
 
@@ -162,5 +167,6 @@ public class AppManager {
     }
 
     public void logOut() {}
+
 
 }
