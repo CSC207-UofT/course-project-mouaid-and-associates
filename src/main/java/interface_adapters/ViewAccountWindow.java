@@ -11,13 +11,16 @@ public class ViewAccountWindow implements Window{
     /**
      * @return "no" if user doesn't want an action, "add", "edit", or "remove" if user wants any of those actions.
      */
+    String[] returnList = new String[1];
     @Override
-    public String getUserInput() {
+    public String[] getUserInput() {
         if (selectAction().equals("yes")){
-            return selectMedicineAction();
+            returnList[0] = selectMedicineAction();
+            return returnList;
         }
         else{
-            return "no";
+            returnList[0] = "no";
+            return returnList;
         }
 
     }

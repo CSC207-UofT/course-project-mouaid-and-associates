@@ -1,8 +1,5 @@
 package interface_adapters;
 
-import java.io.Console;
-import java.util.*;
-
 public interface Window {
 
     /**
@@ -10,7 +7,7 @@ public interface Window {
      * benefits of this interface when interacting with the console - Eren
      */
 
-    String getUserInput();
+    public String[] getUserInput();
 }
 
 
