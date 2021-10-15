@@ -8,6 +8,7 @@ public interface Window {
      */
 
     public String[] getUserInput();
+
 }
 
 
