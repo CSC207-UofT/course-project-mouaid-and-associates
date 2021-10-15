@@ -8,14 +8,15 @@ public class TimeTableWindow implements Window{
     Console cnsl = System.console();
 
     @Override
-    public String getUserInput() {
+    public String[] getUserInput() {
 
         // returns 1 if the user goes back to ViewAccount..
-
+        String[] returnList = new String[1];
         while (true) {
             String input = cnsl.readLine("If you want to go back to ViewAccount type VA");
             if (input.equals("VA")) {
-                return "1";
+                returnList[0] = "1";
+                return returnList;
             }
         }
     }
