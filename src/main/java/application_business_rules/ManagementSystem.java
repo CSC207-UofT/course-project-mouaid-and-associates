@@ -20,13 +20,19 @@ public class ManagementSystem {
     private HashMap<String, User> userDatabase;
     private UserManager userManager;
     private ScheduleManager scheduleManager;
-    private ScheduleCompiler scheduleCompiler;
 
-    public ManagementSystem(UserManager userManager, ScheduleManager scheduleManager,
-                            ScheduleCompiler scheduleCompiler){
+    public ManagementSystem(UserManager userManager, ScheduleManager scheduleManager){
         this.userManager = userManager;
         this.scheduleManager = scheduleManager;
-        this.scheduleCompiler = scheduleCompiler;
+    }
+
+    /**
+     * Creates a new ManagementSystem instance. Also
+     * Creates a new UserManager and ScheduleManager.
+     */
+    public ManagementSystem(){
+        this.userManager = new UserManager();
+        this.scheduleManager = new ScheduleManager();
     }
 
     /**
@@ -38,21 +44,14 @@ public class ManagementSystem {
         this.userDatabase.put(username, this.userManager.addNewUser(name, username));
     }
 
-    /**
-     * Finds the user entity using the username
-     * @param username the username that the user uses
-     * @return returns a User object
-     */
-    public Object findUser(String username){
-        return this.userDatabase.get(username);
-    }
+    // TODO: findUser is not required for Phase 0. Needs to be discussed further.
 
     /**
      * Gets the info of the user using the username that the user uses
      * @param username the username the user uses
      * @return returns a list that contains the user's username, name and list of medicines
      */
-    public List getUserInfo(String username){
+    public List<Object> getUserInfo(String username){
         User user = this.userDatabase.get(username);
         List<Object> info = new ArrayList <Object>();
         info.add(user.getName());
@@ -62,16 +61,36 @@ public class ManagementSystem {
     }
 
     /**
+     * Gets the info of the user using the username that the user uses
+     * @return returns a list that contains the user's username, name and list of medicines (names only).
+     */
+    public List<String> getUserInfo(){
+        List<String> userInfo = new ArrayList<>();
+        userInfo.add(userManager.getName());
+        userInfo.add(userManager.getUserName());
+
+        // Get specifically the names of the medicine.
+        userInfo.addAll(List.copyOf(userManager.getMedicines().keySet()));
+
+        return userInfo;
+    }
+
+    /**
      * Uses the userManager to get a list of medicines and merges it with the master schedule
+     * @return the compiled schedule.
      */
     public Schedule makeSchedule(){
         HashMap<String, Medicine> medicinesDict = userManager.getMedicineUser();
-        List<Medicine> medicineList = new ArrayList<Medicine>(medicinesDict.values());
-        List<Schedule> scheduleList = new ArrayList<Schedule>();
+        List<Medicine> medicineList = new ArrayList<>(medicinesDict.values());
+        List<Schedule> scheduleList = new ArrayList<>();
         for (Medicine meds: medicineList){
             scheduleList.add(meds.getMyMedicineSchedule());
         }
-        Schedule completeSchedule = scheduleManager.compileSchedule(scheduleList);
-        return completeSchedule;
+        return scheduleManager.compileSchedule(scheduleList);
     }
+
+    //TODO add a method called addNewMedicine. Use this to call UserManager.createMedicine()
+
+
+
 }
