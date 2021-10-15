@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Schedule {
     /**
+     * The Schedule that contains all the events.
      * Instance Attributes:
      * events: The list of events corresponding to this schedule.
      *

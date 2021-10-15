@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class UserManager {
     /**
+     * A manger that manages everything about the User Entity
      * Instance Attributes:
      * user: the user object
      * medicineManager: MedicineManager Object that we will use to manage the user's medicines
@@ -60,21 +61,34 @@ public class UserManager {
                 times));
     }
 
+    /**
+     * Gets the user that is managed by UserManger
+     * @return The user that is managed by UserManger
+     */
     public User getUser(){
         return this.user;
     }
-    public HashMap<String, Medicine> getMedicineUser(){
-        return this.user.getMedicineList();
-    }
 
+    /**
+     * Gets the name of the user that is managed by UserManger
+     * @return The name of the user that is managed by UserManger
+     */
     public String getName(){
         return this.user.getName();
     }
 
+    /**
+     * Gets the userName of the user that is managed by UserManger
+     * @return The userName of the user that is managed by UserManger
+     */
     public String getUserName(){
         return this.user.getUserName();
     }
 
+    /**
+     * Gets the medicineList of the user that is managed by UserManger
+     * @return The medicineList of the user that is managed by UserManger
+     */
     public HashMap<String, Medicine> getMedicines(){
         return this.user.getMedicineList();
     }

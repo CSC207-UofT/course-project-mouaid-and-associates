@@ -138,6 +138,7 @@ public class AppManager {
 
         //TODO: Add a method that properly formats times from user input.
 
+
         //Done: call managementSystem.addNewMedicine() and pass in this information.
 //        managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
         //Done: call showAccountWindow

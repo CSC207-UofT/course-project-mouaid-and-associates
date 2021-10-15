@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class Event implements Comparable<Event>{
     /**
+     * A class containing a singular occurrence of an event that would appear on a schedule
      * Instance Attributes:
      * name: The name of the current event
      * description: The description of the current event.
