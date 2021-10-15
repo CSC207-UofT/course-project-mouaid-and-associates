@@ -1,6 +1,5 @@
 package interface_adapters;
 
-
 public interface Window {
 
     /**
@@ -8,9 +7,7 @@ public interface Window {
      * benefits of this interface when interacting with the console - Eren
      */
 
-    public void showOptions();
-
-    public String getUserInput();
+    public String[] getUserInput();
 
 }
 
