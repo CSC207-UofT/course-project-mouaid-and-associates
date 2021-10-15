@@ -3,6 +3,7 @@ package interface_adapters;
 import application_business_rules.ManagementSystem;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AppManager {
@@ -39,51 +40,100 @@ public class AppManager {
         // number of windows, thus an array makes sense.
         this.windows = windows;
 
-        //TODO: Add a call to Start Screen Window
+        //Done: Add a call to Start Screen Window
+        showStartScreenWindow();
+
     }
 
     public void showStartScreenWindow(){
 
         //TODO make a call to StartScreenWindow to show information and get user input
+        windows.get("Start Screen Window").showOptions();       // Currently, a placeholder
+        windows.get("Start Screen Window").getUserInput();      // Currently, placeholder.
 
-        //TODO make a call to createNewAccount
+        // FOR FUTURE: Add a control flow section so that we can also go to login window.
+        //Done make a call to createNewAccount
+        createNewAccount();
     }
 
-    public void createNewAccount(){}
+    public void createNewAccount() {
         //TODO: call CreateAccountWindow to show information and get user input
-        //TODO: obtain name, username and password
-        //TODO: Add username and password to accounts.
-        //TODO: call managementSystem.createNewUser, with name and username as parameters
-        //TODO: call showAccountWindow()
+        Window createAccountWindow = windows.get("Create Account Window");     // Place holder.
 
+        //TODO: obtain name, username and password
+//        String name;
+//        String username;
+//        String password;
+//        name, username, password = createAccountWindow.getUserInput();        // Place holder.
+
+        //TODO: Add username and password to accounts.
+//        accounts.put(username, password);
+
+        //TODO: call managementSystem.createNewUser, with name and username as parameters
+//        managementSystem.createNewUser(name, username);
+
+        //Done: call showAccountWindow()
+        showAccountWindow();
+    }
     public void showAccountWindow(){
-        //TODO: call managementSystem.getUserInfo() to get user information.
+        //Done: call managementSystem.getUserInfo() to get user information.
+        List<String> userInfo = managementSystem.getUserInfo();
+        Window viewAccountWindow = windows.get("View Account Window");
+
         //TODO: call ViewAccountWindow and pass the user information as parameters so that
         //      they can display it.
-        //TODO: Add conditional flow statements so that the user can select between logging out,
+
+//        viewAccountWindow.showOptions(userInfo);
+
+        int choice;     // place holder for user's choice.
+
+//        choice = (int) viewAccountWindow.getUserInput();
+
+        //Done: Add conditional flow statements so that the user can select between logging out,
         //      adding medication and viewing the timetable.
-        //TODO: get user input from ViewAccountWindow and call addMedicine()
-        //TODO: get user input and call logOut()
-        //TODO: get user input and call showFinalSchedule.
+
+        if (choice == 1){
+            addMedicine();
+        } else if (choice == 2) {
+            logOut();
+        } else {
+            showFinalSchedule();
+        }
+
     }
 
     public void addMedicine(){
-        //TODO: call AddMedicineWindow to display the fields to enter data about the medicine
+        //Done: call AddMedicineWindow to display the fields to enter data about the medicine
+        Window addMedicineWindow = windows.get("Add Medicine Window");
+
         //TODO: gets user input on the name, and type of medicine. Also the method of administration,
         //      extra instructions, as well as times to take the medicine.
-        //TODO: call managementSystem.addNewMedicine() and pass in this information.
-        //TODO: call showAccountWindow
+        String name;
+        String type;
+        String methodOfAdmin;
+        String extraInstruct;
+        List<Map<String, Double>> times;
+
+        //TODO: Add a method that properly formats times from user input.
+
+        //Done: call managementSystem.addNewMedicine() and pass in this information.
+//        managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
+        //Done: call showAccountWindow
+        showAccountWindow();
     }
 
-    public void showFinalSchedule(){}
-        //TODO: call managementSystem.makeSchedule
+    public void showFinalSchedule() {
+        //Done: call managementSystem.makeSchedule
+        String schedule = managementSystem.makeSchedule();
         //TODO: get the schedule and pass it into as a parameter for TimeTableWindow.showOptions() or whatever
         //      method is used to display information.
+//        windows.get("TimeTable Window").showOptions(schedule);
 
         //TODO: get user input from TimeTableWindow and call ViewAccountWindow.
+//        windows.get("TimeTable Window").getUserInput()
 
-    public void logOut(){}
-
-        //TODO: Do something to end run() or maybe go back to login window.
+//        showAccountWindow();
+    }
+    public void logOut() {}
 
 }

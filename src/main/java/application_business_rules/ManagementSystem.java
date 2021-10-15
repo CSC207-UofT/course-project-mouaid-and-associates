@@ -79,18 +79,20 @@ public class ManagementSystem {
      * Uses the userManager to get a list of medicines and merges it with the master schedule
      * @return the compiled schedule.
      */
-    public Schedule makeSchedule(){
+    public String makeSchedule(){
         HashMap<String, Medicine> medicinesDict = userManager.getMedicineUser();
         List<Medicine> medicineList = new ArrayList<>(medicinesDict.values());
         List<Schedule> scheduleList = new ArrayList<>();
         for (Medicine meds: medicineList){
             scheduleList.add(meds.getMyMedicineSchedule());
         }
-        return scheduleManager.compileSchedule(scheduleList);
+        return scheduleManager.compileSchedule(scheduleList).toString();
     }
 
-    //TODO add a method called addNewMedicine. Use this to call UserManager.createMedicine()
-
-
+    public void addNewMedicine(String medicineName, int amount,
+                               String methodOfAdministration, String extraInstructions,
+                               List<Map<String, Double>> times) {
+        userManager.createMedicine(medicineName, amount, methodOfAdministration, extraInstructions, times);
+    }
 
 }
