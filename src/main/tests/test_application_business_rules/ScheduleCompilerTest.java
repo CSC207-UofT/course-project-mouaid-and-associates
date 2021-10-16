@@ -1,5 +1,6 @@
-package application_business_rules;
+package test_application_business_rules;
 
+import application_business_rules.ScheduleCompiler;
 import entities.Event;
 import entities.Schedule;
 import org.junit.jupiter.api.AfterEach;

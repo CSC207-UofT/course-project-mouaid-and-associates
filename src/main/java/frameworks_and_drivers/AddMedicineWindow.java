@@ -2,18 +2,27 @@ package frameworks_and_drivers;
 
 import interface_adapters.Window;
 
-import java.io.Console;
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class AddMedicineWindow implements Window {
 
     Console cnsl = System.console();
     @Override
     public String[] getUserInput() {
-        String name = cnsl.readLine("Name of the medicine?");
-        String methodOfAdministration = cnsl.readLine("Method of administration");
-        String amount = cnsl.readLine("Amount of the medicine should be taken");
-        String extra = cnsl.readLine("Any Extra Instructions?");
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("What medicine do you want to take?");
+        String name = scanner.nextLine();
+
+        System.out.println("How are you taking the medicine");
+        String methodOfAdministration = scanner.nextLine();
+
+        System.out.println("How much medicine do you need to take each time");
+        String amount = scanner.nextLine();
+
+        System.out.println("Are there any additional instructions that should be noted?");
+        String extra = scanner.nextLine();
 
         String wdm = selectWD(scanner); // Weekly, daily
         String startDate = selectDay(scanner);
@@ -40,10 +49,11 @@ public class AddMedicineWindow implements Window {
         String[] times = new String[howManyTimesInt];
         String time = " ";
         for (int i = 0; i < howManyTimesInt; i++){
-            while(time.length() != 5 || time.charAt(2) !=':' || Character.isDigit(time.charAt(0)) ||
-                    Character.isDigit(time.charAt(1)) || Character.isDigit(time.charAt(3))||
-                    Character.isDigit(time.charAt(4))){
-                time = cnsl.readLine("For the"+ i + "'st What time (In the form of XX:XX and 24 hour time)");
+            while(!isNumeric(time) || 0 > Double.parseDouble(time) || 24 <= Double.parseDouble(time)){
+                System.out.println("For the "+ (i + 1) + "'st time, pick a time (In the form of XX.XX." +
+                        "Note that  such as 10:30 becomes " +
+                        "10.5, or 13:45 as 13.75");
+                time = scanner.nextLine();
             }
             times[i] = time;
         }
@@ -53,7 +63,8 @@ public class AddMedicineWindow implements Window {
     public String selectWD() {
 
         while (true) {
-            String input = cnsl.readLine("Weekly or daily?");
+            System.out.println("Do you need to take it weekly or daily?");
+            String input = scanner.nextLine();
             if (input.equals("weekly") || input.equals("daily")) {
                 return input;
             }
@@ -62,13 +73,19 @@ public class AddMedicineWindow implements Window {
     public String selectHowManyTimes() {
 
         while (true) {
-            String input = cnsl.readLine("How many times?");
+            System.out.println("How many times do you need to take it in a day?");
+            String input = scanner.nextLine();
             if (isNumeric(input)) {
                 return input;
             }
         }
     }
 
+    /**
+     * Checks to see whether str can be converted into a double
+     * @param str what it will check to see if it can be converted to a string
+     * @return Whether the str can be converted to a double
+     */
     private  boolean isNumeric(String str) {
         try {
             Double.parseDouble(str);

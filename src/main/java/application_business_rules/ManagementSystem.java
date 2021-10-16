@@ -3,6 +3,7 @@ package application_business_rules;
 import java.util.*;
 
 import entities.Medicine;
+import entities.MedicineSchedule;
 import entities.Schedule;
 import entities.User;
 
@@ -21,10 +22,10 @@ public class ManagementSystem {
     private UserManager userManager;
     private ScheduleManager scheduleManager;
 
-    public ManagementSystem(UserManager userManager, ScheduleManager scheduleManager){
-        this.userManager = userManager;
-        this.scheduleManager = scheduleManager;
-    }
+//    public ManagementSystem(UserManager userManager, ScheduleManager scheduleManager){
+//        this.userManager = userManager;
+//        this.scheduleManager = scheduleManager;
+//    }
 
     /**
      * Creates a new ManagementSystem instance. Also
@@ -34,7 +35,9 @@ public class ManagementSystem {
         this.userManager = new UserManager();
         this.scheduleManager = new ScheduleManager();
     }
-
+    public Map getDatabase(){
+        return this.userDatabase;
+    }
     /**
      * Creates a new user instance and stores it in the userDatabase
      * @param name The name of the user
@@ -44,21 +47,7 @@ public class ManagementSystem {
         this.userDatabase.put(username, this.userManager.addNewUser(name, username));
     }
 
-    // TODO: findUser is not required for Phase 0. Needs to be discussed further.
-
-    /**
-     * Gets the info of the user using the username that the user uses
-     * @param username the username the user uses
-     * @return returns a list that contains the user's username, name and list of medicines
-     */
-    public List<Object> getUserInfo(String username){
-        User user = this.userDatabase.get(username);
-        List<Object> info = new ArrayList <Object>();
-        info.add(user.getName());
-        info.add(username);
-        info.add(user.getMedicineList());
-        return info;
-    }
+    // FUTURE TODO: findUser is not required for Phase 0. Needs to be discussed further.
 
     /**
      * Gets the info of the user using the username that the user uses
@@ -83,8 +72,11 @@ public class ManagementSystem {
         HashMap<String, Medicine> medicinesDict = userManager.getMedicines();
         List<Medicine> medicineList = new ArrayList<>(medicinesDict.values());
         List<Schedule> scheduleList = new ArrayList<>();
-        for (Medicine meds: medicineList){
-            scheduleList.add(meds.getMyMedicineSchedule());
+        for (Medicine med: medicineList){
+
+            // Use medicineManager to get the medicine schedule.
+            MedicineSchedule medSched = userManager.medicineManager.getMedicineSchedule(med);
+            scheduleList.add(medSched);
         }
         return scheduleManager.compileSchedule(scheduleList).toString();
     }

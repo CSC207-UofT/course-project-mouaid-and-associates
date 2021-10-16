@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
+    /**
+     * The main method.
+     */
     public static void main(String[] args) {
         AppManager appManager = new AppManager();
 

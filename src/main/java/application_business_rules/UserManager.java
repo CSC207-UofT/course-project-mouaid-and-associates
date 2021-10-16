@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class UserManager {
     /**
-     * A manger that manages everything about the User Entity
+     * A class that manages everything about the User Entity
      * Instance Attributes:
      * user: the user object
      * medicineManager: MedicineManager Object that we will use to manage the user's medicines
@@ -19,12 +19,12 @@ public class UserManager {
      *
      */
     private User user;
-    private MedicineManager medicineManager;
+    public MedicineManager medicineManager;
 
-    public UserManager(User user){
-        this.user = user;
-        this.medicineManager = new MedicineManager();
-    }
+//    public UserManager(User user){
+//        this.user = user;
+//        this.medicineManager = new MedicineManager();
+//    }
 
     /**
      * Creates a new instance of UserManager, with no user defined yet.

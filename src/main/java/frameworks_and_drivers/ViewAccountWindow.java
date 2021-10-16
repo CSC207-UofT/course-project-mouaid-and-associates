@@ -10,52 +10,30 @@ import java.util.Objects;
 public class ViewAccountWindow implements Window, DisplayEntityInformation {
 
     Console cnsl = System.console();
+    String[] returnList = new String[1];
 
     /**
      * @return "no" if user doesn't want an action, "add", "edit", or "remove" if user wants any of those actions.
      */
-    String[] returnList = new String[1];
     @Override
     public String[] getUserInput() {
-        if (selectAction().equals("yes")){
-            returnList[0] = selectMedicineAction();
-        }
-        else{
-            returnList[0] = "no";
-        }
-        return returnList;
-
-    }
-
-    /**
-     * @return "yes" or "no"
-     **/
-    public String selectAction(){
-
         while (true){
-            String input = cnsl.readLine("Do you want to add a new medicine, remove a medicine, edit a medicine, " +
-                    "look the medication timetable or logout? Type yes or no");
-            if (input.equals("yes") || input.equals("no")) {
-                return input;
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Type 'add' to add a new medicine \n" +
+                    "Type 'edit' to edit a medicine\n" +
+                    "Type 'remove' to remove a medicine\n" +
+                    "Type 'view' to view the timetable \n" +
+                    "Type 'logout' to logout. \n");
+            String input = scanner.nextLine();
+
+            if (input.equals("add") || input.equals("edit") || input.equals("remove") || input.equals("logout")
+                    || input.equals("view")) {
+                returnList[0] = input;
+                return returnList;
             }
         }
-
     }
-    /**
-     * @return "add" or "edit" or "remove" or "logout" or "view timetable"
-     **/
-    public String selectMedicineAction(){
 
-        while (true){
-            String input = cnsl.readLine("Add, edit or remove?");
-            if (input.equals("add") || input.equals("edit") || input.equals("remove")) {
-                return input;
-            }
-        }
-
-        //TODO: Add the options for logging out and viewing time table.
-
-    }
 
     /**
      * This is an interface that allows classes in frameworks_and_drivers to get information

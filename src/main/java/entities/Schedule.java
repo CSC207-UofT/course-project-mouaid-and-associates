@@ -2,7 +2,7 @@ package entities;
 
 import java.util.*;
 
-public class Schedule {
+public class  Schedule {
     /**
      * The Schedule that contains all the events.
      * Instance Attributes:
@@ -51,13 +51,20 @@ public class Schedule {
         return this.events.remove(event);
     }
 
-
+    /**
+     *  A toString method that returns a string representation of the schedule. Formatted to
+     *  look nice.
+     *
+     * @return  A string representation of the Schedule.
+     */
     @Override
     public String toString() {
         Map<String, List<Event>> sortedEvents = sortEvents();
         StringBuilder scheduleRep = new StringBuilder();
+        String[] days = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
+                                     "Sunday"};
 
-        for (String day: sortedEvents.keySet()){
+        for (String day: days){
             scheduleRep.append(day).append(": \n");
             for (Event event: sortedEvents.get(day)){
                 String eventName = new String ("    " + event.getName() + "\n");

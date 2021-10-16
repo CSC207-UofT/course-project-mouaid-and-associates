@@ -49,7 +49,7 @@ public class AppManager {
         String[] choice = windows.get("Start Screen Window").getUserInput();      // Currently, placeholder.
 
 
-        if (choice[0].equals("1")){
+        if (choice[0].equals("0")){
             login();
         } else {
             createNewAccount();
@@ -58,7 +58,7 @@ public class AppManager {
     }
 
     public void login(){
-        //TODO: FUTURE: Fill this out later
+        //FUTURE TODO: Fill this out later
     }
 
     public void createNewAccount() {
@@ -88,8 +88,8 @@ public class AppManager {
         // create a new array for properly formatted strings.
         String[] formattedUserInfo = new String[userInfo.length + 1];
 
-        formattedUserInfo[0] = "Name" + userInfo[0];
-        formattedUserInfo[1] = "Username" + userInfo[1];
+        formattedUserInfo[0] = "Name: " + userInfo[0];
+        formattedUserInfo[1] = "Username: " + userInfo[1];
         formattedUserInfo[2] = "List of Medicines: ";
 
         // Format the list of medicines names and add them.
@@ -102,17 +102,18 @@ public class AppManager {
         }
 
 
-        String choice = viewAccountWindow.getUserInput()[0];     // place holder for user's choice.
-
-//        choice = (int) viewAccountWindow.getUserInput();
+        String choice = viewAccountWindow.getUserInput()[0];
 
         //Done: Add conditional flow statements so that the user can select between logging out,
         //      adding medication and viewing the timetable.
 
-        switch (choice) {
-            case "add" -> addMedicine();
-            case "logout" -> logOut();
-            case "view timetable" -> showFinalSchedule();
+        // FUTURE TODO: Add methods for the cases that cover "edit" and "remove".
+        if (choice.equals("add")){
+            addMedicine();
+        } else if (choice.equals("logout")){
+            logOut();
+        } else if (choice.equals("view")){
+            showFinalSchedule();
         }
 
     }
@@ -121,18 +122,28 @@ public class AppManager {
         //Done: call AddMedicineWindow to display the fields to enter data about the medicine
         Window addMedicineWindow = windows.get("Add Medicine Window");
 
-        //TODO: gets user input on the name, and type of medicine. Also the method of administration,
-        //      extra instructions, as well as times to take the medicine.
-
         String[] data = addMedicineWindow.getUserInput();
 
         String name = data[0];
         String methodOfAdmin = data[1];
         int amount = Integer.parseInt(data[2]);
         String extraInstruct = data[3];
-        HashMap<String, Double> times = new HashMap<>();
-        for(int i = 0; i < (data.length - 4); i++){
-            times.put("Tuesday", Double.parseDouble(data[i + 4]);
+        String wOrD = data[4]; // Stores frequency. Weekly/Daily
+        String startDay = data[5];
+        List<Map<String, Double>> times = new ArrayList<>();
+
+        for(int i = 0; i < (data.length - 6); i++) {
+            if (wOrD.equals("weekly")) {
+                Map<String, Double> map = new HashMap<>();
+                map.put(DAYS[Integer.parseInt(startDay) - 1], Double.parseDouble(data[i + 6]));
+                times.add(map);
+            } else {
+                for (String day : DAYS) {
+                    Map<String, Double> map2 = new HashMap<>();
+                    map2.put(day, Double.parseDouble(data[i + 6]));
+                    times.add(map2);
+                }
+            }
 
         }
 
@@ -140,7 +151,8 @@ public class AppManager {
 
 
         //Done: call managementSystem.addNewMedicine() and pass in this information.
-//        managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
+        managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
+
         //Done: call showAccountWindow
         showAccountWindow();
     }
@@ -165,7 +177,5 @@ public class AppManager {
         showAccountWindow();
     }
 
-    public void logOut() {}
-
-
+    public void logOut(){}
 }
