@@ -1,13 +1,11 @@
-package application_business_rules;
+package test_entities;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class ScheduleCompilerTest {
-// TODO: Complete the tests.
+class ScheduleTest {
+    // TODO: Complete the tests.
     @BeforeEach
     void setUp() {
     }
@@ -17,6 +15,10 @@ class ScheduleCompilerTest {
     }
 
     @Test
-    void compileSchedules() {
+    void testToString() {
+    }
+
+    @Test
+    void sortEvents() {
     }
 }
