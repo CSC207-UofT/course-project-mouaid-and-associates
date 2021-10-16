@@ -34,6 +34,7 @@ public class ManagementSystem {
     public ManagementSystem(){
         this.userManager = new UserManager();
         this.scheduleManager = new ScheduleManager();
+        this.userDatabase = new HashMap<>();
     }
     public Map getDatabase(){
         return this.userDatabase;

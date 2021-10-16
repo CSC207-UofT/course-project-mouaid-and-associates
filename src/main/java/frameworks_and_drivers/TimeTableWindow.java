@@ -3,7 +3,7 @@ package frameworks_and_drivers;
 
 import interface_adapters.DisplayEntityInformation;
 import interface_adapters.Window;
-
+import java.util.Scanner;
 import java.io.Console;
 
 public class TimeTableWindow implements Window, DisplayEntityInformation {
@@ -16,7 +16,9 @@ public class TimeTableWindow implements Window, DisplayEntityInformation {
         // returns 1 if the user goes back to ViewAccount..
         String[] returnList = new String[1];
         while (true) {
-            String input = cnsl.readLine("If you want to go back to ViewAccount type VA");
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("If you want to go back to ViewAccount type VA");
+            String input = scanner.nextLine();
             if (input.equals("VA")) {
                 returnList[0] = "1";
                 return returnList;

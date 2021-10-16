@@ -6,6 +6,7 @@ import interface_adapters.Window;
 import java.io.Console;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class ViewAccountWindow implements Window, DisplayEntityInformation {
 

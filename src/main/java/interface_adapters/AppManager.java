@@ -26,7 +26,8 @@ public class AppManager {
     private ManagementSystem managementSystem;
     private Map<String, Window> windows;
     private Map<String, String> accounts;
-
+    private static final String[] DAYS = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday",
+    "Thursday", "Friday", "Saturday"};
 
     public AppManager(){
         managementSystem = new ManagementSystem();
@@ -146,9 +147,6 @@ public class AppManager {
             }
 
         }
-
-        //TODO: Add a method that properly formats times from user input.
-
 
         //Done: call managementSystem.addNewMedicine() and pass in this information.
         managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
