@@ -3,15 +3,14 @@ package frameworks_and_drivers;
 import interface_adapters.DisplayEntityInformation;
 import interface_adapters.Window;
 
-import java.io.Console;
-import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
-public class ViewAccountWindow implements Window, DisplayEntityInformation {
-
-    Console cnsl = System.console();
+public class ViewAccountWindow extends Window implements DisplayEntityInformation {
     String[] returnList = new String[1];
+
+    public ViewAccountWindow(Scanner scanner) {
+        super(scanner);
+    }
 
     /**
      * @return "no" if user doesn't want an action, "add", "edit", or "remove" if user wants any of those actions.
@@ -19,7 +18,6 @@ public class ViewAccountWindow implements Window, DisplayEntityInformation {
     @Override
     public String[] getUserInput() {
         while (true){
-            Scanner scanner = new Scanner(System.in);
             System.out.println("Type 'add' to add a new medicine \n" +
                     "Type 'edit' to edit a medicine\n" +
                     "Type 'remove' to remove a medicine\n" +

@@ -5,10 +5,14 @@ import interface_adapters.Window;
 import java.io.Console;
 import java.util.Scanner;
 
-public class CreateAccountWindow implements Window {
+public class CreateAccountWindow extends Window {
     /*
      * The window that displays the Create an Account page.
      */
+
+    public CreateAccountWindow(Scanner scanner) {
+        super(scanner);
+    }
 
     /**
      * Gets input from the user when first using the app in order to create an account.
@@ -16,7 +20,6 @@ public class CreateAccountWindow implements Window {
      */
     @Override
     public String[] getUserInput() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Name: ");
         String name = scanner.nextLine();
 

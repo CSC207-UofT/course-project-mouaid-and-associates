@@ -4,10 +4,14 @@ import interface_adapters.Window;
 import java.util.Scanner;
 import java.io.Console;
 
-public class LoginWindow implements Window {
+public class LoginWindow extends Window {
     /*
-     * THe window that displays the Login page.
+     * The window that displays the Login page.
      */
+
+    public LoginWindow(Scanner scanner) {
+        super(scanner);
+    }
 
     //The user logs in.
 
@@ -17,7 +21,6 @@ public class LoginWindow implements Window {
      */
     @Override
     public String[] getUserInput() {
-        Scanner scanner = new Scanner(System.in);
         String[] returnList = new String[2];
         System.out.println("Username:");
         String username = scanner.nextLine();

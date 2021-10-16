@@ -4,11 +4,13 @@ import interface_adapters.Window;
 import java.util.Scanner;
 import java.io.*;
 
-public class StartScreenWindow implements Window {
-
+public class StartScreenWindow extends Window {
     /**
      * The window that displays the Start Screen page.
      */
+    public StartScreenWindow(Scanner scanner) {
+        super(scanner);
+    }
 
     /**
      * Gets user input and whether they decide to login or sign up
@@ -17,7 +19,6 @@ public class StartScreenWindow implements Window {
     public String[] getUserInput() {
          // returns 0 if the user selects login and returns 1 if the user selects signup
         String[] returnList = new String[1];
-        Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("For Login type L, for Sign up type S");

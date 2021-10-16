@@ -4,10 +4,14 @@ import interface_adapters.Window;
 
 import java.util.Scanner;
 
-public class AddMedicineWindow implements Window {
+public class AddMedicineWindow extends Window {
     /*
      * The window that displays the Add a Medicine page.
      */
+
+    public AddMedicineWindow(Scanner scanner) {
+        super(scanner);
+    }
 
     /**
      * Gets input from the user in order to add a medicine that the user uses in the app.
@@ -15,8 +19,6 @@ public class AddMedicineWindow implements Window {
      */
     @Override
     public String[] getUserInput() {
-
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("What medicine do you want to take?");
         String name = scanner.nextLine();
