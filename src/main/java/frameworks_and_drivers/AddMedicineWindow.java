@@ -5,8 +5,14 @@ import interface_adapters.Window;
 import java.util.Scanner;
 
 public class AddMedicineWindow implements Window {
+    /*
+     * The window that displays the Add a Medicine page.
+     */
 
-    Console cnsl = System.console();
+    /**
+     * Gets input from the user in order to add a medicine that the user uses in the app.
+     * @return A list containing the user input
+     */
     @Override
     public String[] getUserInput() {
 
@@ -42,8 +48,12 @@ public class AddMedicineWindow implements Window {
         return returnList;
     }
 
-    private String[] getTimes() {
-        String howManyTimesStr = selectHowManyTimes();
+    /**
+     * Gets input from the user on the times they will be taking the medicine they are trying to add.
+     * @return The times the user will be taking the medicine they are trying to add.
+     */
+    private String[] getTimes(Scanner scanner) {
+        String howManyTimesStr = selectHowManyTimes(scanner);
 
         int howManyTimesInt = Integer.parseInt(howManyTimesStr);
         String[] times = new String[howManyTimesInt];
@@ -60,8 +70,11 @@ public class AddMedicineWindow implements Window {
         }
         return times;
     }
-
-    public String selectWD() {
+    /**
+     * Gets input from the user whether the medicine they want to add will be taken weekly or daily
+     * @return Whether the user inputted weekly or daily.
+     */
+    public String selectWD(Scanner scanner) {
 
         while (true) {
             System.out.println("Do you need to take it weekly or daily?");
@@ -71,7 +84,26 @@ public class AddMedicineWindow implements Window {
             }
         }
     }
-    public String selectHowManyTimes() {
+
+    /**
+     * Allows the user to select what day they want to start recording when they should take the medicine
+     * @return A string representing the day to start on
+     */
+    public String selectDay(Scanner scanner){
+        String input = "";
+        while (!isNumeric(input) || 0 > Integer.parseInt(input) || Integer.parseInt(input)  > 7){
+            System.out.println("What day would you like to start? Press 1 for Monday, 2 for Tuesday," +
+                    "3 for Wednesday, 4 for Thursday, 5 for Friday, 6 for Saturday, 7 for Sunday");
+            input = scanner.nextLine();
+        }
+        return input;
+    }
+
+    /**
+     * Gets input and allows the user to decide how many times they should take medicine in a day
+     * @return an integer representing how many times in a day you will take the medicine
+     */
+    public String selectHowManyTimes(Scanner scanner) {
 
         while (true) {
             System.out.println("How many times do you need to take it in a day?");

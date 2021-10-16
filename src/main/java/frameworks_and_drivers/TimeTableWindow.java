@@ -8,8 +8,15 @@ import java.io.Console;
 
 public class TimeTableWindow implements Window, DisplayEntityInformation {
 
+    /**
+     * The window that displays the Timetable page.
+     */
     Console cnsl = System.console();
 
+    /**
+     * Gets input from the user on whether they want to go to the View Account Page
+     * @return A list containing the user input
+     */
     @Override
     public String[] getUserInput() {
 

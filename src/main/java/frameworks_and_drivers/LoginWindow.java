@@ -5,9 +5,16 @@ import java.util.Scanner;
 import java.io.Console;
 
 public class LoginWindow implements Window {
+    /*
+     * THe window that displays the Login page.
+     */
 
-    Console cnsl = System.console();
     //The user logs in.
+
+    /**
+     * Gets input from the user in order to login.
+     * @return A list containing the user login input
+     */
     @Override
     public String[] getUserInput() {
         Scanner scanner = new Scanner(System.in);

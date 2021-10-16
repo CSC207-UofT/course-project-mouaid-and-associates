@@ -6,9 +6,14 @@ import java.io.Console;
 import java.util.Scanner;
 
 public class CreateAccountWindow implements Window {
+    /*
+     * The window that displays the Create an Account page.
+     */
 
-    Console cnsl = System.console();
-    //Creates an account for a user.
+    /**
+     * Gets input from the user when first using the app in order to create an account.
+     * @return A list containing the user input
+     */
     @Override
     public String[] getUserInput() {
         Scanner scanner = new Scanner(System.in);

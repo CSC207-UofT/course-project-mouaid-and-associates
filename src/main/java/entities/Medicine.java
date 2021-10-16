@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Medicine {
     /**
-     * A class containing a medicine a singular medicine in this app
+     * A class containing a singular medicine in this app
      * Instance Attributes:
      * medicineName: The name of the medicine corresponding to this Medicine class
      * amount: The amount of medication available which is dependent on the method of administration

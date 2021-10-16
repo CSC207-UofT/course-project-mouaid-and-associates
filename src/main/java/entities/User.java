@@ -63,7 +63,7 @@ public class User {
     public void addMedicine(Medicine newMedicine){
         if (!(this.medicineList.containsKey(newMedicine))){
             this.medicineList.put(newMedicine.getMedicineName(), newMedicine);
-            newMedicine.setIdNumber(this.medicineList.size());
+            newMedicine.setIdNumber(this.medicineList.size() + 1);
         }
     }
 
