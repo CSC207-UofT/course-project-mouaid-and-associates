@@ -13,7 +13,8 @@ public class AppManager {
      * - windows: A mapping of a string name for a window to a Window object.
      * - accounts: A mapping of usernames to passwords. Will likely be changed to be stored in a database
      *             in the future.
-     * -
+     * - DAYS: A string array of the days of the week.
+     *
      * Representation Invariants:
      * - The keys of windows are {"Login Window", "Create Account Window", "Start Screen Window",
      *                            "TimeTable Window", "View Account Window", "Add Medicine Window",
@@ -34,6 +35,10 @@ public class AppManager {
         accounts = new HashMap<>();
     }
 
+    /** The main runner of the program. It starts of the app.
+     *
+     * @param windows   All the windows to be used by the app.
+     */
     public void run(Map<String, Window> windows){
         // Creates an array for Window objects. Once the program starts, we will only have a set
         // number of windows, thus an array makes sense.
@@ -44,6 +49,9 @@ public class AppManager {
 
     }
 
+    /**
+     * Shows the start screen window.
+     */
     public void showStartScreenWindow(){
 
         //Done make a call to StartScreenWindow to show information and get user input
@@ -58,10 +66,17 @@ public class AppManager {
 
     }
 
+    /**
+     * Shows the login window. Allows the user to login.
+     */
     public void login(){
         //FUTURE TODO: Fill this out later
     }
 
+    /**
+     * Shows the sign-up page and manages user interactions with the program for this
+     * page.
+     */
     public void createNewAccount() {
         //DONE: call CreateAccountWindow to show information and get user input
         Window createAccountWindow = windows.get("Create Account Window");
@@ -81,6 +96,11 @@ public class AppManager {
         //Done: call showAccountWindow()
         showAccountWindow();
     }
+
+    /**
+     * Shows the account page. Allows the user to view their account information and
+     * interact with the page.
+     */
     public void showAccountWindow(){
         //Done: call managementSystem.getUserInfo() to get user information.
         String[] userInfo = managementSystem.getUserInfo().toArray(new String[0]);
@@ -119,6 +139,10 @@ public class AppManager {
 
     }
 
+    /**
+     * Shows the add medicine page. Allows user interaction with the program so that
+     * the user can add a new medicine.
+     */
     public void addMedicine(){
         //Done: call AddMedicineWindow to display the fields to enter data about the medicine
         Window addMedicineWindow = windows.get("Add Medicine Window");
@@ -157,7 +181,7 @@ public class AppManager {
 
     /**
      * Shows the final schedule by using managementSystem to make the schedule and using the TimeTableWindow class
-     * to display the final schedule. It then gets user input from TimeTableWindow and calls ViewAccountWindow
+     * to display the final schedule. It then gets user input from TimeTableWindow and calls ViewAccountWindow.
      */
     public void showFinalSchedule() {
         Window window = windows.get("TimeTable Window");
@@ -175,5 +199,10 @@ public class AppManager {
         showAccountWindow();
     }
 
+    /**
+     * Allows the user to log out. Since at the end of every method, another method is called,
+     * and none of the methods return anything, calling an empty method ends the program, since there
+     * are no more calls to be made.
+     */
     public void logOut(){}
 }
