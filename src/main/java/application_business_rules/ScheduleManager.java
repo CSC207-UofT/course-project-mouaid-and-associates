@@ -5,15 +5,12 @@ import entities.Schedule;
 import java.util.List;
 
 public class ScheduleManager {
+    /**
+     * The class that manages the final schedule
+     * Instance Attributes:
+     * finalSchedule: The main schedule that will be managed by ScheduleManager
+     */
     private Schedule finalSchedule;
-
-    public void setFinalSchedule(Schedule finalSchedule) {
-        this.finalSchedule = finalSchedule;
-    }
-
-    public Schedule getFinalSchedule() {
-        return finalSchedule;
-    }
 
     /**
      * Compiles a bunch of schedule passed in.
@@ -28,5 +25,21 @@ public class ScheduleManager {
 
         return finalSchedule;
     }
+
+//    /**
+//     * Sets the finalSchedule managed by ScheduleManager
+//     * @param finalSchedule the schedule to be as the finalSchedule managed by ScheduleManager
+//     */
+//    public void setFinalSchedule(Schedule finalSchedule) {
+//        this.finalSchedule = finalSchedule;
+//    }
+//
+//    /**
+//     * Gets the finalSchedule managed by ScheduleManager.
+//     * @return  the finalSchedule managed by ScheduleManager.
+//     */
+//    public Schedule getFinalSchedule() {
+//        return finalSchedule;
+//    }
 
 }

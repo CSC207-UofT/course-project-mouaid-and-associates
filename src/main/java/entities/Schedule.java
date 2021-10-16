@@ -2,8 +2,9 @@ package entities;
 
 import java.util.*;
 
-public class Schedule {
+public class  Schedule {
     /**
+     * The Schedule that contains all the events.
      * Instance Attributes:
      * events: The list of events corresponding to this schedule.
      *
@@ -50,13 +51,20 @@ public class Schedule {
         return this.events.remove(event);
     }
 
-
+    /**
+     *  A toString method that returns a string representation of the schedule. Formatted to
+     *  look nice.
+     *
+     * @return  A string representation of the Schedule.
+     */
     @Override
     public String toString() {
         Map<String, List<Event>> sortedEvents = sortEvents();
         StringBuilder scheduleRep = new StringBuilder();
+        String[] days = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
+                                     "Sunday"};
 
-        for (String day: sortedEvents.keySet()){
+        for (String day: days){
             scheduleRep.append(day).append(": \n");
             for (Event event: sortedEvents.get(day)){
                 String eventName = new String ("    " + event.getName() + "\n");
@@ -74,6 +82,14 @@ public class Schedule {
         return scheduleRep.toString();
     }
 
+    /**
+     *  This method organizes the events so that events occurring in the same
+     *  day are grouped together. And events occurring on the same day are also
+     *  organized according to what time they occur. Earliest to latest.
+     *
+     * @return A map mapping a day to the events occurring in that day, with each
+     *         associated event list being sorted according to time.
+     */
     public Map<String, List<Event>> sortEvents(){
         // Sort the events by day.
         Map<String, List<Event>> newDictOfEvents = sortEventsByDay();

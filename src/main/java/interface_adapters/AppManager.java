@@ -2,9 +2,7 @@ package interface_adapters;
 
 import application_business_rules.ManagementSystem;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AppManager {
     /** This is the main class that runs the entire app.
@@ -15,7 +13,7 @@ public class AppManager {
      * - windows: A mapping of a string name for a window to a Window object.
      * - accounts: A mapping of usernames to passwords. Will likely be changed to be stored in a database
      *             in the future.
-     *
+     * -
      * Representation Invariants:
      * - The keys of windows are {"Login Window", "Create Account Window", "Start Screen Window",
      *                            "TimeTable Window", "View Account Window", "Add Medicine Window",
@@ -28,7 +26,8 @@ public class AppManager {
     private ManagementSystem managementSystem;
     private Map<String, Window> windows;
     private Map<String, String> accounts;
-
+    private static final String[] DAYS = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday",
+    "Thursday", "Friday", "Saturday"};
 
     public AppManager(){
         managementSystem = new ManagementSystem();
@@ -47,56 +46,74 @@ public class AppManager {
 
     public void showStartScreenWindow(){
 
-        //TODO make a call to StartScreenWindow to show information and get user input
-        windows.get("Start Screen Window").showOptions();       // Currently, a placeholder
-        windows.get("Start Screen Window").getUserInput();      // Currently, placeholder.
+        //Done make a call to StartScreenWindow to show information and get user input
+        String[] choice = windows.get("Start Screen Window").getUserInput();      // Currently, placeholder.
 
-        // FOR FUTURE: Add a control flow section so that we can also go to login window.
-        //Done make a call to createNewAccount
-        createNewAccount();
+
+        if (choice[0].equals("0")){
+            login();
+        } else {
+            createNewAccount();
+        }
+
+    }
+
+    public void login(){
+        //FUTURE TODO: Fill this out later
     }
 
     public void createNewAccount() {
-        //TODO: call CreateAccountWindow to show information and get user input
-        Window createAccountWindow = windows.get("Create Account Window");     // Place holder.
+        //DONE: call CreateAccountWindow to show information and get user input
+        Window createAccountWindow = windows.get("Create Account Window");
+        String[] inputInfo = createAccountWindow.getUserInput();
 
-        //TODO: obtain name, username and password
-//        String name;
-//        String username;
-//        String password;
-//        name, username, password = createAccountWindow.getUserInput();        // Place holder.
+        //DONE: obtain name, username and password
+        String name = inputInfo[0];
+        String username = inputInfo[1];
+        String password = inputInfo[2];
+        //DONE: Add username and password to accounts.
 
-        //TODO: Add username and password to accounts.
-//        accounts.put(username, password);
+        this.accounts.put(username, password);
 
-        //TODO: call managementSystem.createNewUser, with name and username as parameters
-//        managementSystem.createNewUser(name, username);
+        //Done: call managementSystem.createNewUser, with name and username as parameters
+        managementSystem.createNewUser(name, username);
 
         //Done: call showAccountWindow()
         showAccountWindow();
     }
     public void showAccountWindow(){
         //Done: call managementSystem.getUserInfo() to get user information.
-        List<String> userInfo = managementSystem.getUserInfo();
+        String[] userInfo = managementSystem.getUserInfo().toArray(new String[0]);
         Window viewAccountWindow = windows.get("View Account Window");
 
-        //TODO: call ViewAccountWindow and pass the user information as parameters so that
-        //      they can display it.
+        // create a new array for properly formatted strings.
+        String[] formattedUserInfo = new String[userInfo.length + 1];
 
-//        viewAccountWindow.showOptions(userInfo);
+        formattedUserInfo[0] = "Name: " + userInfo[0];
+        formattedUserInfo[1] = "Username: " + userInfo[1];
+        formattedUserInfo[2] = "List of Medicines: ";
 
-        int choice;     // place holder for user's choice.
+        // Format the list of medicines names and add them.
+        for (int i = 3; i < formattedUserInfo.length; i++){
+            formattedUserInfo[i] = (" - " + userInfo[i - 1]);
+        }
 
-//        choice = (int) viewAccountWindow.getUserInput();
+        if (viewAccountWindow instanceof DisplayEntityInformation){
+            ((DisplayEntityInformation) viewAccountWindow).displayInfo(formattedUserInfo);
+        }
+
+
+        String choice = viewAccountWindow.getUserInput()[0];
 
         //Done: Add conditional flow statements so that the user can select between logging out,
         //      adding medication and viewing the timetable.
 
-        if (choice == 1){
+        // FUTURE TODO: Add methods for the cases that cover "edit" and "remove".
+        if (choice.equals("add")){
             addMedicine();
-        } else if (choice == 2) {
+        } else if (choice.equals("logout")){
             logOut();
-        } else {
+        } else if (choice.equals("view")){
             showFinalSchedule();
         }
 
@@ -106,34 +123,57 @@ public class AppManager {
         //Done: call AddMedicineWindow to display the fields to enter data about the medicine
         Window addMedicineWindow = windows.get("Add Medicine Window");
 
-        //TODO: gets user input on the name, and type of medicine. Also the method of administration,
-        //      extra instructions, as well as times to take the medicine.
-        String name;
-        String type;
-        String methodOfAdmin;
-        String extraInstruct;
-        List<Map<String, Double>> times;
+        String[] data = addMedicineWindow.getUserInput();
 
-        //TODO: Add a method that properly formats times from user input.
+        String name = data[0];
+        String methodOfAdmin = data[1];
+        int amount = Integer.parseInt(data[2]);
+        String extraInstruct = data[3];
+        String wOrD = data[4]; // Stores frequency. Weekly/Daily
+        String startDay = data[5];
+        List<Map<String, Double>> times = new ArrayList<>();
+
+        for(int i = 0; i < (data.length - 6); i++) {
+            if (wOrD.equals("weekly")) {
+                Map<String, Double> map = new HashMap<>();
+                map.put(DAYS[Integer.parseInt(startDay) - 1], Double.parseDouble(data[i + 6]));
+                times.add(map);
+            } else {
+                for (String day : DAYS) {
+                    Map<String, Double> map2 = new HashMap<>();
+                    map2.put(day, Double.parseDouble(data[i + 6]));
+                    times.add(map2);
+                }
+            }
+
+        }
 
         //Done: call managementSystem.addNewMedicine() and pass in this information.
-//        managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
+        managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
+
         //Done: call showAccountWindow
         showAccountWindow();
     }
 
+    /**
+     * Shows the final schedule by using managementSystem to make the schedule and using the TimeTableWindow class
+     * to display the final schedule. It then gets user input from TimeTableWindow and calls ViewAccountWindow
+     */
     public void showFinalSchedule() {
+        Window window = windows.get("TimeTable Window");
         //Done: call managementSystem.makeSchedule
-        String schedule = managementSystem.makeSchedule();
-        //TODO: get the schedule and pass it into as a parameter for TimeTableWindow.showOptions() or whatever
-        //      method is used to display information.
-//        windows.get("TimeTable Window").showOptions(schedule);
+        String[] schedule = new String[]{managementSystem.makeSchedule()};
 
-        //TODO: get user input from TimeTableWindow and call ViewAccountWindow.
-//        windows.get("TimeTable Window").getUserInput()
+        if (window instanceof DisplayEntityInformation)
+            ((DisplayEntityInformation) window).displayInfo(schedule);
 
-//        showAccountWindow();
+        //Done: get user input from TimeTableWindow and call ViewAccountWindow.
+        windows.get("TimeTable Window").getUserInput();
+
+        // For now, we only have one option, which is to take the user back to the account page.
+
+        showAccountWindow();
     }
-    public void logOut() {}
 
+    public void logOut(){}
 }
