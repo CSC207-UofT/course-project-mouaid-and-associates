@@ -56,6 +56,7 @@ public class AddMedicineWindow implements Window {
                 time = scanner.nextLine();
             }
             times[i] = time;
+            time = " ";
         }
         return times;
     }
