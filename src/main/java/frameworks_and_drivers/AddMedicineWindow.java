@@ -15,16 +15,19 @@ public class AddMedicineWindow implements Window {
         String amount = cnsl.readLine("Amount of the medicine should be taken");
         String extra = cnsl.readLine("Any Extra Instructions?");
 
-        String wdm = selectWD(); // Weekly, daily
-        String[] times = getTimes();
-        String[] returnList = new String[4 + times.length];
+        String wdm = selectWD(scanner); // Weekly, daily
+        String startDate = selectDay(scanner);
+        String[] times = getTimes(scanner);
+        String[] returnList = new String[6 + times.length];
 
         returnList[0] = name;
         returnList[1] = methodOfAdministration;
         returnList[2] = amount;
         returnList[3] = extra;
-        for (int i = 4; i < (times.length + 4); i++){
-            returnList[i] = times[i - 4];
+        returnList[4] = wdm;
+        returnList[5] = startDate;
+        for (int i = 6; i < (times.length + 6); i++){
+            returnList[i] = times[i - 6];
         }
 
         return returnList;

@@ -8,6 +8,10 @@ public class StartScreenWindow implements Window {
 
     private Console cnsl = System.console();
 
+    /**
+     * Gets user input and whether they decide to login or sign up
+     * @return "0" or "1" representing whether they have decided to log in or sign up
+     */
     public String[] getUserInput() {
 
 

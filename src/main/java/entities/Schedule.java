@@ -75,6 +75,14 @@ public class Schedule {
         return scheduleRep.toString();
     }
 
+    /**
+     *  This method organizes the events so that events occurring in the same
+     *  day are grouped together. And events occurring on the same day are also
+     *  organized according to what time they occur. Earliest to latest.
+     *
+     * @return A map mapping a day to the events occurring in that day, with each
+     *         associated event list being sorted according to time.
+     */
     public Map<String, List<Event>> sortEvents(){
         // Sort the events by day.
         Map<String, List<Event>> newDictOfEvents = sortEventsByDay();
