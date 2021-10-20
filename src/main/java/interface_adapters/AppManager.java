@@ -128,15 +128,32 @@ public class AppManager {
         //Done: Add conditional flow statements so that the user can select between logging out,
         //      adding medication and viewing the timetable.
 
-        // FUTURE TODO: Add methods for the cases that cover "edit" and "remove".
         if (choice.equals("add")){
             addMedicine();
         } else if (choice.equals("logout")){
             logOut();
         } else if (choice.equals("view")){
             showFinalSchedule();
+        } else if (choice.equals("edit")){
+            editMedicine();
+        } else if (choice.equals("remove")){
+            removeMedicine();
         }
 
+    }
+
+    /**
+     *
+     */
+    public void editMedicine(){
+        //TODO: Complete this method.
+    }
+
+    /**
+     *
+     */
+    public void removeMedicine(){
+        //TODO: Complete this method.
     }
 
     /**
