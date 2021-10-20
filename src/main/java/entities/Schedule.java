@@ -66,16 +66,21 @@ public class  Schedule {
 
         for (String day: days){
             scheduleRep.append(day).append(": \n");
-            for (Event event: sortedEvents.get(day)){
-                String eventName = new String ("    " + event.getName() + "\n");
-                String eventDescription = new String(event.getDescription() + " \n");
-                String eventHour = new String("    " + event.decimalToHourFormat());
 
-                // Add the strings to the string builder.
-                scheduleRep.append(eventName);
-                scheduleRep.append(eventHour);
-                scheduleRep.append(" - ").append(eventDescription);
+            if (sortedEvents.containsKey(day)) {
+                for (Event event : sortedEvents.get(day)) {
+                    String eventName = new String("    " + event.getName() + "\n");
+                    String eventDescription = new String(event.getDescription() + " \n");
+                    String eventHour = new String("    " + event.decimalToHourFormat());
 
+                    // Add the strings to the string builder.
+                    scheduleRep.append(eventName);
+                    scheduleRep.append(eventHour);
+                    scheduleRep.append(" - ").append(eventDescription);
+
+                }
+            } else {
+                scheduleRep.append(" NO EVENTS FOUND :( \n");
             }
         }
 

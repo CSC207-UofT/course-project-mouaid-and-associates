@@ -84,6 +84,9 @@ public class Event implements Comparable<Event>{
      * negative integer, zero, or a positive integer as this Event is less
      * than, equal to, or greater than the specified Event.
      *
+     * Precondition:
+     * - this.timeStamp.getDay().equals(o.getDay)
+     *
      * @param o the object to be compared.
      * @return a negative integer, zero, or a positive integer as this object
      * is less than, equal to, or greater than the specified object.
@@ -105,7 +108,12 @@ public class Event implements Comparable<Event>{
         int min = (int) ((((time * 100) % 100) / 100.0) * 60);
         int hour = (int) (((time * 100) - min) / 100.0);
 
-        return (hour + ":" + min);
+        if (min < 10){
+            return (hour + ":0" + min);
+        } else {
+            return (hour + ":" + min);
+        }
+
     }
 
     //    /**
