@@ -17,6 +17,8 @@ public class  Schedule {
         this.events = events;
     }
 
+    public Schedule(){ this.events = new ArrayList<>();}
+
     /**
      * Gets the events in this schedule
      * @return  The events in this Schedule
@@ -36,19 +38,31 @@ public class  Schedule {
     /**
      *  Adds a list of events to this schedule.
      * @param events List of events to be added to the schedule.
-     * @return A boolean indicating if the item has been added.
      */
-    public boolean addEvents(List<Event> events){
-        return this.events.addAll(events);
+    public void addEvents(List<Event> events){
+        this.events.addAll(events);
+    }
+
+    public void addEvent(Event event){
+        this.events.add(event);
+    }
+
+    public void addEvent(String name, String description, String day, double time){
+        // First we create a new event:
+        Map<String, Double> timeStamp = new HashMap<>();
+        timeStamp.put(day, time);
+        Event event = new Event(name, description, timeStamp);
+
+        // Then add it to the list.
+        this.events.add(event);
     }
 
     /**
      * Removes a specific event from the schedule.
      * @param event An event to be removed from the schedule.
-     * @return A boolean indicating if the item has been removed.
      */
-    public boolean removeEvent(Event event){
-        return this.events.remove(event);
+    public void removeEvent(Event event){
+        this.events.remove(event);
     }
 
     /**

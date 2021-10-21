@@ -21,13 +21,13 @@ class ScheduleTest {
         String[] days = new String[]{"Monday", "Tuesday", "Wednesday"};
         double[] times = new double[]{2.0, 23.0, 15.5};
         events = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            Map<String, Double> time = new HashMap<>();
-            time.put(days[i], times[i]);
-            Event event = new Event("Advil", "Take Advil", time);
-            events.add(event);
-        }
         schedule = new Schedule(events);
+        for (int i = 0; i < 3; i++) {
+            String name = "Advil";
+            String description = "Take Advil";
+            schedule.addEvent(name, description, days[i], times[i]);
+        }
+
     }
 
     @Test
@@ -37,10 +37,9 @@ class ScheduleTest {
         double[] times = new double[]{2.0, 23.0, 15.5};
         List<Event> events2 = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            Map<String, Double> time = new HashMap<>();
-            time.put(days[i], times[i]);
-            Event event = new Event("Advil", "Take Advil", time);
-            events2.add(event);
+            String name = "Advil";
+            String description = "Take Advil";
+            schedule.addEvent(name, description, days[i], times[i]);
         }
 
         // First make a copy of the events before change:
@@ -91,6 +90,6 @@ class ScheduleTest {
 
     @Test
     void sortEvents() {
-        //TODO: COMPLETE THIS TEST.
+        //TODO: Complete this test.
     }
 }
