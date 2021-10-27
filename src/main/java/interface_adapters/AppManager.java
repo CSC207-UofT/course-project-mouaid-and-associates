@@ -19,7 +19,8 @@ public class AppManager {
      * Representation Invariants:
      * - The keys of windows are {"Login Window", "Create Account Window", "Start Screen Window",
      *                            "TimeTable Window", "View Account Window", "Add Medicine Window",
-     *                            "Edit Medicine Window", "Remove Medicine Window" }
+     *                            "Edit Medicine Window", "Remove Medicine Window",
+     *                            "Choose Medicine To Edit Window"}
      *
      *                            * More may be added in the future.
      *
@@ -147,7 +148,16 @@ public class AppManager {
      *
      */
     public void editMedicine(){
-        //TODO: Complete this method.
+        //TODO: First instantiate a window for EditMedicineWindow
+        //TODO: Next, instantiate a window for ChooseMedicineToEditWindow
+        //TODO: Get a list of medicine names, like for removeMedicine
+        //TODO: Check if ChooseMedicineToEditWindow is an instance of DisplayEntityInformation to print
+        //      out the list of medicine names, like in removeMedicine()
+        //TODO: Verify the name is a proper one in ChooseMedicineToEditWindow
+        //TODO: Call EditMedicineWindow and get user input on which aspects to change.
+        //      Return an array with the same order as the addMedicine parameters.
+        //TODO: Call ManagementSystem to update this medicine information.
+        //TODO: add the necessary methods in the necessary classes.
     }
 
     /**
