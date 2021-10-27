@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Event implements Comparable<Event>{
@@ -116,22 +117,23 @@ public class Event implements Comparable<Event>{
 
     }
 
+    /**
+     * Creates a time stamp for an event.
+     * @param day The time an event takes place.
+     * @param hour The hour this event takes place.
+     */
+    public static Map<String, Double> makeTimeStamp(String day, Double hour) {
+        Map<String, Double> time = new HashMap<>();
+        time.put(day, hour);
+        return time;
+    }
+
     //    /**
     //     * Sets the description of the event.
     //     * @param description  The description of the event
     //     */
     //    public void setDescription(String description) {
     //        this.description = description;
-    //    }
-
-    //    /**
-    //     * Sets the time an event takes place.
-    //     * @param day The time an event takes place.
-    //     * @param hour The hour this event takes place.
-    //     */
-    //    public void setTimeStamp(String day, Double hour) {
-    //        this.timeStamp = new HashMap<>();
-    //        this.timeStamp.put(day, hour);
     //    }
 
 }

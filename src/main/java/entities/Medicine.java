@@ -37,20 +37,22 @@ public class Medicine {
      */
     public void addMedicineSchedule(List<Map<String, Double>> times){
         // Make an event
-        String description = new String(methodOfAdministration + " " + medicineName + ". " +
+        String description = new String(methodOfAdministration + " " + amount + " " +
+                medicineName + ". " +
                 extraInstructions);
 
         List<Event> events = new ArrayList<>();
 
-        // Iterate through the list of times
-        for(Map<String, Double> time : times){
-
-            // Make an event for each time stamp and add that to the list of events.
-            Event event = new Event(medicineName, description, time);
-            events.add(event);
-        }
         // Make a schedule
         this.myMedicineSchedule = new MedicineSchedule(medicineName, idNumber, events);
+
+        // Iterate through the list of times
+        for(Map<String, Double> time : times){
+            // Add an event to the list of events in the schedule.
+            myMedicineSchedule.addEvent(medicineName, description, time);
+        }
+
+
     }
 
     /**

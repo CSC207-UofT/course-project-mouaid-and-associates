@@ -43,18 +43,35 @@ public class  Schedule {
         this.events.addAll(events);
     }
 
-    public void addEvent(Event event){
-        this.events.add(event);
-    }
-
-    public void addEvent(String name, String description, String day, double time){
+    /**
+     * Adds an event to the schedule with the event's name, description and a mapping of a day to a time.
+     * @param name          Name of the event.
+     * @param description   Description of the event.
+     * @param timeStamp     Mapping of a day to a time. The time the event takes place.
+     */
+    public void addEvent(String name, String description, Map<String, Double> timeStamp){
         // First we create a new event:
-        Map<String, Double> timeStamp = new HashMap<>();
-        timeStamp.put(day, time);
         Event event = new Event(name, description, timeStamp);
 
         // Then add it to the list.
         this.events.add(event);
+    }
+
+    /**
+     * Adds an event to the schedule with the event's name, description, the day the event takes place
+     * and the hour it takes place. This hides the internal representation of how an event is made.
+     *
+     * @param name          Name of the event.
+     * @param description   Description of the event.
+     * @param day           The day the event takes place.
+     * @param time          The time the event takes place.
+     */
+    public void addEvent(String name, String description, String day, double time){
+        // Make a time stamp and call the other addEvent.
+        Map<String, Double> timeStamp = Event.makeTimeStamp(day, time);
+
+        // Just call the other addEvent method to add the event. No need to repeat code.
+        this.addEvent(name, description, timeStamp);
     }
 
     /**
