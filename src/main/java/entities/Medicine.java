@@ -37,9 +37,17 @@ public class Medicine {
      */
     public void addMedicineSchedule(List<Map<String, Double>> times){
         // Make an event
-        String description = new String(methodOfAdministration + " " + amount + " " +
-                medicineName + ". " +
-                extraInstructions);
+        String description;
+        if (amount == -1){
+            description = methodOfAdministration + " " +
+                    medicineName + ". " +
+                    extraInstructions;
+        } else {
+            description = methodOfAdministration + " " + amount + " " +
+                    medicineName + ". " +
+                    extraInstructions;
+        }
+
 
         List<Event> events = new ArrayList<>();
 

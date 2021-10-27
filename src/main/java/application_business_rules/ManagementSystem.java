@@ -36,7 +36,7 @@ public class ManagementSystem {
         this.scheduleManager = new ScheduleManager();
         this.userDatabase = new HashMap<>();
     }
-    public Map getDatabase(){
+    public Map<String, User> getDatabase(){
         return this.userDatabase;
     }
     /**
@@ -63,6 +63,14 @@ public class ManagementSystem {
         userInfo.addAll(List.copyOf(userManager.getMedicines().keySet()));
 
         return userInfo;
+    }
+
+    /**
+     * Removes the medicines from the list of medicines the user has.
+     * @param medsToRemove      The list of meds to be removed.
+     */
+    public void removeMedicines(String[] medsToRemove){
+        userManager.removeMeds(medsToRemove);
     }
 
     /**

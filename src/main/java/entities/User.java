@@ -21,7 +21,7 @@ public class User {
     public User(String name, String userName){
         this.name = name;
         this.userName = userName;
-        this.medicineList = new HashMap<String, Medicine>();
+        this.medicineList = new HashMap<>();
     }
 
     /**
@@ -61,10 +61,18 @@ public class User {
      * @param newMedicine The medicine to be added to this User's medicineList.
      */
     public void addMedicine(Medicine newMedicine){
-        if (!(this.medicineList.containsKey(newMedicine))){
+        if (!(this.medicineList.containsKey(newMedicine.getMedicineName()))){
             this.medicineList.put(newMedicine.getMedicineName(), newMedicine);
             newMedicine.setIdNumber(this.medicineList.size() + 1);
         }
+    }
+
+    /**
+     * Removes the medicine with the specified name, if it exists.
+     * @param medName   The name of the medicine to be removed.
+     */
+    public void removeMedicine(String medName){
+        medicineList.remove(medName);
     }
 
 //    /**

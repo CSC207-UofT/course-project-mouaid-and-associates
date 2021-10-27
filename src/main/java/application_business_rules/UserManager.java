@@ -62,6 +62,16 @@ public class UserManager {
     }
 
     /**
+     * Removes the given medicines from the list of medicines the user has.
+     * @param medsToRemove  The list of medicines to be removed.
+     */
+    public void removeMeds(String[] medsToRemove){
+        for (String medName: medsToRemove){
+            user.removeMedicine(medName);
+        }
+    }
+
+    /**
      * Gets the user that is managed by UserManger
      * @return The user that is managed by UserManger
      */

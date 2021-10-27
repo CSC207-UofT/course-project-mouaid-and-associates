@@ -2,6 +2,7 @@ package interface_adapters;
 
 import application_business_rules.ManagementSystem;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class AppManager {
@@ -153,7 +154,27 @@ public class AppManager {
      *
      */
     public void removeMedicine(){
-        //TODO: Complete this method.
+        Window removeMedWindow = windows.get("Remove Medicine Window");
+        String[] infoToPrint = managementSystem.getUserInfo().toArray(new String[0]);
+
+        infoToPrint[1] = "The list of medicines to pick from: ";
+        System.out.println(Arrays.toString(infoToPrint));
+
+        for (int i = 2; i < infoToPrint.length; i++){
+            infoToPrint[i] = (" - " + infoToPrint[i]);
+        }
+
+        if (removeMedWindow instanceof DisplayEntityInformation){
+            ((DisplayEntityInformation) removeMedWindow).displayInfo(
+                    Arrays.copyOfRange(infoToPrint, 1, infoToPrint.length));
+        }
+
+        String[] inputs = removeMedWindow.getUserInput();
+
+        managementSystem.removeMedicines(inputs);
+
+        showAccountWindow();
+
     }
 
     /**
@@ -168,11 +189,18 @@ public class AppManager {
 
         String name = data[0];
         String methodOfAdmin = data[1];
-        int amount = Integer.parseInt(data[2]);
+        int amount;
         String extraInstruct = data[3];
         String wOrD = data[4]; // Stores frequency. Weekly/Daily
         String startDay = data[5];
         List<Map<String, Double>> times = new ArrayList<>();
+
+        // In case the user decided to not enter a proper value.
+        try {
+            amount = Integer.parseInt(data[2]);
+        } catch (NumberFormatException e) {
+            amount = -1;
+        }
 
         for(int i = 0; i < (data.length - 6); i++) {
             if (wOrD.equals("weekly")) {
