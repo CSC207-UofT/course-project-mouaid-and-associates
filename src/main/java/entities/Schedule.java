@@ -100,9 +100,9 @@ public class  Schedule {
 
             if (sortedEvents.containsKey(day)) {
                 for (Event event : sortedEvents.get(day)) {
-                    String eventName = new String("    " + event.getName() + "\n");
-                    String eventDescription = new String(event.getDescription() + " \n");
-                    String eventHour = new String("    " + event.decimalToHourFormat());
+                    String eventName = "    " + event.getName() + "\n";
+                    String eventDescription = event.getDescription() + " \n";
+                    String eventHour = "    " + event.decimalToHourFormat();
 
                     // Add the strings to the string builder.
                     scheduleRep.append(eventName);
@@ -111,7 +111,7 @@ public class  Schedule {
 
                 }
             } else {
-                scheduleRep.append(" NO EVENTS FOUND :( \n");
+                scheduleRep.append("Nothing today \n");
             }
         }
 
@@ -171,6 +171,27 @@ public class  Schedule {
         }
 
         return newDictOfEvents;
+    }
+
+    /**
+     * Returns the number of events in this schedule
+     * @return  The number of events in this schedule.
+     */
+    public int getNumberOfEvents(){
+        return events.size();
+    }
+
+    /**
+     * @return The times of the events in this schedule.
+     */
+    public String[] getEventTimes(){
+        String[] times = new String[events.size()];
+        for (int i = 0; i < times.length; i++){
+            String day = events.get(i).getDay();
+            String hour = events.get(i).decimalToHourFormat();
+            times[i] = day + ": " + hour;
+        }
+        return times;
     }
 
 

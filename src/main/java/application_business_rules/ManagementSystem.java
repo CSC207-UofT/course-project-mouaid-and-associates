@@ -109,4 +109,8 @@ public class ManagementSystem {
         userManager.createMedicine(medicineName, amount, methodOfAdministration, extraInstructions, times);
     }
 
+    public String[] getMedicineInfo(String medName){
+        return userManager.getMedicineInfo(medName);
+    }
+
 }

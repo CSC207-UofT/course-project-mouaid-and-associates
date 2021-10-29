@@ -40,6 +40,10 @@ public class MedicineManager {
         return medicine.getMyMedicineSchedule();
     }
 
+    public String[] getMedicineInfo(Medicine medicine){
+        return medicine.getMedicineInfo();
+    }
+
 //    /**
 //     * Gets the medicine's name
 //     * @param medicine A medicine Object.

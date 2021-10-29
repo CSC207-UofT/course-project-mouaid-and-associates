@@ -75,6 +75,10 @@ public class User {
         medicineList.remove(medName);
     }
 
+    public Medicine getMedicine(String medName){
+        return medicineList.get(medName);
+    }
+
 //    /**
 //     * Remove a medicine from this User's medicineList.
 //     * @param newMedicine The medicine to be removed from this User's medicineList.

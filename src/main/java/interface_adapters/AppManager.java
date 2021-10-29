@@ -148,43 +148,76 @@ public class AppManager {
      *
      */
     public void editMedicine(){
-        //TODO: First instantiate a window for EditMedicineWindow
-        //TODO: Next, instantiate a window for ChooseMedicineToEditWindow
-        //TODO: Get a list of medicine names, like for removeMedicine
-        //TODO: Check if ChooseMedicineToEditWindow is an instance of DisplayEntityInformation to print
-        //      out the list of medicine names, like in removeMedicine()
+        // First instantiate a window for EditMedicineWindow
+        Window editMedicineWindow = windows.get("Edit Medicine Window");
+        // Next, instantiate a window for ChooseMedicineToEditWindow
+        Window chooseMedicineToEditWindow = windows.get("Edit Medicine To Edit Window");
+
+        // Get a list of medicine names, like for removeMedicine
+        // First get a list of user information
+        String[] bigList = managementSystem.getUserInfo().toArray(new String[0]);
+
+        // Isolate and get the list of medicine names
+        String[] medList = getFormattedList("List of medicines to choose from: ", bigList,
+                2, bigList.length);
+
+        // First, instantiate a variable to store the name of the medicine the user would like to remove.
+        String medName;
+        String[] medInfo;
+
+        // Check if ChooseMedicineToEditWindow is an instance of DisplayEntityInformation to print
+        // out the list of medicine names, like in removeMedicine()
+        if (chooseMedicineToEditWindow instanceof DisplayEntityInformation){
+            ((DisplayEntityInformation) chooseMedicineToEditWindow).displayInfo(medList);
+        }
+
         //TODO: Verify the name is a proper one in ChooseMedicineToEditWindow
+        medName = chooseMedicineToEditWindow.getUserInput()[0];
+
+        medInfo = managementSystem.getMedicineInfo(medName);
+
+        if (editMedicineWindow instanceof DisplayEntityInformation){
+            ((DisplayEntityInformation) editMedicineWindow).displayInfo(medInfo);
+        }
+
+        //TODO: Get user input as an array, with each index representing a different variable
+        //      If you want, you can change the format to a map later in the program. Add methods to
+        //      medicineManager to set Medicine attributes using the values in the list. Add the supporting
+        //      method to userManager to be able to call medicine manager. To set the times, call
+        //      schedule manager. You can pass schedule manager as a parameter into user manager or call
+        //      directly in management system.
         //TODO: Call EditMedicineWindow and get user input on which aspects to change.
         //      Return an array with the same order as the addMedicine parameters.
         //TODO: Call ManagementSystem to update this medicine information.
         //TODO: add the necessary methods in the necessary classes.
     }
 
-    /**
-     *
+
+
+    /** This method is to run the functionality of removing a medicine, from showing the menu to
+     * calling the appropriate classes to remove the medicine from the account.
      */
     public void removeMedicine(){
         Window removeMedWindow = windows.get("Remove Medicine Window");
-        String[] infoToPrint = managementSystem.getUserInfo().toArray(new String[0]);
+        String[] userInfo = managementSystem.getUserInfo().toArray(new String[0]);
 
-        infoToPrint[1] = "The list of medicines to pick from: ";
-        System.out.println(Arrays.toString(infoToPrint));
+        // Get a formatted list to make the printing of the medicine names nice.
+        String[] infoToPrint = getFormattedList("The list of medicines to pick from: ", userInfo, 2,
+                userInfo.length);
 
-        for (int i = 2; i < infoToPrint.length; i++){
-            infoToPrint[i] = (" - " + infoToPrint[i]);
-        }
-
+        // Display the list of medicine names.
         if (removeMedWindow instanceof DisplayEntityInformation){
-            ((DisplayEntityInformation) removeMedWindow).displayInfo(
-                    Arrays.copyOfRange(infoToPrint, 1, infoToPrint.length));
+            ((DisplayEntityInformation) removeMedWindow).displayInfo(infoToPrint);
         }
 
+        // Get the list of medicine names the user wants to remove
         String[] inputs = removeMedWindow.getUserInput();
 
+        // Call management system to remove the medicines
         managementSystem.removeMedicines(inputs);
 
+        // go back to the account page.
         showAccountWindow();
-
     }
 
     /**
@@ -260,4 +293,24 @@ public class AppManager {
      * are no more calls to be made.
      */
     public void logOut(){}
+
+    /**
+     * A private helper method to help format lists you need to print out to the command line.
+     * @param title       The title of the list.
+     * @param list        The list of items to be printed
+     * @param startIndex  The index from which we start including items from list.
+     * @param endIndex    The index directly after the last item we want to include from the list.
+     * @return            A list of formatted things that can be printed out on the command line.
+     */
+    private String[] getFormattedList(String title, String[] list, int startIndex, int endIndex){
+        // First, start with a list of the correct length
+        String[] formattedList = new String[endIndex - startIndex + 1];
+        formattedList[0] = title;
+
+        for (int i = 1; i < formattedList.length; i++){
+            formattedList[i] = " - " + list[i + startIndex - 1];
+        }
+
+        return formattedList;
+    }
 }

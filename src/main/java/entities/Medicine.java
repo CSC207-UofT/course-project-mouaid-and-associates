@@ -8,13 +8,17 @@ public class Medicine {
     /**
      * A class containing a singular medicine in this app
      * Instance Attributes:
-     * medicineName: The name of the medicine corresponding to this Medicine class
-     * amount: The amount of medication available which is dependent on the method of administration
-     * methodOfAdministration: The method of administration of the medicine, like drink, swallow, injection, etc.
-     * extraInstructions: Any extra instructions associated with the administration of this medicine, like if it
-     * should be taken with food, etc.
-     * idNumber: A unique ID number to identify this instance of medicine in the User's medicine list.
-     * myMedicineSchedule: An instance of medicineSchedule for the medicine corresponding to this Medicine class
+     * - medicineName: The name of the medicine corresponding to this Medicine class
+     * - amount: The amount of medication available which is dependent on the method of administration
+     * - methodOfAdministration: The method of administration of the medicine, like drink, swallow, injection, etc.
+     * - extraInstructions: Any extra instructions associated with the administration of this medicine, like if it
+     *                      should be taken with food, etc.
+     * - idNumber: A unique ID number to identify this instance of medicine in the User's medicine list.
+     * - myMedicineSchedule: An instance of medicineSchedule for the medicine corresponding to this Medicine class
+     *
+     * Representation Invariants:
+     * - amount == -1 when there is no amount associated with this medicine.
+     *
      */
     private String medicineName;
     private int amount;
@@ -149,5 +153,29 @@ public class Medicine {
      */
     public void setIdNumber(int idNumber) {
         this.idNumber = idNumber;
+    }
+
+    public String[] getMedicineInfo(){
+        String[] info = new String[5 + myMedicineSchedule.getNumberOfEvents()];
+        String[] listOfMedicineTimes;
+        info[0] = "Name of Medicine: " + medicineName;
+        info[1] = "Amount of Medicine: ";
+
+        // We will return the amount if there is a value associated with it.
+        if (amount >= 0){
+            info[1] = info[1] + amount;
+        }
+
+        info[2] = "Method of Administration: " + methodOfAdministration;
+        info[3] = "Extra Instructions: " + extraInstructions;
+        info[4] = "Times: ";
+        listOfMedicineTimes = myMedicineSchedule.getEventTimes();
+
+        // Format the times:
+        for (int i = 5; i < info.length; i++){
+            info[i] = "   - " + listOfMedicineTimes[i - 5];
+        }
+
+        return info;
     }
 }

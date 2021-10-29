@@ -102,4 +102,9 @@ public class UserManager {
     public HashMap<String, Medicine> getMedicines(){
         return this.user.getMedicineList();
     }
+
+    public String[] getMedicineInfo(String medName){
+        Medicine medicine = user.getMedicine(medName);
+        return medicineManager.getMedicineInfo(medicine);
+    }
 }
