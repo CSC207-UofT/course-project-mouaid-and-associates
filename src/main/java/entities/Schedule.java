@@ -58,11 +58,11 @@ public class  Schedule {
      * @return  A string representation of the Schedule.
      */
     @Override
+    /* TODO Make it so that it sorts the schedule*/
     public String toString() {
         Map<String, List<Event>> sortedEvents = sortEvents();
         StringBuilder scheduleRep = new StringBuilder();
-        String[] days = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
-                                     "Sunday"};
+        Set<String> days = sortedEvents.keySet();
 
         for (String day: days){
             scheduleRep.append(day).append(": \n");
