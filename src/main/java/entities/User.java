@@ -79,6 +79,17 @@ public class User {
         return medicineList.get(medName);
     }
 
+    /**
+     * Changes the mapping so that the new name of the medicine maps to the medicine instead of the old name.
+     * @param oldName       The old name of the medicine.
+     * @param newName       The new name of the medicine.
+     */
+    public void changeMedicineNameInMapping(String oldName, String newName){
+        Medicine med = medicineList.get(oldName);
+        removeMedicine(oldName);
+        medicineList.put(newName, med);
+    }
+
 //    /**
 //     * Remove a medicine from this User's medicineList.
 //     * @param newMedicine The medicine to be removed from this User's medicineList.

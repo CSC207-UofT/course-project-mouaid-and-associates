@@ -55,12 +55,13 @@ public class ManagementSystem {
      * @return returns a list that contains the user's username, name and list of medicines (names only).
      */
     public List<String> getUserInfo(){
+        String[] medNames;
         List<String> userInfo = new ArrayList<>();
         userInfo.add(userManager.getName());
         userInfo.add(userManager.getUserName());
 
         // Get specifically the names of the medicine.
-        userInfo.addAll(List.copyOf(userManager.getMedicines().keySet()));
+        Collections.addAll(userInfo, userManager.getMedicineNames());
 
         return userInfo;
     }
@@ -78,15 +79,7 @@ public class ManagementSystem {
      * @return the compiled schedule.
      */
     public String makeSchedule(){
-        HashMap<String, Medicine> medicinesDict = userManager.getMedicines();
-        List<Medicine> medicineList = new ArrayList<>(medicinesDict.values());
-        List<Schedule> scheduleList = new ArrayList<>();
-        for (Medicine med: medicineList){
-
-            // Use medicineManager to get the medicine schedule.
-            MedicineSchedule medSched = userManager.medicineManager.getMedicineSchedule(med);
-            scheduleList.add(medSched);
-        }
+        List<Schedule> scheduleList = userManager.getMedicineSchedules();
         return scheduleManager.compileSchedule(scheduleList).toString();
     }
 
@@ -111,6 +104,26 @@ public class ManagementSystem {
 
     public String[] getMedicineInfo(String medName){
         return userManager.getMedicineInfo(medName);
+    }
+
+    /**
+     * Edits a medicine using the given info. The first element is the new name of the medicine.
+     * The second element is the new method of administration, the third element is the new amount,
+     * and the fourth element is the new extra instructions.
+     *
+     * The list of mappings called times is for the new times to take the medicine.
+     *
+     * @param info      The info used to edit the medicine. The first element is the medicine name.
+     * @param times     The new times to take this medicine.
+     */
+    public void editMedicine(String medName, String[] info, List<Map<String, Double>> times){
+        userManager.editMedicine(medName, info);
+        scheduleManager.editScheduleTimes(userManager.getMedicineSchedule(medName), times);
+
+        // Change the mapping from the old name to the new name.
+        if (!info[0].equals("")){
+            userManager.changeMedicineNameInMapping(medName, info[0]);
+        }
     }
 
 }

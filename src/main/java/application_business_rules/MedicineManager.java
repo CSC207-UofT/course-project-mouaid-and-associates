@@ -3,6 +3,7 @@ package application_business_rules;
 import entities.Medicine;
 import entities.MedicineSchedule;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,96 +45,39 @@ public class MedicineManager {
         return medicine.getMedicineInfo();
     }
 
-//    /**
-//     * Gets the medicine's name
-//     * @param medicine A medicine Object.
-//     */
-//    public String getMedicineName(Medicine medicine){
-//
-//        return medicine.getMedicineName();
-//    }
-//
-//    /**
-//     * gets the amount that is in this medicine object
-//     * @param medicine A medicine Object.
-//     */
-//    public int getAmount(Medicine medicine){
-//        return medicine.getAmount();
-//    }
-//
-//    /**
-//     * gets the method of administration for this medicine object
-//     * @param medicine A medicine Object.
-//     */
-//    public String getMethodOfAdministration(Medicine medicine) {
-//
-//        return medicine.getMethodOfAdministration();
-//    }
-//
-//    /**
-//     * Gets extra intstructions from this medicine object
-//     * @param medicine A medicine Object.
-//     */
-//    public String getExtraInstructions(Medicine medicine) {
-//
-//        return medicine.getExtraInstructions();
-//    }
-//
-//    /**
-//     * Gets the ID number of this medicine Object
-//     * @param medicine A medicine Object.
-//     */
-//    public int getIdNumber(Medicine medicine) {
-//
-//        return medicine.getIdNumber();
-//    }
-//
-//    /**
-//     * Sets a medicine name for this medicine object
-//     * @param medicine A medicine Object.
-//     * @param medicineName The name of the medicine.
-//     */
-//    public void setMedicineName(Medicine medicine, String medicineName) {
-//
-//        medicine.setMedicineName(medicineName);
-//    }
-//
-//    /**
-//     * sets an amount for this medicine object
-//     * @param medicine A medicine Object.
-//     * @param amount The amount that will be set for this medicine object.
-//     */
-//    public void setAmount(Medicine medicine, int amount) {
-//
-//        medicine.setAmount(amount);
-//    }
-//
-//    /**
-//     * Sets a method of administration for the medicine object
-//     * @param medicine A medicine Object.
-//     * @param methodOfAdministration Method of administration that will be set for this medicine object.
-//     *
-//     */
-//    public void setMethodOfAdministration(Medicine medicine, String methodOfAdministration) {
-//        medicine.setMethodOfAdministration(methodOfAdministration);
-//    }
-//
-//    /**
-//     * Sets Extra instructions for the medicine Object
-//     * @param medicine A medicine Object.
-//     * @param extraInstructions Extra Instructions that will be set for the medicine Object.
-//     */
-//    public void setExtraInstructions(Medicine medicine, String extraInstructions) {
-//        medicine.setExtraInstructions(extraInstructions);
-//    }
-//
-//    /**
-//     * Sets new ID number for this medicine Object
-//     * @param medicine A medicine Object.
-//     * @param idNumber The ID number that will be set for this medicine Object
-//     */
-//    public void setIdNumber(Medicine medicine, int idNumber) {
-//
-//        medicine.setIdNumber(idNumber);
-//    }
+    /**
+     * Sets the attributes for the Medicine passed in based on the values in the newInfo mapping.
+     * @param med       The Medicine object that we will change the attributes off.
+     * @param newInfo   The mapping that contains the new information used to set the attributes of the Medicine.
+     */
+    public void editMedicine(Medicine med, Map<String, String> newInfo){
+        boolean makeNewDescription = false;     // for when the description needs to be updated
+        String newEventDescription;
+
+        if(!newInfo.get("name").equals("")){
+            med.setMedicineName(newInfo.get("name"));
+            makeNewDescription = true;      // set to true since we changed part of the description
+        }
+        if(!newInfo.get("method of administration").equals("")){
+            med.setMethodOfAdministration(newInfo.get("method of administration"));
+            makeNewDescription = true;
+        }
+        if(!newInfo.get("extra instructions").equals("")){
+            med.setExtraInstructions(newInfo.get("extra instructions"));
+            makeNewDescription = true;
+        }
+        if(!newInfo.get("amount").equals("")){
+            med.setAmount(Integer.parseInt(newInfo.get("amount")));
+            makeNewDescription = true;
+        }
+
+        // If we have to make a new description, then we make the description based on the new values
+        // of med.
+        if (makeNewDescription){
+            newEventDescription = med.makeDescription();
+            // Change the descriptions of the associated medicine schedule.
+            med.getMyMedicineSchedule().setEventDescriptions(newEventDescription);
+        }
+
+    }
 }

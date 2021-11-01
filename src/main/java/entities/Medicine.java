@@ -42,15 +42,7 @@ public class Medicine {
     public void addMedicineSchedule(List<Map<String, Double>> times){
         // Make an event
         String description;
-        if (amount == -1){
-            description = methodOfAdministration + " " +
-                    medicineName + ". " +
-                    extraInstructions;
-        } else {
-            description = methodOfAdministration + " " + amount + " " +
-                    medicineName + ". " +
-                    extraInstructions;
-        }
+        description = makeDescription();
 
 
         List<Event> events = new ArrayList<>();
@@ -65,6 +57,20 @@ public class Medicine {
         }
 
 
+    }
+
+    public String makeDescription() {
+        String description;
+        if (amount == -1){
+            description = methodOfAdministration + " " +
+                    medicineName + ". " +
+                    extraInstructions;
+        } else {
+            description = methodOfAdministration + " " + amount + " " +
+                    medicineName + ". " +
+                    extraInstructions;
+        }
+        return description;
     }
 
     /**
@@ -114,38 +120,40 @@ public class Medicine {
 //    public int getIdNumber() {
 //        return idNumber;
 //    }
-//
-//    /**
-//     * Sets the medicineName in this Medicine Class
-//     * @param medicineName The medicineName to be set to this Medicine Class
-//     */
-//    public void setMedicineName(String medicineName) {
-//        this.medicineName = medicineName;
-//    }
-//
-//    /**
-//     * Sets the amount in this Medicine Class
-//     * @param amount The medicineName to be set to this Medicine Class
-//     */
-//    public void setAmount(int amount) {
-//        this.amount = amount;
-//    }
-//
-//    /**
-//     * Sets the methodOfAdministration in this Medicine Class
-//     * @param methodOfAdministration The medicineName to be set to this Medicine Class
-//     */
-//    public void setMethodOfAdministration(String methodOfAdministration) {
-//        this.methodOfAdministration = methodOfAdministration;
-//    }
-//
-//    /**
-//     * Sets the extraInstructions in this Medicine Class
-//     * @param extraInstructions The medicineName to be set to this Medicine Class
-//     */
-//    public void setExtraInstructions(String extraInstructions) {
-//        this.extraInstructions = extraInstructions;
-//    }
+
+    /**
+     * Sets the medicineName in this Medicine Class
+     * @param medicineName The medicineName to be set to this Medicine Class
+     */
+    public void setMedicineName(String medicineName) {
+        this.medicineName = medicineName;
+        myMedicineSchedule.setMedicineName(medicineName);
+        myMedicineSchedule.setEventNames(medicineName);
+    }
+
+    /**
+     * Sets the amount in this Medicine Class
+     * @param amount The medicineName to be set to this Medicine Class
+     */
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    /**
+     * Sets the methodOfAdministration in this Medicine Class
+     * @param methodOfAdministration The medicineName to be set to this Medicine Class
+     */
+    public void setMethodOfAdministration(String methodOfAdministration) {
+        this.methodOfAdministration = methodOfAdministration;
+    }
+
+    /**
+     * Sets the extraInstructions in this Medicine Class
+     * @param extraInstructions The medicineName to be set to this Medicine Class
+     */
+    public void setExtraInstructions(String extraInstructions) {
+        this.extraInstructions = extraInstructions;
+    }
 
     /**
      * Sets the idNumber in this Medicine Class

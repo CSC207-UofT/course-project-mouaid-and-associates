@@ -29,8 +29,8 @@ public class AppManager {
     private ManagementSystem managementSystem;
     private Map<String, Window> windows;
     private Map<String, String> accounts;
-    private static final String[] DAYS = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday",
-    "Thursday", "Friday", "Saturday"};
+    private static final String[] DAYS = new String[]{"Monday", "Tuesday", "Wednesday",
+    "Thursday", "Friday", "Saturday", "Sunday"};
 
     public AppManager(){
         managementSystem = new ManagementSystem();
@@ -151,7 +151,7 @@ public class AppManager {
         // First instantiate a window for EditMedicineWindow
         Window editMedicineWindow = windows.get("Edit Medicine Window");
         // Next, instantiate a window for ChooseMedicineToEditWindow
-        Window chooseMedicineToEditWindow = windows.get("Edit Medicine To Edit Window");
+        Window chooseMedicineToEditWindow = windows.get("Choose Medicine To Edit Window");
 
         // Get a list of medicine names, like for removeMedicine
         // First get a list of user information
@@ -160,10 +160,11 @@ public class AppManager {
         // Isolate and get the list of medicine names
         String[] medList = getFormattedList("List of medicines to choose from: ", bigList,
                 2, bigList.length);
-
         // First, instantiate a variable to store the name of the medicine the user would like to remove.
         String medName;
         String[] medInfo;
+        String[] changes; // Represents the changes the user wants to make.
+        List<Map<String, Double>> newTimes = new ArrayList<>();
 
         // Check if ChooseMedicineToEditWindow is an instance of DisplayEntityInformation to print
         // out the list of medicine names, like in removeMedicine()
@@ -171,7 +172,7 @@ public class AppManager {
             ((DisplayEntityInformation) chooseMedicineToEditWindow).displayInfo(medList);
         }
 
-        //TODO: Verify the name is a proper one in ChooseMedicineToEditWindow
+
         medName = chooseMedicineToEditWindow.getUserInput()[0];
 
         medInfo = managementSystem.getMedicineInfo(medName);
@@ -180,16 +181,17 @@ public class AppManager {
             ((DisplayEntityInformation) editMedicineWindow).displayInfo(medInfo);
         }
 
-        //TODO: Get user input as an array, with each index representing a different variable
-        //      If you want, you can change the format to a map later in the program. Add methods to
-        //      medicineManager to set Medicine attributes using the values in the list. Add the supporting
-        //      method to userManager to be able to call medicine manager. To set the times, call
-        //      schedule manager. You can pass schedule manager as a parameter into user manager or call
-        //      directly in management system.
-        //TODO: Call EditMedicineWindow and get user input on which aspects to change.
-        //      Return an array with the same order as the addMedicine parameters.
-        //TODO: Call ManagementSystem to update this medicine information.
-        //TODO: add the necessary methods in the necessary classes.
+        changes = editMedicineWindow.getUserInput();
+
+        // Format the given times.
+        if (changes.length > 4) {
+            formatTimes(changes, changes[4], changes[5], newTimes);
+        }
+
+        // Call management system to edit the entities.
+        managementSystem.editMedicine(medName, changes, newTimes);
+
+        showAccountWindow();
     }
 
 
@@ -245,6 +247,23 @@ public class AppManager {
             amount = -1;
         }
 
+        formatTimes(data, wOrD, startDay, times);
+
+        //Done: call managementSystem.addNewMedicine() and pass in this information.
+        managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
+
+        //Done: call showAccountWindow
+        showAccountWindow();
+    }
+
+    /**
+     * Formats the times returned by user input.
+     * @param data      The user input
+     * @param wOrD      A variable determining weekly OR daily.
+     * @param startDay  The day the first time occurs.
+     * @param times     The mapping on which we will save the formatted times.
+     */
+    private void formatTimes(String[] data, String wOrD, String startDay, List<Map<String, Double>> times) {
         for(int i = 0; i < (data.length - 6); i++) {
             if (wOrD.equals("weekly")) {
                 Map<String, Double> map = new HashMap<>();
@@ -259,12 +278,6 @@ public class AppManager {
             }
 
         }
-
-        //Done: call managementSystem.addNewMedicine() and pass in this information.
-        managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
-
-        //Done: call showAccountWindow
-        showAccountWindow();
     }
 
     /**

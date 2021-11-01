@@ -3,6 +3,7 @@ package application_business_rules;
 import entities.Schedule;
 
 import java.util.List;
+import java.util.Map;
 
 public class ScheduleManager {
     /**
@@ -26,20 +27,19 @@ public class ScheduleManager {
         return finalSchedule;
     }
 
-//    /**
-//     * Sets the finalSchedule managed by ScheduleManager
-//     * @param finalSchedule the schedule to be as the finalSchedule managed by ScheduleManager
-//     */
-//    public void setFinalSchedule(Schedule finalSchedule) {
-//        this.finalSchedule = finalSchedule;
-//    }
-//
-//    /**
-//     * Gets the finalSchedule managed by ScheduleManager.
-//     * @return  the finalSchedule managed by ScheduleManager.
-//     */
-//    public Schedule getFinalSchedule() {
-//        return finalSchedule;
-//    }
+    /**
+     * Edits the event times of a given schedule, using the given times.
+     *
+     * Preconditions:
+     * - The event names and descriptions of the given schedule are all the same.
+     * - The number of events is equal to the number of elements in times.
+     * @param schedule      The schedule to be edited
+     * @param times         The new time stamps
+     */
+    public void editScheduleTimes(Schedule schedule, List<Map<String, Double>> times){
+        if (times.size() > 0) {
+            schedule.setEventTimes(times);
+        }
+    }
 
 }
