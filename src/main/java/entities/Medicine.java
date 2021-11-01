@@ -1,6 +1,11 @@
 package entities;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +40,7 @@ public class Medicine {
      * Adds a new MedicineSchedule to this Medicine object.
      * @param times The times to take this medication.
      */
-    public void addMedicineSchedule(List<Map<String, Double>> times){
+    public void addMedicineSchedule(List<LocalDateTime> times){
         // Make an event
         String description = new String(methodOfAdministration + " " + medicineName + ". " +
                 extraInstructions);
@@ -43,7 +48,7 @@ public class Medicine {
         List<Event> events = new ArrayList<>();
 
         // Iterate through the list of times
-        for(Map<String, Double> time : times){
+        for(LocalDateTime time : times){
 
             // Make an event for each time stamp and add that to the list of events.
             Event event = new Event(medicineName, description, time);

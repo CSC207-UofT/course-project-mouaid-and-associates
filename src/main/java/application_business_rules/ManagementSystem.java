@@ -1,5 +1,9 @@
 package application_business_rules;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 import entities.Medicine;
@@ -97,7 +101,7 @@ public class ManagementSystem {
      */
     public void addNewMedicine(String medicineName, int amount,
                                String methodOfAdministration, String extraInstructions,
-                               List<Map<String, Double>> times) {
+                               List<LocalDateTime> times) {
         userManager.createMedicine(medicineName, amount, methodOfAdministration, extraInstructions, times);
     }
 

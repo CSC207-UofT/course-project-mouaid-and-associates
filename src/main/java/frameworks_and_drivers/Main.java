@@ -3,6 +3,8 @@ package frameworks_and_drivers;
 import interface_adapters.AppManager;
 import interface_adapters.Window;
 
+import java.text.ParseException;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -11,7 +13,7 @@ public class Main {
     /**
      * The main method.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         AppManager appManager = new AppManager();
         Scanner scanner = new Scanner(System.in);
         Map<String, Window> windows = new HashMap<>();
@@ -24,7 +26,6 @@ public class Main {
         windows.put("View Account Window", new ViewAccountWindow(scanner));
 
         appManager.run(windows);
-
         scanner.close();
 
     }

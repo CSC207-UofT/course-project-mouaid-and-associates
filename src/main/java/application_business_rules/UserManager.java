@@ -3,6 +3,10 @@ package application_business_rules;
 import entities.Medicine;
 import entities.User;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +58,7 @@ public class UserManager {
      */
     public void createMedicine(String medicineName, int amount,
                                    String methodOfAdministration, String extraInstructions,
-                                   List<Map<String, Double>> times){
+                                   List<LocalDateTime> times){
 
         user.addMedicine(this.medicineManager.createNewMedicine(medicineName, amount,
                 methodOfAdministration, extraInstructions,

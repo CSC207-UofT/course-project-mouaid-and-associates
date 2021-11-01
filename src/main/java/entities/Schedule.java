@@ -69,7 +69,7 @@ public class  Schedule {
             for (Event event: sortedEvents.get(day)){
                 String eventName = new String ("    " + event.getName() + "\n");
                 String eventDescription = new String(event.getDescription() + " \n");
-                String eventHour = new String("    " + event.decimalToHourFormat());
+                String eventHour = event.getTime();
 
                 // Add the strings to the string builder.
                 scheduleRep.append(eventName);

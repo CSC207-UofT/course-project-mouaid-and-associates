@@ -2,6 +2,12 @@ package interface_adapters;
 
 import application_business_rules.ManagementSystem;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 public class AppManager {
@@ -39,7 +45,7 @@ public class AppManager {
      *
      * @param windows   All the windows to be used by the app.
      */
-    public void run(Map<String, Window> windows){
+    public void run(Map<String, Window> windows) throws ParseException {
         // Creates an array for Window objects. Once the program starts, we will only have a set
         // number of windows, thus an array makes sense.
         this.windows = windows;
@@ -52,7 +58,7 @@ public class AppManager {
     /**
      * Shows the start screen window.
      */
-    public void showStartScreenWindow(){
+    public void showStartScreenWindow() throws ParseException {
 
         //Done make a call to StartScreenWindow to show information and get user input
         String[] choice = windows.get("Start Screen Window").getUserInput();      // Currently, placeholder.
@@ -77,7 +83,7 @@ public class AppManager {
      * Shows the sign-up page and manages user interactions with the program for this
      * page.
      */
-    public void createNewAccount() {
+    public void createNewAccount() throws ParseException {
         //DONE: call CreateAccountWindow to show information and get user input
         Window createAccountWindow = windows.get("Create Account Window");
         String[] inputInfo = createAccountWindow.getUserInput();
@@ -101,7 +107,7 @@ public class AppManager {
      * Shows the account page. Allows the user to view their account information and
      * interact with the page.
      */
-    public void showAccountWindow(){
+    public void showAccountWindow() throws ParseException {
         //Done: call managementSystem.getUserInfo() to get user information.
         String[] userInfo = managementSystem.getUserInfo().toArray(new String[0]);
         Window viewAccountWindow = windows.get("View Account Window");
@@ -143,7 +149,7 @@ public class AppManager {
      * Shows the add medicine page. Allows user interaction with the program so that
      * the user can add a new medicine.
      */
-    public void addMedicine(){
+    public void addMedicine() throws ParseException {
         //Done: call AddMedicineWindow to display the fields to enter data about the medicine
         Window addMedicineWindow = windows.get("Add Medicine Window");
 
@@ -155,18 +161,19 @@ public class AppManager {
         String extraInstruct = data[3];
         String wOrD = data[4]; // Stores frequency. Weekly/Daily
         String startDay = data[5];
-        List<Map<String, Double>> times = new ArrayList<>();
-
-        for(int i = 0; i < (data.length - 6); i++) {
+        String startMonth = data[6];
+        List<LocalDateTime> times = new ArrayList<>();
+        String day;
+        for(int i = 0; i < (data.length - 7); i++) {
             if (wOrD.equals("weekly")) {
-                Map<String, Double> map = new HashMap<>();
-                map.put(DAYS[Integer.parseInt(startDay) - 1], Double.parseDouble(data[i + 6]));
-                times.add(map);
+                times.add(LocalDateTime.parse("2021-" + startMonth + "-" + startDay + "T" +  data[i + 7]));
             } else {
-                for (String day : DAYS) {
-                    Map<String, Double> map2 = new HashMap<>();
-                    map2.put(day, Double.parseDouble(data[i + 6]));
-                    times.add(map2);
+                for (int j = 0; j <7; j++) {
+                   day = Integer.toString(Integer.parseInt(startDay) + j);
+                   if (day.length() == 1){
+                       day = "0" + day;
+                   }
+                   times.add(LocalDateTime.parse("2021-" + startMonth + "-" + day + "T" +  data[i + 7]));
                 }
             }
 
@@ -183,7 +190,7 @@ public class AppManager {
      * Shows the final schedule by using managementSystem to make the schedule and using the TimeTableWindow class
      * to display the final schedule. It then gets user input from TimeTableWindow and calls ViewAccountWindow.
      */
-    public void showFinalSchedule() {
+    public void showFinalSchedule() throws ParseException {
         Window window = windows.get("TimeTable Window");
         //Done: call managementSystem.makeSchedule
         String[] schedule = new String[]{managementSystem.makeSchedule()};

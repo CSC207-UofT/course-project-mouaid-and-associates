@@ -1,7 +1,11 @@
 package entities;
-
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Map;
-
 public class Event implements Comparable<Event>{
     /**
      * A class containing a singular occurrence of an event that would appear on a schedule
@@ -23,8 +27,7 @@ public class Event implements Comparable<Event>{
      */
     private String name;
     private String description;
-
-    private Map<String, Double> timeStamp;
+    private LocalDateTime timeStamp;
 
 
     /**
@@ -32,7 +35,7 @@ public class Event implements Comparable<Event>{
      * @param description   The description of the event.
      * @param timeStamp         The times the event takes place.
      */
-    public Event(String name, String description, Map<String, Double> timeStamp){
+    public Event(String name, String description, LocalDateTime timeStamp){
         this.name = name;
         this.description = description;
         this.timeStamp = timeStamp;
@@ -68,7 +71,7 @@ public class Event implements Comparable<Event>{
      * @return  The day this event takes place.
      */
     public String getDay(){
-        return (String) timeStamp.keySet().toArray()[0];
+        return timeStamp.getMonthValue() + "/"+ timeStamp.getDayOfMonth();
     }
 
     /**
@@ -76,7 +79,7 @@ public class Event implements Comparable<Event>{
      * @return  The hour this event takes place.
      */
     public Double getHour(){
-        return (Double) timeStamp.values().toArray()[0];
+        return (double)timeStamp.getHour();
     }
 
     /**
@@ -100,13 +103,10 @@ public class Event implements Comparable<Event>{
      * Changes the format of the hour into proper hour attribute.
      * @return  The hour in normal time format.
      */
-    public String decimalToHourFormat(){
-        double time = this.getHour();
-        int min = (int) ((((time * 100) % 100) / 100.0) * 60);
-        int hour = (int) (((time * 100) - min) / 100.0);
-
-        return (hour + ":" + min);
+    public String getTime(){
+        return timeStamp.getHour() + ":" + timeStamp.getMinute();
     }
+
 
     //    /**
     //     * Sets the description of the event.

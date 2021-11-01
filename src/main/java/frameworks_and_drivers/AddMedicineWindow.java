@@ -2,13 +2,13 @@ package frameworks_and_drivers;
 
 import interface_adapters.Window;
 
+import java.util.Date;
 import java.util.Scanner;
 
 public class AddMedicineWindow extends Window {
     /*
      * The window that displays the Add a Medicine page.
      */
-
     public AddMedicineWindow(Scanner scanner) {
         super(scanner);
     }
@@ -33,20 +33,20 @@ public class AddMedicineWindow extends Window {
         String extra = scanner.nextLine();
 
         String wdm = selectWD(scanner); // Weekly, daily
-        String startDate = selectDay(scanner);
+        String selectDay = selectDay(scanner);
+        String selectMonth = SelectMonth(scanner);
         String[] times = getTimes(scanner);
-        String[] returnList = new String[6 + times.length];
-
+        String[] returnList = new String[7 + times.length];
         returnList[0] = name;
         returnList[1] = methodOfAdministration;
         returnList[2] = amount;
         returnList[3] = extra;
         returnList[4] = wdm;
-        returnList[5] = startDate;
-        for (int i = 6; i < (times.length + 6); i++){
-            returnList[i] = times[i - 6];
+        returnList[5] = selectDay;
+        returnList[6] = selectMonth;
+        for (int i = 0; i < (times.length); i++){
+            returnList[i + 7] = times[i];
         }
-
         return returnList;
     }
 
@@ -61,10 +61,9 @@ public class AddMedicineWindow extends Window {
         String[] times = new String[howManyTimesInt];
         String time = " ";
         for (int i = 0; i < howManyTimesInt; i++){
-            while(!isNumeric(time) || 0 > Double.parseDouble(time) || 24 <= Double.parseDouble(time)){
-                System.out.println("For the "+ (i + 1) + "'st time, pick a time (In the form of XX.XX." +
-                        "Note that  such as 10:30 becomes " +
-                        "10.5, or 13:45 as 13.75");
+            while(!isValidTime(time)){
+                System.out.println("For the "+ (i + 1) + "'st time, pick a time (In the form of XX:XX. Use the 24 hour " +
+                        "format, so that 10:30 is 10:30 am and 22:30 is 10:30 pm");
                 time = scanner.nextLine();
             }
             times[i] = time;
@@ -92,13 +91,24 @@ public class AddMedicineWindow extends Window {
      * @return A string representing the day to start on
      */
     public String selectDay(Scanner scanner){
-        String input = "";
-        while (!isNumeric(input) || 0 > Integer.parseInt(input) || Integer.parseInt(input)  > 7){
-            System.out.println("What day would you like to start? Press 1 for Monday, 2 for Tuesday," +
-                    "3 for Wednesday, 4 for Thursday, 5 for Friday, 6 for Saturday, 7 for Sunday");
-            input = scanner.nextLine();
+        String day = "";
+        while (!isNumeric(day) || 0 > Integer.parseInt(day) || Integer.parseInt(day)  > 32){
+            System.out.println("What day of the month would you like to start?");
+            day = scanner.nextLine();
         }
-        return input;
+
+        return day;
+    }
+
+    public String SelectMonth (Scanner scanner) {
+        String month = "  ";
+        while (!isNumeric(month) || 0 > Integer.parseInt(month) || Integer.parseInt(month)  > 12 ||
+                month.length() != 2){
+            System.out.println("What month would you like to start? Please month the month in the form 01 for January" +
+                    "02 for February and so on");
+            month = scanner.nextLine();
+        }
+        return month;
     }
 
     /**
@@ -130,5 +140,26 @@ public class AddMedicineWindow extends Window {
         }
     }
 
+    /**
+     * Checks to see if the user inputted time correctly
+     * @param time a string given that should represent the time
+     * @return Whether time is of the right format
+     */
+    public boolean isValidTime(String time){
+        if (time.length() != 5 || !isNumeric(String.valueOf(time.charAt(0))) ||
+                !isNumeric(String.valueOf(time.charAt(1))) || !isNumeric(String.valueOf(time.charAt(3))) ||
+                !isNumeric(String.valueOf(time.charAt(4))) || time.charAt(2) != ':'){
+            return false;
+        }
+        else if (Character.getNumericValue(time.charAt(0)) * 10 + Character.getNumericValue(time.charAt(1)) >= 24 ||
+                Character.getNumericValue(time.charAt(3)) * 10 + Character.getNumericValue(time.charAt(4)) > 59){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+
+    }
 }
 
