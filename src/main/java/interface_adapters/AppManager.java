@@ -2,7 +2,6 @@ package interface_adapters;
 
 import application_business_rules.ManagementSystem;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class AppManager {
@@ -46,24 +45,56 @@ public class AppManager {
         // number of windows, thus an array makes sense.
         this.windows = windows;
 
+        // Create a variable that sends us to the next window.
+        String next_window;
         //Done: Add a call to Start Screen Window
-        showStartScreenWindow();
+        next_window = showStartScreenWindow();
 
+        while(!next_window.equals("Log Out")){
+            switch (next_window){
+                case "Login Window":
+                    next_window = login();
+                    break;
+                case "Create Account Window":
+                    next_window = createNewAccount();
+                    break;
+                case "TimeTable Window":
+                    next_window = showFinalSchedule();
+                    break;
+                case "View Account Window":
+                    next_window = showAccountWindow();
+                    break;
+                case "Add Medicine Window":
+                    next_window = addMedicine();
+                    break;
+                case "Edit Medicine Window":
+                    next_window = editMedicine();
+                    break;
+                case "Remove Medicine Window":
+                    next_window = removeMedicine();
+                    break;
+                default:
+                    next_window = "Log Out";
+                    break;
+            }
+        }
+
+        logOut();
     }
 
     /**
      * Shows the start screen window.
      */
-    public void showStartScreenWindow(){
+    public String showStartScreenWindow(){
 
         //Done make a call to StartScreenWindow to show information and get user input
         String[] choice = windows.get("Start Screen Window").getUserInput();      // Currently, placeholder.
 
 
         if (choice[0].equals("0")){
-            login();
+            return "Login Window";
         } else {
-            createNewAccount();
+            return "Create Account Window";
         }
 
     }
@@ -71,15 +102,16 @@ public class AppManager {
     /**
      * Shows the login window. Allows the user to login.
      */
-    public void login(){
+    public String login(){
         //FUTURE TODO: Fill this out later
+        return "View Account Window";
     }
 
     /**
      * Shows the sign-up page and manages user interactions with the program for this
      * page.
      */
-    public void createNewAccount() {
+    public String createNewAccount() {
         //DONE: call CreateAccountWindow to show information and get user input
         Window createAccountWindow = windows.get("Create Account Window");
         String[] inputInfo = createAccountWindow.getUserInput();
@@ -96,14 +128,14 @@ public class AppManager {
         managementSystem.createNewUser(name, username);
 
         //Done: call showAccountWindow()
-        showAccountWindow();
+        return "View Account Window";
     }
 
     /**
      * Shows the account page. Allows the user to view their account information and
      * interact with the page.
      */
-    public void showAccountWindow(){
+    public String showAccountWindow(){
         //Done: call managementSystem.getUserInfo() to get user information.
         String[] userInfo = managementSystem.getUserInfo().toArray(new String[0]);
         Window viewAccountWindow = windows.get("View Account Window");
@@ -131,15 +163,15 @@ public class AppManager {
         //      adding medication and viewing the timetable.
 
         if (choice.equals("add")){
-            addMedicine();
-        } else if (choice.equals("logout")){
-            logOut();
+            return "Add Medicine Window";
         } else if (choice.equals("view")){
-            showFinalSchedule();
+            return "TimeTable Window";
         } else if (choice.equals("edit")){
-            editMedicine();
+            return "Edit Medicine Window";
         } else if (choice.equals("remove")){
-            removeMedicine();
+            return "Remove Medicine Window";
+        } else {
+            return "Log Out";
         }
 
     }
@@ -147,7 +179,7 @@ public class AppManager {
     /**
      *
      */
-    public void editMedicine(){
+    public String editMedicine(){
         // First instantiate a window for EditMedicineWindow
         Window editMedicineWindow = windows.get("Edit Medicine Window");
         // Next, instantiate a window for ChooseMedicineToEditWindow
@@ -191,7 +223,7 @@ public class AppManager {
         // Call management system to edit the entities.
         managementSystem.editMedicine(medName, changes, newTimes);
 
-        showAccountWindow();
+        return "View Account Window";
     }
 
 
@@ -199,7 +231,7 @@ public class AppManager {
     /** This method is to run the functionality of removing a medicine, from showing the menu to
      * calling the appropriate classes to remove the medicine from the account.
      */
-    public void removeMedicine(){
+    public String removeMedicine(){
         Window removeMedWindow = windows.get("Remove Medicine Window");
         String[] userInfo = managementSystem.getUserInfo().toArray(new String[0]);
 
@@ -219,14 +251,14 @@ public class AppManager {
         managementSystem.removeMedicines(inputs);
 
         // go back to the account page.
-        showAccountWindow();
+        return "View Account Window";
     }
 
     /**
      * Shows the add medicine page. Allows user interaction with the program so that
      * the user can add a new medicine.
      */
-    public void addMedicine(){
+    public String addMedicine(){
         //Done: call AddMedicineWindow to display the fields to enter data about the medicine
         Window addMedicineWindow = windows.get("Add Medicine Window");
 
@@ -253,7 +285,7 @@ public class AppManager {
         managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
 
         //Done: call showAccountWindow
-        showAccountWindow();
+        return "View Account Window";
     }
 
     /**
@@ -284,7 +316,7 @@ public class AppManager {
      * Shows the final schedule by using managementSystem to make the schedule and using the TimeTableWindow class
      * to display the final schedule. It then gets user input from TimeTableWindow and calls ViewAccountWindow.
      */
-    public void showFinalSchedule() {
+    public String showFinalSchedule() {
         Window window = windows.get("TimeTable Window");
         //Done: call managementSystem.makeSchedule
         String[] schedule = new String[]{managementSystem.makeSchedule()};
@@ -297,7 +329,7 @@ public class AppManager {
 
         // For now, we only have one option, which is to take the user back to the account page.
 
-        showAccountWindow();
+        return "View Account Window";
     }
 
     /**

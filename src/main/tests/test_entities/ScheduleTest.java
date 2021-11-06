@@ -87,9 +87,4 @@ class ScheduleTest {
 
         assertEquals(expected, schedule.toString());
     }
-
-    @Test
-    void sortEvents() {
-        //TODO: Complete this test.
-    }
 }
