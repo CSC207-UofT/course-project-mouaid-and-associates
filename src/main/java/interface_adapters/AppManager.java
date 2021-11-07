@@ -4,7 +4,7 @@ import application_business_rules.ManagementSystem;
 
 import java.lang.reflect.Array;
 import java.util.*;
-
+import java.util.Random;
 public class AppManager {
     /** This is the main class that runs the entire app.
      *
@@ -107,19 +107,25 @@ public class AppManager {
         //Done: call managementSystem.getUserInfo() to get user information.
         String[] userInfo = managementSystem.getUserInfo().toArray(new String[0]);
         Window viewAccountWindow = windows.get("View Account Window");
+        List<Integer> prescriptionsIDS = managementSystem.getPrescriptionsIDs();
 
         // create a new array for properly formatted strings.
-        String[] formattedUserInfo = new String[userInfo.length + 1];
+        String[] formattedUserInfo = new String[userInfo.length + prescriptionsIDS.size() + 2];
 
         formattedUserInfo[0] = "Name: " + userInfo[0];
         formattedUserInfo[1] = "Username: " + userInfo[1];
         formattedUserInfo[2] = "List of Medicines: ";
+        formattedUserInfo[userInfo.length + 1] = "List of Prescriptions: ";
 
         // Format the list of medicines names and add them.
-        for (int i = 3; i < formattedUserInfo.length; i++){
+        for (int i = 3; i < formattedUserInfo.length - (prescriptionsIDS.size() + 1); i++){
             formattedUserInfo[i] = (" - " + userInfo[i - 1]);
         }
-
+        // Format the list of prescriptions IDs and add them
+        int accumulator = 0;
+        for(int i = userInfo.length + 2; i < formattedUserInfo.length; i++){
+            formattedUserInfo[i] = (" - " + prescriptionsIDS.get(accumulator));
+        }
         if (viewAccountWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) viewAccountWindow).displayInfo(formattedUserInfo);
         }
@@ -140,6 +146,10 @@ public class AppManager {
             editMedicine();
         } else if (choice.equals("remove")){
             removeMedicine();
+        } else if (choice.equals("pres")){
+            addPrescription();
+        } else if (choice.equals("remove pres")){
+            removePrescription();
         }
 
     }
@@ -230,6 +240,57 @@ public class AppManager {
 
         String[] data = addMedicineWindow.getUserInput();
 
+        addMedicineHelper(data);
+
+        //Done: call showAccountWindow
+        showAccountWindow();
+    }
+
+    /**
+     * Adds a new prescription to the current user's prescriptions list
+     */
+    public void addPrescription(){
+        Window addPrescriptionWindow = windows.get("Add Prescription Window");
+        List<String[]> data = ((PrescriptionWindow) addPrescriptionWindow).getUserPrescriptionInput();
+        List<String> medicinesNames = new ArrayList<>();
+        for(String[] medicine : data){
+            addMedicineHelper(medicine);
+            medicinesNames.add(medicine[0]);
+        }
+        managementSystem.addNewPrescription(medicinesNames, generateID());
+        showAccountWindow();
+
+    }
+
+    /**
+     * Generates an ID for a prescription
+     * @return the ID
+     */
+    private int generateID() {
+        Random rand = new Random();
+        while(true){
+            int id = rand.nextInt(10000);
+            if(managementSystem.IDChecker(id)){
+            }
+            else{
+                return id;
+            }
+
+        }
+
+    }
+
+    /**
+     * Removes a prescription from the current user's prescriptions list
+     */
+    public void removePrescription(){
+        Window removePrescriptionWindow = windows.get("Remove Prescription Window");
+        String[] data = removePrescriptionWindow.getUserInput();
+        managementSystem.removePrescription(data[0]);
+        showAccountWindow();
+    }
+
+    private void addMedicineHelper(String[] data) {
         String name = data[0];
         String methodOfAdmin = data[1];
         int amount;
@@ -262,11 +323,7 @@ public class AppManager {
 
         //Done: call managementSystem.addNewMedicine() and pass in this information.
         managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
-
-        //Done: call showAccountWindow
-        showAccountWindow();
     }
-
     /**
      * Shows the final schedule by using managementSystem to make the schedule and using the TimeTableWindow class
      * to display the final schedule. It then gets user input from TimeTableWindow and calls ViewAccountWindow.
@@ -285,6 +342,9 @@ public class AppManager {
         // For now, we only have one option, which is to take the user back to the account page.
 
         showAccountWindow();
+    }
+    public List<Integer> getPrescriptionID(){
+        return managementSystem.getPrescriptionsIDs();
     }
 
     /**
