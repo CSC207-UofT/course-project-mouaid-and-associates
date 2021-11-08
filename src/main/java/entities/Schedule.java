@@ -17,6 +17,8 @@ public class  Schedule {
         this.events = events;
     }
 
+    public Schedule(){ this.events = new ArrayList<>();}
+
     /**
      * Gets the events in this schedule
      * @return  The events in this Schedule
@@ -26,29 +28,50 @@ public class  Schedule {
     }
 
     /**
-     * Sets the events in this schedule
-     * @param events The events to be set to this schedule
+     *  Adds a list of events to this schedule.
+     * @param events List of events to be added to the schedule.
      */
-    public void setEvents(List<Event> events) {
-        this.events = events;
+    public void addEvents(List<Event> events){
+        this.events.addAll(events);
     }
 
     /**
-     *  Adds a list of events to this schedule.
-     * @param events List of events to be added to the schedule.
-     * @return A boolean indicating if the item has been added.
+     * Adds an event to the schedule with the event's name, description and a mapping of a day to a time.
+     * @param name          Name of the event.
+     * @param description   Description of the event.
+     * @param timeStamp     Mapping of a day to a time. The time the event takes place.
      */
-    public boolean addEvents(List<Event> events){
-        return this.events.addAll(events);
+    public void addEvent(String name, String description, Map<String, Double> timeStamp){
+        // First we create a new event:
+        Event event = new Event(name, description, timeStamp);
+
+        // Then add it to the list.
+        this.events.add(event);
+    }
+
+    /**
+     * Adds an event to the schedule with the event's name, description, the day the event takes place
+     * and the hour it takes place. This hides the internal representation of how an event is made.
+     *
+     * @param name          Name of the event.
+     * @param description   Description of the event.
+     * @param day           The day the event takes place.
+     * @param time          The time the event takes place.
+     */
+    public void addEvent(String name, String description, String day, double time){
+        // Make a time stamp and call the other addEvent.
+        Map<String, Double> timeStamp = Event.makeTimeStamp(day, time);
+
+        // Just call the other addEvent method to add the event. No need to repeat code.
+        this.addEvent(name, description, timeStamp);
     }
 
     /**
      * Removes a specific event from the schedule.
      * @param event An event to be removed from the schedule.
-     * @return A boolean indicating if the item has been removed.
      */
-    public boolean removeEvent(Event event){
-        return this.events.remove(event);
+    public void removeEvent(Event event){
+        this.events.remove(event);
     }
 
     /**
@@ -66,16 +89,21 @@ public class  Schedule {
 
         for (String day: days){
             scheduleRep.append(day).append(": \n");
-            for (Event event: sortedEvents.get(day)){
-                String eventName = new String ("    " + event.getName() + "\n");
-                String eventDescription = new String(event.getDescription() + " \n");
-                String eventHour = new String("    " + event.decimalToHourFormat());
 
-                // Add the strings to the string builder.
-                scheduleRep.append(eventName);
-                scheduleRep.append(eventHour);
-                scheduleRep.append(" - ").append(eventDescription);
+            if (sortedEvents.containsKey(day)) {
+                for (Event event : sortedEvents.get(day)) {
+                    String eventName = "    " + event.getName() + "\n";
+                    String eventDescription = event.getDescription() + " \n";
+                    String eventHour = "    " + event.decimalToHourFormat();
 
+                    // Add the strings to the string builder.
+                    scheduleRep.append(eventName);
+                    scheduleRep.append(eventHour);
+                    scheduleRep.append(" - ").append(eventDescription);
+
+                }
+            } else {
+                scheduleRep.append("Nothing today \n");
             }
         }
 
@@ -135,6 +163,60 @@ public class  Schedule {
         }
 
         return newDictOfEvents;
+    }
+
+    /**
+     * Returns the number of events in this schedule
+     * @return  The number of events in this schedule.
+     */
+    public int getNumberOfEvents(){
+        return events.size();
+    }
+
+    /**
+     * @return The times of the events in this schedule.
+     */
+    public String[] getEventTimes(){
+        String[] times = new String[events.size()];
+        for (int i = 0; i < times.length; i++){
+            String day = events.get(i).getDay();
+            String hour = events.get(i).decimalToHourFormat();
+            times[i] = day + ": " + hour;
+        }
+        return times;
+    }
+
+    /**
+     * Sets the times of the events, ONLY IF all the event descriptions and names are the same.
+     *
+     * Preconditions:
+     * - All the names and descriptions of the events of this schedule are the same.
+     * @param times     The new times of the events.
+     */
+    public void setEventTimes(List<Map<String, Double>> times){
+        // Since all the event names and descriptions are the same, just get the name and
+        // descriptions from the first event.
+        String eventName = events.get(0).getName();
+        String eventDescription = events.get(0).getDescription();
+
+        // Delete all the old events:
+        events.clear();
+
+        for (Map<String, Double> time: times){
+            addEvent(eventName, eventDescription, time);
+        }
+    }
+
+    public void setEventNames(String newName){
+        for (Event event : events) {
+            event.setName(newName);
+        }
+    }
+
+    public void setEventDescriptions(String newDescription){
+        for (Event event : events) {
+            event.setDescription(newDescription);
+        }
     }
 
 
