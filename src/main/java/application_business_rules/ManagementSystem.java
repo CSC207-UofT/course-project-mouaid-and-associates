@@ -79,6 +79,8 @@ public class ManagementSystem {
             MedicineSchedule medSched = userManager.medicineManager.getMedicineSchedule(med);
             scheduleList.add(medSched);
         }
+        // Add the SleepSchedule to the list of Schedules
+        scheduleList.add(userManager.sleepManager.getSleepSchedule(userManager.getUser().getSleepClass()));
         return scheduleManager.compileSchedule(scheduleList).toString();
     }
 

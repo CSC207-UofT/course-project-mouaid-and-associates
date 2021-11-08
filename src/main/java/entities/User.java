@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class User {
     /**
@@ -17,6 +18,7 @@ public class User {
     private String name;
     private String userName;
     private HashMap<String, Medicine> medicineList;
+    private Sleep sleepClass;
 
     public User(String name, String userName){
         this.name = name;
@@ -67,7 +69,15 @@ public class User {
         }
     }
 
-//    /**
+    public void setSleepClass(Sleep sleep){
+        this.sleepClass = sleep;
+    }
+
+    public Sleep getSleepClass() {
+        return sleepClass;
+    }
+
+    //    /**
 //     * Remove a medicine from this User's medicineList.
 //     * @param newMedicine The medicine to be removed from this User's medicineList.
 //     */
