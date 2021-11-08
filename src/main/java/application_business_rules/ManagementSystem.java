@@ -79,7 +79,14 @@ public class ManagementSystem {
      * @return the compiled schedule.
      */
     public String makeSchedule(){
+      
         List<Schedule> scheduleList = userManager.getMedicineSchedules();
+
+       
+        // Add the SleepSchedule to the list of Schedules
+        // TODO: Change it so that we hide the implementation details from Management System.
+        scheduleList.add(userManager.sleepManager.getSleepSchedule(userManager.getUser().getSleepClass()));
+
         return scheduleManager.compileSchedule(scheduleList).toString();
     }
 

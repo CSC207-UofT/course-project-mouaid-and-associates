@@ -1,7 +1,11 @@
 package application_business_rules;
 
 import entities.Medicine;
+
 import entities.Schedule;
+
+import entities.Sleep;
+
 import entities.User;
 
 import java.util.*;
@@ -20,6 +24,7 @@ public class UserManager {
      */
     private User user;
     public MedicineManager medicineManager;
+    public SleepManager sleepManager;
 
 //    public UserManager(User user){
 //        this.user = user;
@@ -32,6 +37,7 @@ public class UserManager {
      */
     public UserManager(){
         this.medicineManager = new MedicineManager();
+        this.sleepManager = new SleepManager();
     }
 
     /**
@@ -159,5 +165,18 @@ public class UserManager {
     public Schedule getMedicineSchedule(String medName){
         Medicine med = user.getMedicine(medName);
         return medicineManager.getMedicineSchedule(med);
+    }
+
+    public void createUserSleepClass(List<Double> times){
+        Sleep sleep = this.sleepManager.createNewSleepClass(times);
+        this.user.setSleepClass(sleep);
+    }
+
+    public void setUserSleepAndWakeUpTimes(List<Double> times){
+        this.sleepManager.setSleepAndWakeUpTimes(this.user.getSleepClass(), times);
+    }
+
+    public List<Double> getSleepAndWakeUpTimes() {
+        return this.sleepManager.getSleepAndWakeUpTimes(this.user.getSleepClass());
     }
 }
