@@ -22,6 +22,9 @@ public class Main {
         windows.put("Start Screen Window", new StartScreenWindow(scanner));
         windows.put("TimeTable Window", new TimeTableWindow(scanner));
         windows.put("View Account Window", new ViewAccountWindow(scanner));
+        windows.put("Remove Medicine Window", new RemoveMedicineWindow(scanner));
+        windows.put("Choose Medicine To Edit Window", new ChooseMedicineToEditWindow(scanner));
+        windows.put("Edit Medicine Window", new EditMedicineWindow(scanner));
 
         appManager.run(windows);
 

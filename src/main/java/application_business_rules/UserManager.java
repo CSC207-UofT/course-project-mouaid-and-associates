@@ -1,11 +1,15 @@
 package application_business_rules;
 
 import entities.Medicine;
+
+import entities.Schedule;
+
+import entities.Sleep;
+
 import entities.User;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class UserManager {
     /**
@@ -20,6 +24,7 @@ public class UserManager {
      */
     private User user;
     public MedicineManager medicineManager;
+    public SleepManager sleepManager;
 
 //    public UserManager(User user){
 //        this.user = user;
@@ -32,6 +37,7 @@ public class UserManager {
      */
     public UserManager(){
         this.medicineManager = new MedicineManager();
+        this.sleepManager = new SleepManager();
     }
 
     /**
@@ -62,6 +68,16 @@ public class UserManager {
     }
 
     /**
+     * Removes the given medicines from the list of medicines the user has.
+     * @param medsToRemove  The list of medicines to be removed.
+     */
+    public void removeMeds(String[] medsToRemove){
+        for (String medName: medsToRemove){
+            user.removeMedicine(medName);
+        }
+    }
+
+    /**
      * Gets the user that is managed by UserManger
      * @return The user that is managed by UserManger
      */
@@ -86,10 +102,81 @@ public class UserManager {
     }
 
     /**
-     * Gets the medicineList of the user that is managed by UserManger
-     * @return The medicineList of the user that is managed by UserManger
+     * Gets the medicine schedules for every medicine associated with this user.
+     * @return All the medicine schedules associated with this user.
      */
-    public HashMap<String, Medicine> getMedicines(){
-        return this.user.getMedicineList();
+    public List<Schedule> getMedicineSchedules(){
+        List<Schedule> schedules = new ArrayList<>();
+        for (Medicine med: user.getMedicineList().values()){
+            schedules.add(medicineManager.getMedicineSchedule(med));
+        }
+        return schedules;
+    }
+
+    /**
+     * @return The names of the medicines that are associated with this user.
+     */
+    public String[] getMedicineNames(){
+        return user.getMedicineList().keySet().toArray(new String[0]);
+    }
+
+    public String[] getMedicineInfo(String medName){
+        Medicine medicine = user.getMedicine(medName);
+        return medicineManager.getMedicineInfo(medicine);
+    }
+
+    /**
+     * Sets the attributes of the medicine with the given medName, using the information in info.
+     * @param medName       The name of the medicine that will be changed.
+     * @param info          The new information that will replace the old information.
+     */
+    public void editMedicine(String medName, String[] info){
+        // Get the medicine to be edited.
+        Medicine med = user.getMedicine(medName);
+
+        // First create a mapping that maps a variable/attribute name to a value in the list.
+        // The order is pre-determined.
+        Map<String, String> newInfo = new HashMap<>();
+        newInfo.put("name", info[0]);
+        newInfo.put("method of administration", info[1]);
+        newInfo.put("amount", info[2]);
+        newInfo.put("extra instructions", info[3]);
+
+        // Change the mapping in the user's list of medicines.
+
+        // Call medicine manager to edit the medicine.
+        medicineManager.editMedicine(med, newInfo);
+    }
+
+    /**
+     * Changes the mapping so that newName refers to the medicine object instead of oldName.
+     * @param oldName       The old name of the medicine.
+     * @param newName       The new name of the medicine.
+     */
+    public void changeMedicineNameInMapping(String oldName, String newName){
+        user.changeMedicineNameInMapping(oldName, newName);
+    }
+
+    /**
+     * Returns the medicine schedule of the medicine with the given name.
+     * @param medName       The name of the medicine.
+     * @return              The medicine's schedule.
+     */
+    public Schedule getMedicineSchedule(String medName){
+        Medicine med = user.getMedicine(medName);
+        return medicineManager.getMedicineSchedule(med);
+    }
+
+    public void createUserSleepClass(List<Double> times){
+        Sleep sleep = this.sleepManager.createNewSleepClass(times);
+        this.user.setSleepClass(sleep);
+    }
+
+    public void setUserSleepAndWakeUpTimes(List<Double> times){
+        this.sleepManager.setSleepAndWakeUpTimes(this.user.getSleepClass(), times);
+    }
+
+    public List<Double> getSleepAndWakeUpTimes() {
+        return this.sleepManager.getSleepAndWakeUpTimes(this.user.getSleepClass());
     }
 }
