@@ -31,6 +31,7 @@ public class Sleep {
     public void createSleepSchedule(){
         List<Event> events = new ArrayList<>();
         String[]  daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        this.schedule = new OtherActivitiesSchedule();
 
         // Checks if the sleepTime and wakUpTime are negative which indicates that the SleepClass is being created for
         // the first time and therefore there are no set Sleep and wake up times so the SleepSchedule is empty
