@@ -5,11 +5,11 @@ import java.util.List;
 
 public class PrescriptionMedicine {
     private List<Medicine> listOfMedicines;
-    private int prescriptionID;
+    private String prescriptionName;
 
-    public PrescriptionMedicine(List<Medicine> listOfMedicines, int prescriptionID){
+    public PrescriptionMedicine(List<Medicine> listOfMedicines, String prescriptionName){
         this.listOfMedicines = listOfMedicines;
-        this.prescriptionID = prescriptionID;
+        this.prescriptionName = prescriptionName;
     }
 
     /**
@@ -24,12 +24,12 @@ public class PrescriptionMedicine {
         listOfMedicines.removeIf(medicine -> medicine.getMedicineName().equals(name));
     }
 
-    public int getPrescriptionID() {
-        return prescriptionID;
+    public String getPrescriptionName() {
+        return prescriptionName;
     }
 
-    public void setPrescriptionID(int prescriptionID) {
-        this.prescriptionID = prescriptionID;
+    public void setPrescriptionName(String prescriptionName) {
+        this.prescriptionName = prescriptionName;
     }
 
     public String[] getPresMedicines(){

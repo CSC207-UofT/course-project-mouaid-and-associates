@@ -22,7 +22,7 @@ public class ManagementSystem {
     private HashMap<String, User> userDatabase;
     private UserManager userManager;
     private ScheduleManager scheduleManager;
-    private HashMap<Integer, PrescriptionMedicine> prescriptionManager;
+    private HashMap<String, PrescriptionMedicine> prescriptionManager;
 
 //    public ManagementSystem(UserManager userManager, ScheduleManager scheduleManager){
 //        this.userManager = userManager;
@@ -123,11 +123,11 @@ public class ManagementSystem {
      * @param ID the ID
      * @return Returns True if it is in the hashmap and false otherwise
      */
-    public boolean IDChecker(int ID){
-        return this.prescriptionManager.containsKey(ID);
+    public boolean presNameChecker(String presName){
+        return this.prescriptionManager.containsKey(presName);
     }
 
-    public void addNewPrescription(List<String> medicines, int ID){
+    public void addNewPrescription(List<String> medicines, String presName){
         List<Medicine> allMedicines = List.copyOf(userManager.getMedicines().values());
         List<Medicine> presMedicines = new ArrayList<>();
         for(Medicine medicine : allMedicines){
@@ -135,8 +135,8 @@ public class ManagementSystem {
                 presMedicines.add(medicine);
             }
         }
-        PrescriptionMedicine prescriptionMedicine = new PrescriptionMedicine(presMedicines, ID);
-        prescriptionManager.put(ID, prescriptionMedicine);
+        PrescriptionMedicine prescriptionMedicine = new PrescriptionMedicine(presMedicines, presName);
+        prescriptionManager.put(presName, prescriptionMedicine);
     }
 
     /**
@@ -144,29 +144,39 @@ public class ManagementSystem {
      * @param ID The ID of a specific prescription
      * @return A prescriptionMedicine Object
      */
-    public PrescriptionMedicine getPrescription(int ID){
-        return prescriptionManager.get(ID);
+    public PrescriptionMedicine getPrescription(String presName){
+        return prescriptionManager.get(presName);
     }
 
     /**
      * Returns all the IDS of all the prescriptions
      * @return A set of keys
      */
-    public List<Integer> getPrescriptionsIDs(){
+    public List<String> getPrescriptionsNames(){
         return List.copyOf(prescriptionManager.keySet());
     }
-    public void addMedicineToPres(int ID, Medicine medicine){
-        prescriptionManager.get(ID).addMedicine(medicine);
+    public void addMedicineToPres(String presName, Medicine medicine){
+        prescriptionManager.get(presName).addMedicine(medicine);
     }
 
-    public void removeMedicineFromPres(int ID, String name){
-        prescriptionManager.get(ID).removeMedicine(name);
+    /**
+     * Removes a medicine from a given prescription
+     * @param presName the name of the prescription
+     * @param name the name of the medicine
+     */
+    public void removeMedicineFromPres(String presName, String name){
+        prescriptionManager.get(presName).removeMedicine(name);
     }
-    public void removePrescription(String ID){
-        PrescriptionMedicine prescription = prescriptionManager.get(Integer.parseInt(ID));
+
+    /**
+     * Removes a prescription from the user's list of prescriptions
+     * @param presName The name of the prescription
+     */
+    public void removePrescription(String presName){
+        PrescriptionMedicine prescription = prescriptionManager.get(presName);
         String[] medicines = prescription.getPresMedicines();
         userManager.removeMeds(medicines);
-        prescriptionManager.remove(Integer.parseInt(ID));
+        prescriptionManager.remove(presName);
     }
 
 }

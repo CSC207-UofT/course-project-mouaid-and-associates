@@ -107,7 +107,7 @@ public class AppManager {
         //Done: call managementSystem.getUserInfo() to get user information.
         String[] userInfo = managementSystem.getUserInfo().toArray(new String[0]);
         Window viewAccountWindow = windows.get("View Account Window");
-        List<Integer> prescriptionsIDS = managementSystem.getPrescriptionsIDs();
+        List<String> prescriptionsIDS = managementSystem.getPrescriptionsNames();
 
         // create a new array for properly formatted strings.
         String[] formattedUserInfo = new String[userInfo.length + prescriptionsIDS.size() + 2];
@@ -254,29 +254,13 @@ public class AppManager {
         List<String[]> data = ((PrescriptionWindow) addPrescriptionWindow).getUserPrescriptionInput();
         List<String> medicinesNames = new ArrayList<>();
         for(String[] medicine : data){
-            addMedicineHelper(medicine);
-            medicinesNames.add(medicine[0]);
+            if(medicine.length > 1){
+                addMedicineHelper(medicine);
+                medicinesNames.add(medicine[0]);
+            }
         }
-        managementSystem.addNewPrescription(medicinesNames, generateID());
+        managementSystem.addNewPrescription(medicinesNames, data.get(0)[0]);
         showAccountWindow();
-
-    }
-
-    /**
-     * Generates an ID for a prescription
-     * @return the ID
-     */
-    private int generateID() {
-        Random rand = new Random();
-        while(true){
-            int id = rand.nextInt(10000);
-            if(managementSystem.IDChecker(id)){
-            }
-            else{
-                return id;
-            }
-
-        }
 
     }
 
@@ -343,8 +327,8 @@ public class AppManager {
 
         showAccountWindow();
     }
-    public List<Integer> getPrescriptionID(){
-        return managementSystem.getPrescriptionsIDs();
+    public List<String> getPrescriptionNames(){
+        return managementSystem.getPrescriptionsNames();
     }
 
     /**
