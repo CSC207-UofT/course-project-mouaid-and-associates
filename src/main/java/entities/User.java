@@ -95,10 +95,18 @@ public class User {
 
 //    /**
 
+    /**
+     * Set the SleepClass instance with a Sleep Class
+     * @param sleep the Sleep Class to be set
+     */
     public void setSleepClass(Sleep sleep){
         this.sleepClass = sleep;
     }
 
+    /**
+     * Get the Sleep Class of this User class
+     * @return This User's Sleep Class
+     */
     public Sleep getSleepClass() {
         return sleepClass;
     }

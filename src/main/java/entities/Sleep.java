@@ -7,7 +7,11 @@ import java.util.Map;
 
 public class Sleep {
     /**
-     *
+     * This is a Class that stores the Does everything related to Sleeping.
+     * Instance Attributes:
+     * sleepSchedule: This Sleep Class' SleepSchedule
+     * sleepTime: The sleep time for this Sleep Class
+     * wakeUpTime: The wakeup time for this Sleep Class
      */
 
     private SleepSchedule sleepSchedule;
@@ -15,11 +19,15 @@ public class Sleep {
     private Double wakeUpTime;
 
 
-    public Sleep(List<Double> times) {
-        this.sleepTime = times.get(0);
-        this.wakeUpTime = times.get(1);
+    public Sleep() {
+        this.sleepTime = -1.0;
+        this.wakeUpTime = -1.0;
     }
 
+    /**
+     * Creates a SleepSchedule for this Sleep Class. The SleepSchedule is empty if the class is being instantiated for
+     * the first time and is not empty after the user sets Sleep and wake up times
+     */
     public void createSleepSchedule(){
         List<Event> events = new ArrayList<>();
         String[]  daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
@@ -40,15 +48,19 @@ public class Sleep {
         }
         this.sleepSchedule = new SleepSchedule(events);
     }
-    public SleepSchedule getMySleepSchedule(){return this.sleepSchedule; }
 
-    public List<Double> getSleepAndWakeUpTime(){
-        List<Double> times = new ArrayList<>();
-        times.add(this.sleepTime);
-        times.add(this.wakeUpTime);
-        return times;
+    /**
+     * Get the SleepSchedule of this Sleep Class
+     * @return This Sleep Class' SleepSchedule
+     */
+    public SleepSchedule getMySleepSchedule(){
+        return this.sleepSchedule;
     }
 
+    /**
+     * Set the Sleep and wakeup times of this Sleep Class
+     * @param times A list containing the new sleep time and wakeup time
+     */
     public void setSleepAndWakeUpTime(List<Double> times) {
         this.sleepTime = times.get(0);
         this.wakeUpTime = times.get(1);
