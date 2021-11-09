@@ -167,6 +167,19 @@ public class UserManager {
         return medicineManager.getMedicineSchedule(med);
     }
 
+    /**
+     * Returns all the schedules related to this User.
+     * @return  A list of schedules associated with the user.
+     */
+    public List<Schedule> getSchedules(){
+        // Initialize a schedule list, and get the medicine schedules.
+        List<Schedule> schedules = getMedicineSchedules();
+        // Gets the sleep schedule
+        schedules.add(getSleepSchedule());
+
+        return schedules;
+    }
+
     public void createUserSleepClass(List<Double> times){
         Sleep sleep = this.sleepManager.createNewSleepClass(times);
         this.user.setSleepClass(sleep);

@@ -22,11 +22,6 @@ public class ManagementSystem {
     private UserManager userManager;
     private ScheduleManager scheduleManager;
 
-//    public ManagementSystem(UserManager userManager, ScheduleManager scheduleManager){
-//        this.userManager = userManager;
-//        this.scheduleManager = scheduleManager;
-//    }
-
     /**
      * Creates a new ManagementSystem instance. Also
      * Creates a new UserManager and ScheduleManager.

@@ -23,15 +23,20 @@ public class Sleep {
     public void createSleepSchedule(){
         List<Event> events = new ArrayList<>();
         String[]  daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-        for (String i: daysOfWeek){
-            Map<String, Double> sleep = new HashMap<>();
-            Map<String, Double> wake = new HashMap<>();
-            sleep.put(i,this.sleepTime);
-            wake.put(i,this.wakeUpTime);
-            Event sleepEvent = new Event("Sleep Time", "When you sleep", sleep);
-            Event wakeEvent = new Event("Wake Up Time", "When you wake up", wake);
-            events.add(sleepEvent);
-            events.add(wakeEvent);
+
+        // Checks if the sleepTime and wakUpTime are negative which indicates that the SleepClass is being created for
+        // the first time and therefore there are no set Sleep and wake up times so the SleepSchedule is empty
+        if (!(sleepTime < 0 || wakeUpTime < 0)) {
+            for (String i : daysOfWeek) {
+                Map<String, Double> sleep = new HashMap<>();
+                Map<String, Double> wake = new HashMap<>();
+                sleep.put(i, this.sleepTime);
+                wake.put(i, this.wakeUpTime);
+                Event sleepEvent = new Event("Sleep Time", "When you sleep", sleep);
+                Event wakeEvent = new Event("Wake Up Time", "When you wake up", wake);
+                events.add(sleepEvent);
+                events.add(wakeEvent);
+            }
         }
         this.sleepSchedule = new SleepSchedule(events);
     }
