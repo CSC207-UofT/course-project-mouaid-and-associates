@@ -75,12 +75,7 @@ public class ManagementSystem {
      */
     public String makeSchedule(){
       
-        List<Schedule> scheduleList = userManager.getMedicineSchedules();
-
-       
-        // Add the SleepSchedule to the list of Schedules
-        // TODO: Change it so that we hide the implementation details from Management System.
-        scheduleList.add(userManager.sleepManager.getSleepSchedule(userManager.getUser().getSleepClass()));
+        List<Schedule> scheduleList = userManager.getSchedules();
 
         return scheduleManager.compileSchedule(scheduleList).toString();
     }
@@ -126,6 +121,14 @@ public class ManagementSystem {
         if (!info[0].equals("")){
             userManager.changeMedicineNameInMapping(medName, info[0]);
         }
+    }
+
+    /**
+     * Sets new Sleep and Wakup times for the User
+     * @param times the Sleep and Wakeup times
+     */
+    public void setSleepAndWakeUpTimes(List<Double> times){
+        this.userManager.setUserSleepAndWakeUpTimes(times);
     }
 
 }
