@@ -290,13 +290,13 @@ public class AppManager {
         addMedicineHelper(data);
 
         //Done: call showAccountWindow
-        showAccountWindow();
+        return "View Account Window";
     }
 
     /**
      * Adds a new prescription to the current user's prescriptions list
      */
-    public void addPrescription(){
+    public String addPrescription(){
         Window addPrescriptionWindow = windows.get("Add Prescription Window");
         List<String[]> data = ((PrescriptionWindow) addPrescriptionWindow).getUserPrescriptionInput();
         List<String> medicinesNames = new ArrayList<>();
@@ -307,18 +307,18 @@ public class AppManager {
             }
         }
         managementSystem.addNewPrescription(medicinesNames, data.get(0)[0]);
-        showAccountWindow();
+        return "View Account Window";
 
     }
 
     /**
      * Removes a prescription from the current user's prescriptions list
      */
-    public void removePrescription(){
+    public String removePrescription(){
         Window removePrescriptionWindow = windows.get("Remove Prescription Window");
         String[] data = removePrescriptionWindow.getUserInput();
         managementSystem.removePrescription(data[0]);
-        showAccountWindow();
+        return "View Account Window";
     }
 
     private void addMedicineHelper(String[] data) {
@@ -342,9 +342,6 @@ public class AppManager {
 
         //Done: call managementSystem.addNewMedicine() and pass in this information.
         managementSystem.addNewMedicine(name, amount, unitOfMeasurement, methodOfAdmin, extraInstruct, times);
-
-        //Done: call showAccountWindow
-        return "View Account Window";
     }
 
     /**
@@ -392,10 +389,6 @@ public class AppManager {
             }
 
         }
-
-        //Done: call managementSystem.addNewMedicine() and pass in this information.
-        managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
-
     }
     /**
      * Shows the final schedule by using managementSystem to make the schedule and using the TimeTableWindow class
