@@ -177,7 +177,8 @@ public class AppManager {
     }
 
     /**
-     *
+     * Allows the user to pick a specific medicine and edit that medication's information and the times
+     * to take that medication.
      */
     public String editMedicine(){
         // First instantiate a window for EditMedicineWindow
@@ -216,8 +217,8 @@ public class AppManager {
         changes = editMedicineWindow.getUserInput();
 
         // Format the given times.
-        if (changes.length > 4) {
-            formatTimes(changes, changes[4], changes[5], newTimes);
+        if (changes.length > 5) {
+            formatTimes(changes, changes[5], changes[6], newTimes);
         }
 
         // Call management system to edit the entities.
@@ -266,15 +267,16 @@ public class AppManager {
 
         String name = data[0];
         String methodOfAdmin = data[1];
+        String unitOfMeasurement = data[2];
         int amount;
-        String extraInstruct = data[3];
-        String wOrD = data[4]; // Stores frequency. Weekly/Daily
-        String startDay = data[5];
+        String extraInstruct = data[4];
+        String wOrD = data[5]; // Stores frequency. Weekly/Daily
+        String startDay = data[6];
         List<Map<String, Double>> times = new ArrayList<>();
 
         // In case the user decided to not enter a proper value.
         try {
-            amount = Integer.parseInt(data[2]);
+            amount = Integer.parseInt(data[3]);
         } catch (NumberFormatException e) {
             amount = -1;
         }
@@ -282,7 +284,7 @@ public class AppManager {
         formatTimes(data, wOrD, startDay, times);
 
         //Done: call managementSystem.addNewMedicine() and pass in this information.
-        managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
+        managementSystem.addNewMedicine(name, amount, unitOfMeasurement, methodOfAdmin, extraInstruct, times);
 
         //Done: call showAccountWindow
         return "View Account Window";
@@ -296,15 +298,15 @@ public class AppManager {
      * @param times     The mapping on which we will save the formatted times.
      */
     private void formatTimes(String[] data, String wOrD, String startDay, List<Map<String, Double>> times) {
-        for(int i = 0; i < (data.length - 6); i++) {
+        for(int i = 0; i < (data.length - 7); i++) {
             if (wOrD.equals("weekly")) {
                 Map<String, Double> map = new HashMap<>();
-                map.put(DAYS[Integer.parseInt(startDay) - 1], Double.parseDouble(data[i + 6]));
+                map.put(DAYS[Integer.parseInt(startDay) - 1], Double.parseDouble(data[i + 7]));
                 times.add(map);
             } else {
                 for (String day : DAYS) {
                     Map<String, Double> map2 = new HashMap<>();
-                    map2.put(day, Double.parseDouble(data[i + 6]));
+                    map2.put(day, Double.parseDouble(data[i + 7]));
                     times.add(map2);
                 }
             }

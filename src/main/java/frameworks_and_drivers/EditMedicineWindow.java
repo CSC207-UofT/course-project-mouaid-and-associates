@@ -18,16 +18,17 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
     public String[] getUserInput() {
         String choice = "0";
         String[] times;
-        List<String> changes = new ArrayList<>(List.of(new String[]{"", "", "", ""}));
+        List<String> changes = new ArrayList<>(List.of(new String[]{"", "", "", "", ""}));
 
-        while (!choice.equals("6")){
+        while (!choice.equals("7")){
             System.out.println("Enter the number of the information you would like to change:");
             System.out.println("(1) Name of the medicine");
-            System.out.println("(2) Method of administration");
-            System.out.println("(3) Amount");
-            System.out.println("(4) Extra Instructions");
-            System.out.println("(5) The times to take the medicine");
-            System.out.println("(6) Go back to Account page");
+            System.out.println("(2) The unit of measurement");
+            System.out.println("(3) Method of Administration");
+            System.out.println("(4) Dosage amount");
+            System.out.println("(5) Extra Instructions");
+            System.out.println("(6) The times to take the medicine");
+            System.out.println("(7) Go back to Account page");
 
             choice = scanner.nextLine();
 
@@ -36,21 +37,26 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
                 System.out.println("Enter the new name of the medicine:");
                 changes.set(0, scanner.nextLine());
             } else if (choice.equals("2")){
+                System.out.println("Enter the new unit of measurement for the medicine \n " +
+                        "(e.g. mL, pill, L, g, mg, tsp, tbsp, pea sized drop, etc.");
+                changes.set(1, scanner.nextLine());
+            } else if (choice.equals("3")) {
                 // get method of administration
                 System.out.println("Enter the new method of administration:");
-                changes.set(1, scanner.nextLine());
-            } else if (choice.equals("3")){
-                // get amount
-                System.out.println("Enter the new amount of the medicine:");
                 changes.set(2, scanner.nextLine());
             } else if (choice.equals("4")){
-                // get extra instructions
-                System.out.println("Enter the new extra instructions:");
+                // get amount
+                System.out.println("Enter the new dosage of the medicine. " +
+                        "Enter the number only, as it will be measured in the units specified:");
                 changes.set(3, scanner.nextLine());
             } else if (choice.equals("5")){
+                // get extra instructions
+                System.out.println("Enter the new extra instructions:");
+                changes.set(4, scanner.nextLine());
+            } else if (choice.equals("6")){
                 // If the user has entered times beforehand, clear the previous entry.
-                if (changes.size() > 4){
-                    changes.subList(4, changes.size()).clear();
+                if (changes.size() > 5){
+                    changes.subList(5, changes.size()).clear();
                 }
 
                 changes.add(super.selectWD(scanner));

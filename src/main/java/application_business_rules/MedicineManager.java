@@ -22,10 +22,11 @@ public class MedicineManager {
      * @param extraInstructions Extra instructions for this medicine
      * @param times The times to take this medicine
      */
-    public Medicine createNewMedicine(String medicineName, int amount,
+    public Medicine createNewMedicine(String medicineName, int amount, String unitOfMeasurement,
                                       String methodOfAdministration, String extraInstructions,
                                       List<Map<String, Double>> times){
-        Medicine medicine = new Medicine(medicineName, amount, methodOfAdministration, extraInstructions);
+        Medicine medicine = new Medicine(medicineName, amount, unitOfMeasurement,
+                methodOfAdministration, extraInstructions);
 
         // Add a medicine schedule
         medicine.addMedicineSchedule(times);
@@ -64,6 +65,10 @@ public class MedicineManager {
         }
         if(!newInfo.get("extra instructions").equals("")){
             med.setExtraInstructions(newInfo.get("extra instructions"));
+            makeNewDescription = true;
+        }
+        if(!newInfo.get("unit of measurement").equals("")){
+            med.setUnitOfMeasurement(newInfo.get("unit of measurement"));
             makeNewDescription = true;
         }
         if(!newInfo.get("amount").equals("")){
