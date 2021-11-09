@@ -47,6 +47,10 @@ public class Event implements Comparable<Event>{
         return name;
     }
 
+    public void setTimeStamp(Map<String, Double> timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
     /**
      * Sets the name of the event.
      * @param name  The name of the event
@@ -128,12 +132,12 @@ public class Event implements Comparable<Event>{
         return time;
     }
 
-    //    /**
-    //     * Sets the description of the event.
-    //     * @param description  The description of the event
-    //     */
-    //    public void setDescription(String description) {
-    //        this.description = description;
-    //    }
+    /**
+     * Sets the description of the event.
+     * @param description  The description of the event
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }

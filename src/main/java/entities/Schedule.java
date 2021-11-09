@@ -28,14 +28,6 @@ public class  Schedule {
     }
 
     /**
-     * Sets the events in this schedule
-     * @param events The events to be set to this schedule
-     */
-    public void setEvents(List<Event> events) {
-        this.events = events;
-    }
-
-    /**
      *  Adds a list of events to this schedule.
      * @param events List of events to be added to the schedule.
      */
@@ -192,6 +184,39 @@ public class  Schedule {
             times[i] = day + ": " + hour;
         }
         return times;
+    }
+
+    /**
+     * Sets the times of the events, ONLY IF all the event descriptions and names are the same.
+     *
+     * Preconditions:
+     * - All the names and descriptions of the events of this schedule are the same.
+     * @param times     The new times of the events.
+     */
+    public void setEventTimes(List<Map<String, Double>> times){
+        // Since all the event names and descriptions are the same, just get the name and
+        // descriptions from the first event.
+        String eventName = events.get(0).getName();
+        String eventDescription = events.get(0).getDescription();
+
+        // Delete all the old events:
+        events.clear();
+
+        for (Map<String, Double> time: times){
+            addEvent(eventName, eventDescription, time);
+        }
+    }
+
+    public void setEventNames(String newName){
+        for (Event event : events) {
+            event.setName(newName);
+        }
+    }
+
+    public void setEventDescriptions(String newDescription){
+        for (Event event : events) {
+            event.setDescription(newDescription);
+        }
     }
 
 
