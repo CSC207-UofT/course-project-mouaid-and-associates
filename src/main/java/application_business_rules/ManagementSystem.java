@@ -93,10 +93,11 @@ public class ManagementSystem {
      *                                 to one time stamp. Thus taking the same medication multiple times leads to
      *                                 multiple time stamps, hence the list.
      */
-    public void addNewMedicine(String medicineName, int amount,
+    public void addNewMedicine(String medicineName, int amount, String unitOfMeasurement,
                                String methodOfAdministration, String extraInstructions,
                                List<Map<String, Double>> times) {
-        userManager.createMedicine(medicineName, amount, methodOfAdministration, extraInstructions, times);
+        userManager.createMedicine(medicineName, amount, unitOfMeasurement,
+                methodOfAdministration, extraInstructions, times);
     }
 
     public String[] getMedicineInfo(String medName){
@@ -105,8 +106,8 @@ public class ManagementSystem {
 
     /**
      * Edits a medicine using the given info. The first element is the new name of the medicine.
-     * The second element is the new method of administration, the third element is the new amount,
-     * and the fourth element is the new extra instructions.
+     * The second element is the new unit of measurement, the third element is the new method of administration,
+     * the fourth element is the new amount, and the fifth element is the new extra instructions.
      *
      * The list of mappings called times is for the new times to take the medicine.
      *

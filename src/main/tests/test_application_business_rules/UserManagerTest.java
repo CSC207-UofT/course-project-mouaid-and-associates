@@ -15,8 +15,8 @@ public class UserManagerTest {
     public void TestAddNewUser() {
         MedicineManager medicineManager = new MedicineManager();
         UserManager usermanager = new UserManager();
-        Medicine medicine = new Medicine("Panadol", 40, "Eat",
-                "No extra instructions");
+        Medicine medicine = new Medicine("Panadol", 40, "pills",
+                "Eat", "No extra instructions");
         User user =  usermanager.addNewUser("Mohamed", "moe123");
         assertEquals(usermanager.getUser(), user);
     }
