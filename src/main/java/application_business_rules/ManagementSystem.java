@@ -6,6 +6,7 @@ import entities.Medicine;
 import entities.MedicineSchedule;
 import entities.Schedule;
 import entities.User;
+import entities.PrescriptionMedicine;
 
 import javax.lang.model.type.NullType;
 
@@ -21,6 +22,7 @@ public class ManagementSystem {
     private HashMap<String, User> userDatabase;
     private UserManager userManager;
     private ScheduleManager scheduleManager;
+    private HashMap<String, PrescriptionMedicine> prescriptionManager;
 
     /**
      * Creates a new ManagementSystem instance. Also
@@ -30,6 +32,7 @@ public class ManagementSystem {
         this.userManager = new UserManager();
         this.scheduleManager = new ScheduleManager();
         this.userDatabase = new HashMap<>();
+        this.prescriptionManager = new HashMap<>();
     }
     public Map<String, User> getDatabase(){
         return this.userDatabase;
@@ -60,6 +63,7 @@ public class ManagementSystem {
 
         return userInfo;
     }
+
 
     /**
      * Removes the medicines from the list of medicines the user has.
@@ -105,6 +109,66 @@ public class ManagementSystem {
     }
 
     /**
+     * Checks if the ID is in the hashmap
+     * @param presName the ID
+     * @return Returns True if it is in the hashmap and false otherwise
+     */
+    public boolean presNameChecker(String presName){
+        return this.prescriptionManager.containsKey(presName);
+    }
+
+    public void addNewPrescription(List<String> medicines, String presName){
+        List<Medicine> allMedicines = List.copyOf(userManager.getMedicines().values());
+        List<Medicine> presMedicines = new ArrayList<>();
+        for(Medicine medicine : allMedicines){
+            if (medicines.contains(medicine.getMedicineName())){
+                presMedicines.add(medicine);
+            }
+        }
+        PrescriptionMedicine prescriptionMedicine = new PrescriptionMedicine(presMedicines, presName);
+        prescriptionManager.put(presName, prescriptionMedicine);
+    }
+
+    /**
+     * Gets a prescription using the given ID
+     * @param presName The ID of a specific prescription
+     * @return A prescriptionMedicine Object
+     */
+    public PrescriptionMedicine getPrescription(String presName){
+        return prescriptionManager.get(presName);
+    }
+
+    /**
+     * Returns all the IDS of all the prescriptions
+     * @return A set of keys
+     */
+    public List<String> getPrescriptionsNames(){
+        return List.copyOf(prescriptionManager.keySet());
+    }
+    public void addMedicineToPres(String presName, Medicine medicine){
+        prescriptionManager.get(presName).addMedicine(medicine);
+    }
+
+    /**
+     * Removes a medicine from a given prescription
+     * @param presName the name of the prescription
+     * @param name the name of the medicine
+     */
+    public void removeMedicineFromPres(String presName, String name){
+        prescriptionManager.get(presName).removeMedicine(name);
+    }
+
+    /**
+     * Removes a prescription from the user's list of prescriptions
+     * @param presName The name of the prescription
+     */
+    public void removePrescription(String presName){
+        PrescriptionMedicine prescription = prescriptionManager.get(presName);
+        String[] medicines = prescription.getPresMedicines();
+        userManager.removeMeds(medicines);
+        prescriptionManager.remove(presName);
+
+    /**
      * Edits a medicine using the given info. The first element is the new name of the medicine.
      * The second element is the new unit of measurement, the third element is the new method of administration,
      * the fourth element is the new amount, and the fifth element is the new extra instructions.
@@ -130,6 +194,7 @@ public class ManagementSystem {
      */
     public void setSleepAndWakeUpTimes(List<Double> times){
         this.userManager.setUserSleepAndWakeUpTimes(times);
+
     }
 
 }

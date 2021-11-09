@@ -3,7 +3,7 @@ package interface_adapters;
 import application_business_rules.ManagementSystem;
 
 import java.util.*;
-
+import java.util.Random;
 public class AppManager {
     /** This is the main class that runs the entire app.
      *
@@ -19,7 +19,8 @@ public class AppManager {
      * - The keys of windows are {"Login Window", "Create Account Window", "Start Screen Window",
      *                            "TimeTable Window", "View Account Window", "Add Medicine Window",
      *                            "Edit Medicine Window", "Remove Medicine Window",
-     *                            "Choose Medicine To Edit Window", "Set Sleep Timings Window"}
+     *                            "Choose Medicine To Edit Window", "Set Sleep Timings Window",
+     *                            "Remove Prescription Window", "Add Prescription Window" }
      *
      *                            * More may be added in the future.
      *
@@ -74,7 +75,13 @@ public class AppManager {
                     next_window = removeMedicine();
                     break;
                 case "Set Sleep Timings Window":
-                     next_window = setSleepTimes();
+                    next_window = setSleepTimes();
+                    break;
+                case "Add Prescription Window":
+                    next_window = addPrescription();
+                    break;
+                case "Remove Prescription Window":
+                    next_window = removePrescription();
                     break;
                 default:
                     next_window = "Log Out";
@@ -142,19 +149,25 @@ public class AppManager {
         //Done: call managementSystem.getUserInfo() to get user information.
         String[] userInfo = managementSystem.getUserInfo().toArray(new String[0]);
         Window viewAccountWindow = windows.get("View Account Window");
+        List<String> prescriptionsIDS = managementSystem.getPrescriptionsNames();
 
         // create a new array for properly formatted strings.
-        String[] formattedUserInfo = new String[userInfo.length + 1];
+        String[] formattedUserInfo = new String[userInfo.length + prescriptionsIDS.size() + 2];
 
         formattedUserInfo[0] = "Name: " + userInfo[0];
         formattedUserInfo[1] = "Username: " + userInfo[1];
         formattedUserInfo[2] = "List of Medicines: ";
+        formattedUserInfo[userInfo.length + 1] = "List of Prescriptions: ";
 
         // Format the list of medicines names and add them.
-        for (int i = 3; i < formattedUserInfo.length; i++){
+        for (int i = 3; i < formattedUserInfo.length - (prescriptionsIDS.size() + 1); i++){
             formattedUserInfo[i] = (" - " + userInfo[i - 1]);
         }
-
+        // Format the list of prescriptions IDs and add them
+        int accumulator = 0;
+        for(int i = userInfo.length + 2; i < formattedUserInfo.length; i++){
+            formattedUserInfo[i] = (" - " + prescriptionsIDS.get(accumulator));
+        }
         if (viewAccountWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) viewAccountWindow).displayInfo(formattedUserInfo);
         }
@@ -171,6 +184,10 @@ public class AppManager {
             return "TimeTable Window";
         } else if (choice.equals("edit")){
             return "Edit Medicine Window";
+        } else if (choice.equals("pres")){
+            return "Add Prescription Window";
+        } else if (choice.equals("remove pres")){
+            return "Remove Prescription Window";
         } else if (choice.equals("remove")) {
             return "Remove Medicine Window";
         } else if (choice.equals("set sleep times")) {
@@ -270,6 +287,41 @@ public class AppManager {
 
         String[] data = addMedicineWindow.getUserInput();
 
+        addMedicineHelper(data);
+
+        //Done: call showAccountWindow
+        showAccountWindow();
+    }
+
+    /**
+     * Adds a new prescription to the current user's prescriptions list
+     */
+    public void addPrescription(){
+        Window addPrescriptionWindow = windows.get("Add Prescription Window");
+        List<String[]> data = ((PrescriptionWindow) addPrescriptionWindow).getUserPrescriptionInput();
+        List<String> medicinesNames = new ArrayList<>();
+        for(String[] medicine : data){
+            if(medicine.length > 1){
+                addMedicineHelper(medicine);
+                medicinesNames.add(medicine[0]);
+            }
+        }
+        managementSystem.addNewPrescription(medicinesNames, data.get(0)[0]);
+        showAccountWindow();
+
+    }
+
+    /**
+     * Removes a prescription from the current user's prescriptions list
+     */
+    public void removePrescription(){
+        Window removePrescriptionWindow = windows.get("Remove Prescription Window");
+        String[] data = removePrescriptionWindow.getUserInput();
+        managementSystem.removePrescription(data[0]);
+        showAccountWindow();
+    }
+
+    private void addMedicineHelper(String[] data) {
         String name = data[0];
         String methodOfAdmin = data[1];
         String unitOfMeasurement = data[2];
@@ -340,8 +392,11 @@ public class AppManager {
             }
 
         }
-    }
 
+        //Done: call managementSystem.addNewMedicine() and pass in this information.
+        managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
+
+    }
     /**
      * Shows the final schedule by using managementSystem to make the schedule and using the TimeTableWindow class
      * to display the final schedule. It then gets user input from TimeTableWindow and calls ViewAccountWindow.
@@ -360,6 +415,9 @@ public class AppManager {
         // For now, we only have one option, which is to take the user back to the account page.
 
         return "View Account Window";
+    }
+    public List<String> getPrescriptionNames(){
+        return managementSystem.getPrescriptionsNames();
     }
 
     /**
