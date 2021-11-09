@@ -19,7 +19,7 @@ public class AppManager {
      * - The keys of windows are {"Login Window", "Create Account Window", "Start Screen Window",
      *                            "TimeTable Window", "View Account Window", "Add Medicine Window",
      *                            "Edit Medicine Window", "Remove Medicine Window",
-     *                            "Choose Medicine To Edit Window"}
+     *                            "Choose Medicine To Edit Window", "Set Sleep Timings Window"}
      *
      *                            * More may be added in the future.
      *
@@ -72,6 +72,9 @@ public class AppManager {
                     break;
                 case "Remove Medicine Window":
                     next_window = removeMedicine();
+                    break;
+                case "Set Sleep Timings Window":
+                     next_window = setSleepTimes();
                     break;
                 default:
                     next_window = "Log Out";
@@ -168,8 +171,10 @@ public class AppManager {
             return "TimeTable Window";
         } else if (choice.equals("edit")){
             return "Edit Medicine Window";
-        } else if (choice.equals("remove")){
+        } else if (choice.equals("remove")) {
             return "Remove Medicine Window";
+        } else if (choice.equals("set sleep times")) {
+            return "Set Sleep Timings Window";
         } else {
             return "Log Out";
         }
@@ -285,6 +290,29 @@ public class AppManager {
         managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
 
         //Done: call showAccountWindow
+        return "View Account Window";
+    }
+
+    /**
+     * Shows the set sleep times window, and allows the user to set their sleep schedule.
+     * @return  The name of the next window to open.
+     */
+    public String setSleepTimes(){
+        // Call SetSleepTimingsWindow to display the fields to enter the sleep and wakeup times
+        Window setSleepTimingsWindow = windows.get("Set Sleep Timings Window");
+
+        String[] stringTimings = setSleepTimingsWindow.getUserInput();
+
+        Double sleepTime = Double.parseDouble(stringTimings[0]);
+        Double wakeUpTime = Double.parseDouble(stringTimings[1]);
+
+        List<Double> times = new ArrayList<>();
+        times.add(sleepTime);
+        times.add(wakeUpTime);
+
+        this.managementSystem.setSleepAndWakeUpTimes(times);
+
+        // Return to the account page.
         return "View Account Window";
     }
 

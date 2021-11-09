@@ -1,12 +1,6 @@
 package application_business_rules;
 
-import entities.Medicine;
-
-import entities.Schedule;
-
-import entities.Sleep;
-
-import entities.User;
+import entities.*;
 
 import java.util.*;
 import java.util.concurrent.ScheduledExecutorService;
@@ -47,6 +41,7 @@ public class UserManager {
      */
     public User addNewUser(String name,String username){
         this.user = new User(name, username);
+        createUserSleepClass();// Create a default Sleep Class with an empty SleepSchedule
         return this.user;
     }
 
@@ -167,16 +162,40 @@ public class UserManager {
         return medicineManager.getMedicineSchedule(med);
     }
 
-    public void createUserSleepClass(List<Double> times){
-        Sleep sleep = this.sleepManager.createNewSleepClass(times);
+    /**
+     * Returns all the schedules related to this User.
+     * @return  A list of schedules associated with the user.
+     */
+    public List<Schedule> getSchedules(){
+        // Initialize a schedule list, and get the medicine schedules.
+        List<Schedule> schedules = getMedicineSchedules();
+        // Gets the sleep schedule
+        schedules.add(getSleepSchedule());
+
+        return schedules;
+    }
+
+    /**
+     * Create a new Sleep Class and assign it to the User's Sleep Class
+     */
+    public void createUserSleepClass(){
+        Sleep sleep = this.sleepManager.createNewSleepClass();
         this.user.setSleepClass(sleep);
     }
 
+    /**
+     * Set the Sleep and wakeup times of the users Sleep Class
+     * @param times A list containing the new sleep time and wakeup time of the user
+     */
     public void setUserSleepAndWakeUpTimes(List<Double> times){
         this.sleepManager.setSleepAndWakeUpTimes(this.user.getSleepClass(), times);
     }
 
-    public List<Double> getSleepAndWakeUpTimes() {
-        return this.sleepManager.getSleepAndWakeUpTimes(this.user.getSleepClass());
+    /**
+     * Get the Sleep Schedule of the User
+     * @return The User's SleepSchedule
+     */
+    public Schedule getSleepSchedule(){
+        return this.sleepManager.getSleepSchedule(this.user.getSleepClass());
     }
 }
