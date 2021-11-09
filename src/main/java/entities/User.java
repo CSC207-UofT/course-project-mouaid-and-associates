@@ -19,6 +19,7 @@ public class User {
     private String userName;
     private HashMap<String, Medicine> medicineList;
     private Sleep sleepClass;
+    private Meal mealClass;
 
     public User(String name, String userName){
         this.name = name;
@@ -108,8 +109,14 @@ public class User {
      * @return This User's Sleep Class
      */
     public Sleep getSleepClass() {
-        return sleepClass;
+        return this.sleepClass;
     }
+
+    public void setMealClass(Meal meal){
+        this.mealClass = meal;
+    }
+
+    public Meal getMealClass(){ return this.mealClass;}
 
     //    /**
 

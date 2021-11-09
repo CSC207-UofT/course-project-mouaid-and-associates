@@ -3,7 +3,6 @@ package application_business_rules;
 import entities.*;
 
 import java.util.*;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class UserManager {
     /**
@@ -18,7 +17,7 @@ public class UserManager {
      */
     private User user;
     public MedicineManager medicineManager;
-    public SleepManager sleepManager;
+    public OtherActivitiesManager otherActivitiesManager;
 
 //    public UserManager(User user){
 //        this.user = user;
@@ -31,7 +30,7 @@ public class UserManager {
      */
     public UserManager(){
         this.medicineManager = new MedicineManager();
-        this.sleepManager = new SleepManager();
+        this.otherActivitiesManager = new OtherActivitiesManager();
     }
 
     /**
@@ -41,7 +40,8 @@ public class UserManager {
      */
     public User addNewUser(String name,String username){
         this.user = new User(name, username);
-        createUserSleepClass();// Create a default Sleep Class with an empty SleepSchedule
+        createUserSleepClass();// Create a default Sleep Class with an empty OtherActivitiesSchedule
+        createUserMealClass();// Create a default Meal Class with an empty OtherActivitiesSchedule
         return this.user;
     }
 
@@ -170,7 +170,8 @@ public class UserManager {
         // Initialize a schedule list, and get the medicine schedules.
         List<Schedule> schedules = getMedicineSchedules();
         // Gets the sleep schedule
-        schedules.add(getSleepSchedule());
+        schedules.add(getActivitySchedule(this.user.getSleepClass()));
+
 
         return schedules;
     }
@@ -179,23 +180,29 @@ public class UserManager {
      * Create a new Sleep Class and assign it to the User's Sleep Class
      */
     public void createUserSleepClass(){
-        Sleep sleep = this.sleepManager.createNewSleepClass();
+        Sleep sleep = this.otherActivitiesManager.createNewSleepClass();
         this.user.setSleepClass(sleep);
     }
 
+    public void createUserMealClass(){
+        Meal meal = this.otherActivitiesManager.createNewMealClass();
+        this.user.setMealClass(meal);
+    }
+
+
     /**
-     * Set the Sleep and wakeup times of the users Sleep Class
-     * @param times A list containing the new sleep time and wakeup time of the user
+     * Set the Activity times of the User's given OtherActivities Class
+     * @param times A list containing the new activity time
      */
-    public void setUserSleepAndWakeUpTimes(List<Double> times){
-        this.sleepManager.setSleepAndWakeUpTimes(this.user.getSleepClass(), times);
+    public void setActivityTimes(OtherActivities activities, List<Double> times){
+        this.otherActivitiesManager.setActivityTimes(activities, times);
     }
 
     /**
-     * Get the Sleep Schedule of the User
-     * @return The User's SleepSchedule
+     * Get the Activity Schedule of the given User's Activity
+     * @return The User's ActivitySchedule for the given Activity
      */
-    public Schedule getSleepSchedule(){
-        return this.sleepManager.getSleepSchedule(this.user.getSleepClass());
+    public Schedule getActivitySchedule(OtherActivities activity){
+        return this.otherActivitiesManager.getActivitySchedule(activity);
     }
 }
