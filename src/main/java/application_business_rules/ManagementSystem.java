@@ -120,7 +120,7 @@ public class ManagementSystem {
 
     /**
      * Checks if the ID is in the hashmap
-     * @param ID the ID
+     * @param presName the ID
      * @return Returns True if it is in the hashmap and false otherwise
      */
     public boolean presNameChecker(String presName){
@@ -141,7 +141,7 @@ public class ManagementSystem {
 
     /**
      * Gets a prescription using the given ID
-     * @param ID The ID of a specific prescription
+     * @param presName The ID of a specific prescription
      * @return A prescriptionMedicine Object
      */
     public PrescriptionMedicine getPrescription(String presName){
