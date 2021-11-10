@@ -26,6 +26,7 @@ public class Main {
         windows.put("Choose Medicine To Edit Window", new ChooseMedicineToEditWindow(scanner));
         windows.put("Edit Medicine Window", new EditMedicineWindow(scanner));
         windows.put("Set Sleep Timings Window", new SetSleepTimingsWindow(scanner));
+        windows.put("Set Meal Timings Window", new SetMealTimingsWindow(scanner));
 
         appManager.run(windows);
 

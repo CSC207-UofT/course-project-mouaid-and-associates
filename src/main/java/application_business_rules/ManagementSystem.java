@@ -128,7 +128,11 @@ public class ManagementSystem {
      * @param times the Sleep and Wakeup times
      */
     public void setSleepAndWakeUpTimes(List<Double> times){
-        this.userManager.setUserSleepAndWakeUpTimes(times);
+        this.userManager.setActivityTimes(this.userManager.getUser().getSleepClass(), times);
+    }
+
+    public void setMealTimes(List<Double> times){
+        this.userManager.setActivityTimes(this.userManager.getUser().getMealClass(), times);
     }
 
 }
