@@ -77,6 +77,8 @@ public class AppManager {
                 case "Set Sleep Timings Window":
                     next_window = setSleepTimes();
                     break;
+                case "Set Meal Timings Window":
+                    next_window = setMealTimes();
                 case "Add Prescription Window":
                     next_window = addPrescription();
                     break;
@@ -192,7 +194,9 @@ public class AppManager {
             return "Remove Medicine Window";
         } else if (choice.equals("set sleep times")) {
             return "Set Sleep Timings Window";
-        } else {
+        } else if (choice.equals("Set Meal Timings Window")){
+            return "Set Meal Timings Window";
+        }else {
             return "Log Out";
         }
 
@@ -362,6 +366,27 @@ public class AppManager {
         times.add(wakeUpTime);
 
         this.managementSystem.setSleepAndWakeUpTimes(times);
+
+        // Return to the account page.
+        return "View Account Window";
+    }
+
+    /**
+     * Shows the set meal times window, and allows the user to set their meal schedule.
+     * @return  The name of the next window to open.
+     */
+    public String setMealTimes(){
+        // Call SetMealTimingsWindow to display the fields to enter the Meal times
+        Window setMealTimingsWindow = windows.get("Set Meal Timings Window");
+
+        String[] stringTimings = setMealTimingsWindow.getUserInput();
+        List<Double> times = new ArrayList<>();
+
+        for (String timings: stringTimings){
+            times.add(Double.valueOf(timings));
+        }
+
+        this.managementSystem.setMealTimes(times);
 
         // Return to the account page.
         return "View Account Window";
