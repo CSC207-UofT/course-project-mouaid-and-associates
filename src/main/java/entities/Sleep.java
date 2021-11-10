@@ -7,9 +7,10 @@ import java.util.Map;
 
 public class Sleep extends OtherActivities{
     /**
-     * This is a Class that stores the Does everything related to Sleeping.
+     * This is a Class that stores and Does everything related to Sleeping.
      * Instance Attributes:
-     * sleepSchedule: This Sleep Class' SleepSchedule
+     * schedule: This Sleep Class' OtherActivitiesSchedule
+     * times: This Sleep Class' sleep and wakeup times
      */
 
     private Schedule schedule;
@@ -22,8 +23,8 @@ public class Sleep extends OtherActivities{
     }
 
     /**
-     * Creates a SleepSchedule for this Sleep Class. The SleepSchedule is empty if the class is being instantiated for
-     * the first time and is not empty after the user sets Sleep and wake up times
+     * Creates an OtherActivitiesSchedule for this Sleep Class. The OtherActivitiesSchedule is empty if the class is
+     * being instantiated for the first time and is not empty after the user sets Sleep and wake up times
      */
     public void createSchedule(){
         String[]  daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};

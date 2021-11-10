@@ -7,7 +7,10 @@ import java.util.Map;
 
 public class Meal extends OtherActivities{
     /**
-     *
+     * This is a Class that stores and Does everything related to Meal times.
+     * Instance Attributes:
+     * schedule: This Meal Class' OtherActivitiesSchedule
+     * times: This Meal Class' sleep and wakeup times
      */
 
     private Schedule schedule;
@@ -19,6 +22,10 @@ public class Meal extends OtherActivities{
         this.times = new ArrayList<>();
     }
 
+    /**
+     * Creates an OtherActivitiesSchedule for this Meal Class. The OtherActivitiesSchedule is empty if the class is
+     * being instantiated for the first time and is not empty after the user sets Meal times
+     */
     public void createSchedule() {
         String[]  daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
         this.schedule = new OtherActivitiesSchedule();

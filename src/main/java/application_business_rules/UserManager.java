@@ -177,13 +177,16 @@ public class UserManager {
     }
 
     /**
-     * Create a new Sleep Class and assign it to the User's Sleep Class
+     * Create a new Sleep Class and assign it to the User's sleepClass
      */
     public void createUserSleepClass(){
         Sleep sleep = this.otherActivitiesManager.createNewSleepClass();
         this.user.setSleepClass(sleep);
     }
 
+    /**
+     * Create a new Meal Class and assign it to the User's mealClass
+     */
     public void createUserMealClass(){
         Meal meal = this.otherActivitiesManager.createNewMealClass();
         this.user.setMealClass(meal);

@@ -14,6 +14,9 @@ public abstract class OtherActivities {
         this.times = new ArrayList<>();
     }
 
+    /**
+     * An abstract class for creating a schedule for the give activity
+     */
     abstract void createSchedule();
 
     /**

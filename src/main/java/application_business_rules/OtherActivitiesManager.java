@@ -14,7 +14,7 @@ public class OtherActivitiesManager {
     public OtherActivitiesManager(){}
 
     /**
-     * Create a default Sleep Class with an empty SleepSchedule
+     * Create a default Sleep Class with an empty OtherActivitiesSchedule
      * @return The created Sleep class
      */
     public Sleep createNewSleepClass(){
@@ -23,6 +23,10 @@ public class OtherActivitiesManager {
         return sleepClass;
     }
 
+    /**
+     * Create a default Meal Class with an empty OtherActivitiesSchedule
+     * @return The created Meal class
+     */
     public Meal createNewMealClass(){
         Meal mealClass = new Meal();
         mealClass.createSchedule();
