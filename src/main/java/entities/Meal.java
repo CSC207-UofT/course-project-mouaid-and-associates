@@ -1,8 +1,6 @@
 package entities;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Meal extends OtherActivities{
@@ -13,22 +11,19 @@ public class Meal extends OtherActivities{
      * times: This Meal Class' sleep and wakeup times
      */
 
-    private Schedule schedule;
-    private List<Double> times;
-
 
     public Meal() {
         super();
-        this.times = new ArrayList<>();
     }
 
     /**
      * Creates an OtherActivitiesSchedule for this Meal Class. The OtherActivitiesSchedule is empty if the class is
      * being instantiated for the first time and is not empty after the user sets Meal times
      */
+    @Override
     public void createSchedule() {
         String[]  daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-        this.schedule = new OtherActivitiesSchedule();
+        this.schedule.removeAllEvents();
 
         // Checks if the meal times isEmpty() which indicates that the MealClass is being created for
         // the first time and therefore there are no set meal times so the ActivitiesSchedule is empty
@@ -39,7 +34,7 @@ public class Meal extends OtherActivities{
                     meal.put(i, time);
 
                     // Add the events to the schedule.
-                    schedule.addEvent("Meal Time", "When you have a meal", meal);
+                    schedule.addEvent("Meal Time", "Time to eat", meal);
                 }
             }
         }

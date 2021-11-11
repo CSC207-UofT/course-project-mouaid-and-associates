@@ -7,10 +7,11 @@ public abstract class OtherActivities {
     /**
      * The Super Class for other events in the schedule like sleep times and meal times
      */
-    private List<Double> times;
-    private Schedule schedule;
+    protected List<Double> times;
+    protected Schedule schedule;      // Why do you have these attribute, if you redefine them in Sleep and Meal??
 
     public OtherActivities(){
+        this.schedule = new Schedule();
         this.times = new ArrayList<>();
     }
 
@@ -33,6 +34,7 @@ public abstract class OtherActivities {
      */
     public void setTime(List<Double> times) {
         this.times = times;
+        System.out.println("HERE");
         createSchedule();
     }
 

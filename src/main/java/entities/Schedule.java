@@ -75,6 +75,13 @@ public class  Schedule {
     }
 
     /**
+     * Removes all the events in this schedule.
+     */
+    public void removeAllEvents(){
+        this.events.clear();
+    }
+
+    /**
      *  A toString method that returns a string representation of the schedule. Formatted to
      *  look nice.
      *

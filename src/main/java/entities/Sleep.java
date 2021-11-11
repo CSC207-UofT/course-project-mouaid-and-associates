@@ -1,8 +1,6 @@
 package entities;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Sleep extends OtherActivities{
@@ -13,10 +11,6 @@ public class Sleep extends OtherActivities{
      * times: This Sleep Class' sleep and wakeup times
      */
 
-    private Schedule schedule;
-    private List<Double> times;
-
-
     public Sleep() {
         super();
         this.times = new ArrayList<>();
@@ -26,9 +20,10 @@ public class Sleep extends OtherActivities{
      * Creates an OtherActivitiesSchedule for this Sleep Class. The OtherActivitiesSchedule is empty if the class is
      * being instantiated for the first time and is not empty after the user sets Sleep and wake up times
      */
+    @Override
     public void createSchedule(){
         String[]  daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-        this.schedule = new OtherActivitiesSchedule();
+        this.schedule.removeAllEvents();
 
         // Checks if the sleep and wake up times isEmpty() which indicates that the SleepClass is being created for
         // the first time and therefore there are no set Sleep and wake up times so the SleepSchedule is empty

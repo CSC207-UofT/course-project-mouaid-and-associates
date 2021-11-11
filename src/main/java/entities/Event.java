@@ -24,7 +24,6 @@ public class Event implements Comparable<Event>{
      */
     private String name;
     private String description;
-
     private Map<String, Double> timeStamp;
 
 
