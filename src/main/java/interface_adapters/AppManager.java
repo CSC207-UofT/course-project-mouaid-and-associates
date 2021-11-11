@@ -165,6 +165,9 @@ public class AppManager {
         List<LocalDateTime> times = new ArrayList<>();
         String day;
         for(int i = 0; i < (data.length - 7); i++) {
+            if (startDay.length() == 1){
+                startDay = "0" + startDay;
+            }
             if (wOrD.equals("weekly")) {
                 times.add(LocalDateTime.parse("2021-" + startMonth + "-" + startDay + "T" +  data[i + 7]));
             } else {

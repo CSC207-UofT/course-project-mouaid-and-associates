@@ -11,7 +11,6 @@ import entities.MedicineSchedule;
 import entities.Schedule;
 import entities.User;
 
-import javax.lang.model.type.NullType;
 
 public class ManagementSystem {
     /**

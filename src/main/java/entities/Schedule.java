@@ -1,7 +1,5 @@
 package entities;
-
 import java.util.*;
-
 public class  Schedule {
     /**
      * The Schedule that contains all the events.
@@ -12,7 +10,6 @@ public class  Schedule {
      * - 0 <= events.size()
      */
     private List<Event> events;
-
     public Schedule(List<Event> events){
         this.events = events;
     }
@@ -58,12 +55,11 @@ public class  Schedule {
      * @return  A string representation of the Schedule.
      */
     @Override
-    /* TODO Make it so that it sorts the schedule*/
     public String toString() {
         Map<String, List<Event>> sortedEvents = sortEvents();
         StringBuilder scheduleRep = new StringBuilder();
-        Set<String> days = sortedEvents.keySet();
-
+        List<String> days = getOrderedEventDays(events);
+        String[] medDays = days.toArray(new String[days.size()]);
         for (String day: days){
             scheduleRep.append(day).append(": \n");
             for (Event event: sortedEvents.get(day)){
@@ -82,6 +78,16 @@ public class  Schedule {
         return scheduleRep.toString();
     }
 
+    public List<String> getOrderedEventDays(List<Event> events){
+        Collections.sort(events);
+        ArrayList<String> daysSoFar = new ArrayList<>();
+        for (Event event : events){
+            if (!daysSoFar.contains(event.getDay())){
+                daysSoFar.add(event.getDay());
+            }
+        }
+        return daysSoFar;
+    }
     /**
      *  This method organizes the events so that events occurring in the same
      *  day are grouped together. And events occurring on the same day are also
@@ -116,12 +122,10 @@ public class  Schedule {
         // Start and accumulator collection. This is a dictionary mapping
         // days to events occurring on that day.
         Map<String, List<Event>> newDictOfEvents = new HashMap<>();
-
         // iterate through the list of events:
         for(Event event : this.events){
             // First get the Event's day.
             String day = event.getDay();
-
             // Check if the key already exists in the mapping
             if (newDictOfEvents.containsKey(day)){
                 // if it exists, add to it.

@@ -1,11 +1,5 @@
 package entities;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Map;
 public class Event implements Comparable<Event>{
     /**
      * A class containing a singular occurrence of an event that would appear on a schedule
@@ -96,7 +90,7 @@ public class Event implements Comparable<Event>{
      */
     @Override
     public int compareTo(Event o) {
-        return this.getHour().compareTo(o.getHour());
+        return this.timeStamp.compareTo(o.timeStamp);
     }
 
     /**
@@ -107,6 +101,13 @@ public class Event implements Comparable<Event>{
         return timeStamp.getHour() + ":" + timeStamp.getMinute();
     }
 
+    /**
+     * Returns the time and date of the event
+     * @return The time and date the Event takes place as a LocalDateTime
+     */
+    public LocalDateTime getTimeStamp(){
+        return timeStamp;
+    }
 
     //    /**
     //     * Sets the description of the event.
