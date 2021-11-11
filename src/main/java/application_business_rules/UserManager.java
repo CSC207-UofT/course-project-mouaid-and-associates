@@ -198,4 +198,8 @@ public class UserManager {
     public Schedule getSleepSchedule(){
         return this.sleepManager.getSleepSchedule(this.user.getSleepClass());
     }
+
+    public HashMap<String, Medicine> getMedicines(){
+        return this.user.getMedicineList();
+    }
 }

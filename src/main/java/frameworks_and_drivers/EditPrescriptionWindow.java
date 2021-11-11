@@ -18,7 +18,8 @@ public class EditPrescriptionWindow extends PrescriptionWindow {
     }
 
     /**
-     * @return the index of the medicine at even indexes and the new medicine at odd indexes
+     * @return the index of the medicine at odd indexes and the new medicine at even indexes, 0'th index
+     * is the name of the prescription
      */
     public List<String[]> getUserPrescriptionInput() {
 
@@ -28,18 +29,21 @@ public class EditPrescriptionWindow extends PrescriptionWindow {
             System.out.println("Add or edit this this prescription");
             choice = scanner.nextLine();
         }*/
+        System.out.println("Name of the prescription you want to edit");
+        String prescription = scanner.nextLine();
+        String[] prescriptionList = {prescription};
+        medicines.add(prescriptionList);
 
         String done = "";
         while (!done.equals("0")) {
             String medicineChoice = "";
             while (!isNumeric(medicineChoice)) {
-                System.out.println("Specify which medicine to edit (by number)");
+                System.out.println("Specify which medicine to edit (by name)");
                 medicineChoice = scanner.nextLine();
             }
             EditMedicineWindow editMedicineWindow = new EditMedicineWindow(scanner);
-            int medInt = Integer.parseInt(medicineChoice) - 1;
-            String[] medicineNumber = {String.valueOf(medInt)};
-            medicines.add(medicineNumber);
+            String[] medicine = {medicineChoice};
+            medicines.add(medicine);
             medicines.add(editMedicineWindow.getUserInput());
 
             System.out.println("If you are done editing the Prescription press 0.");
@@ -49,20 +53,8 @@ public class EditPrescriptionWindow extends PrescriptionWindow {
         return medicines;
 
 
-    }
-    /**
-     * Checks to see whether str can be converted into a double
-     * @param str what it will check to see if it can be converted to a string
-     * @return Whether the str can be converted to a double
-     */
-    private  boolean isNumeric(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch(NumberFormatException e){
-            return false;
-        }
 
     }
+
+
 }
-

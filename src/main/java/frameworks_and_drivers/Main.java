@@ -17,6 +17,9 @@ public class Main {
         Map<String, Window> windows = new HashMap<>();
 
         windows.put("Add Medicine Window", new AddMedicineWindow(scanner));
+        windows.put("Edit Prescription Window", new EditPrescriptionWindow(scanner));
+        windows.put("Add Prescription Window", new AddPrescriptionWindow(scanner));
+/*        windows.put("Remove Prescription Window", new RemovePrescriptionWindow(scanner));*/
         windows.put("Create Account Window", new CreateAccountWindow(scanner));
         windows.put("Login Window", new LoginWindow(scanner));
         windows.put("Start Screen Window", new StartScreenWindow(scanner));

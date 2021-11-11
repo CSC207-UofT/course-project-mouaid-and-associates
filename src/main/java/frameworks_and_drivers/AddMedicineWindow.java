@@ -1,7 +1,6 @@
 package frameworks_and_drivers;
 
 import interface_adapters.ScheduleInputWindow;
-import interface_adapters.Window;
 
 import java.util.Scanner;
 
@@ -50,6 +49,7 @@ public class AddMedicineWindow extends ScheduleInputWindow {
 
         return returnList;
     }
+}
 
 //    /**
 //     * Gets input from the user on the times they will be taking the medicine they are trying to add.
@@ -131,5 +131,4 @@ public class AddMedicineWindow extends ScheduleInputWindow {
 //        }
 //    }
 
-}
 

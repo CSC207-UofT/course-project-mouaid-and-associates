@@ -6,6 +6,7 @@ import entities.Medicine;
 import entities.MedicineSchedule;
 import entities.Schedule;
 import entities.User;
+import entities.PrescriptionMedicine;
 
 import javax.lang.model.type.NullType;
 
@@ -21,6 +22,13 @@ public class ManagementSystem {
     private HashMap<String, User> userDatabase;
     private UserManager userManager;
     private ScheduleManager scheduleManager;
+    private HashMap<String, PrescriptionMedicine> prescriptionManager;
+
+
+//    public ManagementSystem(UserManager userManager, ScheduleManager scheduleManager){
+//        this.userManager = userManager;
+//        this.scheduleManager = scheduleManager;
+//    }
 
     /**
      * Creates a new ManagementSystem instance. Also
@@ -30,6 +38,7 @@ public class ManagementSystem {
         this.userManager = new UserManager();
         this.scheduleManager = new ScheduleManager();
         this.userDatabase = new HashMap<>();
+        this.prescriptionManager = new HashMap<>();
     }
     public Map<String, User> getDatabase(){
         return this.userDatabase;
@@ -50,16 +59,16 @@ public class ManagementSystem {
      * @return returns a list that contains the user's username, name and list of medicines (names only).
      */
     public List<String> getUserInfo(){
-        String[] medNames;
         List<String> userInfo = new ArrayList<>();
         userInfo.add(userManager.getName());
         userInfo.add(userManager.getUserName());
 
         // Get specifically the names of the medicine.
-        Collections.addAll(userInfo, userManager.getMedicineNames());
+        userInfo.addAll(List.copyOf(userManager.getMedicines().keySet()));
 
         return userInfo;
     }
+
 
     /**
      * Removes the medicines from the list of medicines the user has.
@@ -74,9 +83,15 @@ public class ManagementSystem {
      * @return the compiled schedule.
      */
     public String makeSchedule(){
-      
-        List<Schedule> scheduleList = userManager.getSchedules();
+        HashMap<String, Medicine> medicinesDict = userManager.getMedicines();
+        List<Medicine> medicineList = new ArrayList<>(medicinesDict.values());
+        List<Schedule> scheduleList = new ArrayList<>();
+        for (Medicine med: medicineList){
 
+            // Use medicineManager to get the medicine schedule.
+            MedicineSchedule medSched = userManager.medicineManager.getMedicineSchedule(med);
+            scheduleList.add(medSched);
+        }
         return scheduleManager.compileSchedule(scheduleList).toString();
     }
 
@@ -103,32 +118,82 @@ public class ManagementSystem {
         return userManager.getMedicineInfo(medName);
     }
 
-    /**
-     * Edits a medicine using the given info. The first element is the new name of the medicine.
-     * The second element is the new method of administration, the third element is the new amount,
-     * and the fourth element is the new extra instructions.
-     *
-     * The list of mappings called times is for the new times to take the medicine.
-     *
-     * @param info      The info used to edit the medicine. The first element is the medicine name.
-     * @param times     The new times to take this medicine.
-     */
-    public void editMedicine(String medName, String[] info, List<Map<String, Double>> times){
-        userManager.editMedicine(medName, info);
-        scheduleManager.editScheduleTimes(userManager.getMedicineSchedule(medName), times);
 
-        // Change the mapping from the old name to the new name.
-        if (!info[0].equals("")){
-            userManager.changeMedicineNameInMapping(medName, info[0]);
+    /**
+     * Checks if the ID is in the hashmap
+     * @param presName the ID
+     * @return Returns True if it is in the hashmap and false otherwise
+     */
+    public boolean presNameChecker(String presName){
+        return this.prescriptionManager.containsKey(presName);
+    }
+
+    public void addNewPrescription(List<String> medicines, String presName){
+        List<Medicine> allMedicines = List.copyOf(userManager.getMedicines().values());
+        List<Medicine> presMedicines = new ArrayList<>();
+        for(Medicine medicine : allMedicines){
+            if (medicines.contains(medicine.getMedicineName())){
+                presMedicines.add(medicine);
+            }
         }
+        PrescriptionMedicine prescriptionMedicine = new PrescriptionMedicine(presMedicines, presName);
+        prescriptionManager.put(presName, prescriptionMedicine);
     }
 
     /**
-     * Sets new Sleep and Wakup times for the User
-     * @param times the Sleep and Wakeup times
+     * Gets a prescription using the given ID
+     * @param presName The ID of a specific prescription
+     * @return A prescriptionMedicine Object
      */
-    public void setSleepAndWakeUpTimes(List<Double> times){
-        this.userManager.setUserSleepAndWakeUpTimes(times);
+    public PrescriptionMedicine getPrescription(String presName){
+        return prescriptionManager.get(presName);
+    }
+
+    /**
+     * Returns all the IDS of all the prescriptions
+     * @return A set of keys
+     */
+    public List<String> getPrescriptionsNames(){
+        return List.copyOf(prescriptionManager.keySet());
+    }
+    public void addMedicineToPres(String presName, Medicine medicine){
+        prescriptionManager.get(presName).addMedicine(medicine);
+    }
+
+    /**
+     * Removes a medicine from a given prescription
+     * @param presName the name of the prescription
+     * @param name the name of the medicine
+     */
+    public void removeMedicineFromPres(String presName, String name){
+        prescriptionManager.get(presName).removeMedicine(name);
+    }
+
+    /**
+     * Removes a prescription from the user's list of prescriptions
+     * @param presName The name of the prescription
+     */
+    public void removePrescription(String presName){
+        PrescriptionMedicine prescription = prescriptionManager.get(presName);
+        String[] medicines = prescription.getPresMedicines();
+        userManager.removeMeds(medicines);
+        prescriptionManager.remove(presName);
+    }
+
+    public void editPrescription(String presName, List<String[]> data){
+        PrescriptionMedicine prescription = prescriptionManager.get(presName);
+        String[] medicines = prescription.getPresMedicines();
+
+        for(int i = 0; i < data.size()/2; i++ ){
+            medicines prescription.getPresMedicines();
+
+
+
+        }
+
+
+
+
     }
 
 }

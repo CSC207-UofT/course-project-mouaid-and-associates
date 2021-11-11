@@ -2,6 +2,7 @@ package interface_adapters;
 
 import application_business_rules.ManagementSystem;
 
+import java.io.IOException;
 import java.util.*;
 
 public class AppManager {
@@ -75,6 +76,9 @@ public class AppManager {
                     break;
                 case "Set Sleep Timings Window":
                      next_window = setSleepTimes();
+                    break;
+                case "Edit Prescription Window":
+                    next_window = editPrescription();
                     break;
                 default:
                     next_window = "Log Out";
@@ -226,10 +230,29 @@ public class AppManager {
         }
 
         // Call management system to edit the entities.
-        managementSystem.editMedicine(medName, changes, newTimes);
+   /*     managementSystem.editMedicine(medName, changes, newTimes);*/
 
         return "View Account Window";
     }
+
+    /**
+     * Edits a prescription which user specifies
+     */
+    public String editPrescription(){
+        Window editPrescriptionWindow = windows.get("Edit Prescription Window");
+        List<String[]> data = ((PrescriptionWindow) editPrescriptionWindow).getUserPrescriptionInput();
+        String presName = data.get(0)[0];
+        data.remove(0);
+        managementSystem.editPrescription(presName, data);
+
+
+    }
+
+/*    private class NoName extends IOException{
+        public NoName(String errorMessage, Throwable err){
+            super(errorMessage, err);
+        }
+    }*/
 
 
 
@@ -310,7 +333,7 @@ public class AppManager {
         times.add(sleepTime);
         times.add(wakeUpTime);
 
-        this.managementSystem.setSleepAndWakeUpTimes(times);
+/*        this.managementSystem.setSleepAndWakeUpTimes(times);*/
 
         // Return to the account page.
         return "View Account Window";
@@ -358,6 +381,68 @@ public class AppManager {
         // For now, we only have one option, which is to take the user back to the account page.
 
         return "View Account Window";
+    }
+
+    public void addPrescription(){
+        Window addPrescriptionWindow = windows.get("Add Prescription Window");
+        List<String[]> data = ((PrescriptionWindow) addPrescriptionWindow).getUserPrescriptionInput();
+        List<String> medicinesNames = new ArrayList<>();
+        for(String[] medicine : data){
+            if(medicine.length > 1){
+                addMedicineHelper(medicine);
+                medicinesNames.add(medicine[0]);
+            }
+        }
+        managementSystem.addNewPrescription(medicinesNames, data.get(0)[0]);
+        showAccountWindow();
+
+    }
+
+    /**
+     * Removes a prescription from the current user's prescriptions list
+     */
+    public void removePrescription(){
+        Window removePrescriptionWindow = windows.get("Remove Prescription Window");
+        String[] data = removePrescriptionWindow.getUserInput();
+        managementSystem.removePrescription(data[0]);
+        showAccountWindow();
+    }
+
+
+
+    private void addMedicineHelper(String[] data) {
+        String name = data[0];
+        String methodOfAdmin = data[1];
+        int amount;
+        String extraInstruct = data[3];
+        String wOrD = data[4]; // Stores frequency. Weekly/Daily
+        String startDay = data[5];
+        List<Map<String, Double>> times = new ArrayList<>();
+
+        // In case the user decided to not enter a proper value.
+        try {
+            amount = Integer.parseInt(data[2]);
+        } catch (NumberFormatException e) {
+            amount = -1;
+        }
+
+        for(int i = 0; i < (data.length - 6); i++) {
+            if (wOrD.equals("weekly")) {
+                Map<String, Double> map = new HashMap<>();
+                map.put(DAYS[Integer.parseInt(startDay) - 1], Double.parseDouble(data[i + 6]));
+                times.add(map);
+            } else {
+                for (String day : DAYS) {
+                    Map<String, Double> map2 = new HashMap<>();
+                    map2.put(day, Double.parseDouble(data[i + 6]));
+                    times.add(map2);
+                }
+            }
+
+        }
+
+        //Done: call managementSystem.addNewMedicine() and pass in this information.
+        managementSystem.addNewMedicine(name, amount, methodOfAdmin, extraInstruct, times);
     }
 
     /**
