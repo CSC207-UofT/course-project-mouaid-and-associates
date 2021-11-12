@@ -59,16 +59,12 @@ public class  Schedule {
         Map<String, List<Event>> sortedEvents = sortEvents();
         StringBuilder scheduleRep = new StringBuilder();
         List<String> days = getOrderedEventDays(events);
-        String[] medDays = days.toArray(new String[days.size()]);
         for (String day: days){
             scheduleRep.append(day).append(": \n");
             for (Event event: sortedEvents.get(day)){
-                String eventName = new String ("    " + event.getName() + "\n");
                 String eventDescription = new String(event.getDescription() + " \n");
                 String eventHour = event.getTime();
-
                 // Add the strings to the string builder.
-                scheduleRep.append(eventName);
                 scheduleRep.append(eventHour);
                 scheduleRep.append(" - ").append(eventDescription);
 
