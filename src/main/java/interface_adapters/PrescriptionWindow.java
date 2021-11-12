@@ -14,6 +14,7 @@ public abstract class PrescriptionWindow extends Window{
 
     public abstract List<String[]> getUserPrescriptionInput();
 
+
     /**
      * Checks to see whether str can be converted into a double
      * @param str what it will check to see if it can be converted to a string
@@ -29,3 +30,4 @@ public abstract class PrescriptionWindow extends Window{
 
     }
 }
+

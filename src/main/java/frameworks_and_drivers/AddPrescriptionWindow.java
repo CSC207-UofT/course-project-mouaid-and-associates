@@ -40,3 +40,4 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
 
     }
 }
+
