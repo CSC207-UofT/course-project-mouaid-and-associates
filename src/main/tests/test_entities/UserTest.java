@@ -11,8 +11,8 @@ public class UserTest {
     @Test
     public void TestAddMedicine(){
         User myUser = new User("Mouaid Alim", "alimmoua");
-        Medicine myMedicine = new Medicine("Mouaid's medicine", 60, "Injection",
-                              "needs to be taken 1 hour before eating");
+        Medicine myMedicine = new Medicine("Mouaid's medicine", 60, "mL",
+                "Injection","needs to be taken 1 hour before eating");
         myUser.addMedicine(myMedicine);
         assertTrue(myUser.getMedicineList().containsValue(myMedicine));
     }

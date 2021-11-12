@@ -53,13 +53,12 @@ public class UserManager {
      * @param extraInstructions Extra instructions for this medicine
      * @param times The times to take this medication.
      */
-    public void createMedicine(String medicineName, int amount,
-                                   String methodOfAdministration, String extraInstructions,
-                                   List<Map<String, Double>> times){
+    public void createMedicine(String medicineName, int amount, String unitOfMeasurement,
+                               String methodOfAdministration, String extraInstructions,
+                               List<Map<String, Double>> times){
 
-        user.addMedicine(this.medicineManager.createNewMedicine(medicineName, amount,
-                methodOfAdministration, extraInstructions,
-                times));
+        user.addMedicine(this.medicineManager.createNewMedicine(medicineName, amount, unitOfMeasurement,
+                methodOfAdministration, extraInstructions, times));
     }
 
     /**
@@ -133,11 +132,10 @@ public class UserManager {
         // The order is pre-determined.
         Map<String, String> newInfo = new HashMap<>();
         newInfo.put("name", info[0]);
-        newInfo.put("method of administration", info[1]);
-        newInfo.put("amount", info[2]);
-        newInfo.put("extra instructions", info[3]);
-
-        // Change the mapping in the user's list of medicines.
+        newInfo.put("unit of measurement", info[1]);
+        newInfo.put("method of administration", info[2]);
+        newInfo.put("amount", info[3]);
+        newInfo.put("extra instructions", info[4]);
 
         // Call medicine manager to edit the medicine.
         medicineManager.editMedicine(med, newInfo);
