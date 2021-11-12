@@ -160,6 +160,11 @@ public class ManagementSystem {
         prescriptionManager.get(presName).addMedicine(medicine);
     }
 
+    public void addMedicineToPresByList(String presName, String[] list){
+        Medicine medicine = new Medicine(list[0], Integer.parseInt(list[1]), list[2], list[3]);
+        prescriptionManager.get(presName).addMedicine(medicine);
+    }
+
     /**
      * Removes a medicine from a given prescription
      * @param presName the name of the prescription
@@ -180,20 +185,37 @@ public class ManagementSystem {
         prescriptionManager.remove(presName);
     }
 
-    public void editPrescription(String presName, List<String[]> data){
-        PrescriptionMedicine prescription = prescriptionManager.get(presName);
-        String[] medicines = prescription.getPresMedicines();
+    public void setPrescriptionName(String oldName, String newName){
+        PrescriptionMedicine prescription = prescriptionManager.get(oldName);
+        prescription.setPrescriptionName(newName);
+    }
 
-        for(int i = 0; i < data.size()/2; i++ ){
-            medicines prescription.getPresMedicines();
+    public void editPrescription(String presName, String medName, String[] data){
+/*        try {*/
+            PrescriptionMedicine prescription = prescriptionManager.get(presName);
+            String[] medicines = prescription.getPresMedicines();
+            Medicine medicine = new Medicine(data[0], Integer.parseInt(data[1]), data[2], data[3]);
 
+            boolean nameInPres = false;
+            for (int i = 0; i < prescription.getPresMedicines().length; i++){
+                // edits the medicine in prescription
+                if(medicines[i].equals(medName)){
+                    prescription.getPresMedicinesMedicine().add(i, medicine);
+                    nameInPres = true;
+                }
+            }
 
+            if (!nameInPres){
+                //adds the medicine to the prescription
+                prescription.addMedicine(medicine);
+            }
 
+/*            return "View Acccount Window";
         }
-
-
-
-
+        catch(Exception NullPointerException) {
+            System.out.println(presName + "doesn't exist. Try a new prescription name");
+            return "Edit Prescription Window";
+        }*/
     }
 
 }

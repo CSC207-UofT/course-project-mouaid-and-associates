@@ -29,7 +29,7 @@ public class RemoveMedicineWindow extends Window implements DisplayEntityInforma
 
     }
 
-    public String getUserChoice(){
+    private String getUserChoice(){
         System.out.println("Please enter the name of the medicine you would like to remove below:");
         System.out.println("* You can just press enter to exit *");
 

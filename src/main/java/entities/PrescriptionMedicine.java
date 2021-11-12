@@ -39,4 +39,8 @@ public class PrescriptionMedicine {
         }
         return meds;
     }
+
+    public List<Medicine> getPresMedicinesMedicine(){
+        return this.listOfMedicines;
+    }
 }

@@ -19,6 +19,9 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
     public String[] getUserInput() {
         while (true){
             System.out.println("Type 'add' to add a new medicine \n" +
+                    "Type 'pres' to add a new prescription \n" +
+                    "Type 'remove pres' to remove a prescription \n" +
+                    "Type 'edit pres' to edit your prescriptions \n" +
                     "Type 'edit' to edit a medicine\n" +
                     "Type 'remove' to remove a medicine\n" +
                     "Type 'view' to view the timetable \n" +
@@ -26,7 +29,8 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
             String input = scanner.nextLine();
 
             if (input.equals("add") || input.equals("edit") || input.equals("remove") || input.equals("logout")
-                    || input.equals("view")) {
+                    || input.equals("view") || input.equals("pres") || input.equals("edit pres")
+                    || input.equals("remove pres")) {
                 returnList[0] = input;
                 return returnList;
             }
