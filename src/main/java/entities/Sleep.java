@@ -13,7 +13,6 @@ public class Sleep extends OtherActivities{
 
     public Sleep() {
         super();
-        this.times = new ArrayList<>();
     }
 
     /**

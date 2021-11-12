@@ -16,6 +16,7 @@ public class Meal extends OtherActivities{
         super();
     }
 
+
     /**
      * Creates an OtherActivitiesSchedule for this Meal Class. The OtherActivitiesSchedule is empty if the class is
      * being instantiated for the first time and is not empty after the user sets Meal times
