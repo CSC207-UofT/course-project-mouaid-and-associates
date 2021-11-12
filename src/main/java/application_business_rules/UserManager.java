@@ -169,7 +169,7 @@ public class UserManager {
         List<Schedule> schedules = getMedicineSchedules();
         // Gets the sleep schedule
         schedules.add(getActivitySchedule(this.user.getSleepClass()));
-
+        schedules.add(getActivitySchedule(this.user.getMealClass()));
 
         return schedules;
     }

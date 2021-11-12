@@ -19,7 +19,6 @@ public class OtherActivitiesManager {
      */
     public Sleep createNewSleepClass(){
         Sleep sleepClass = new Sleep();
-        sleepClass.createSchedule();
         return sleepClass;
     }
 
@@ -29,7 +28,6 @@ public class OtherActivitiesManager {
      */
     public Meal createNewMealClass(){
         Meal mealClass = new Meal();
-        mealClass.createSchedule();
         return mealClass;
     }
 

@@ -194,7 +194,7 @@ public class AppManager {
             return "Remove Medicine Window";
         } else if (choice.equals("set sleep times")) {
             return "Set Sleep Timings Window";
-        } else if (choice.equals("Set Meal Timings Window")){
+        } else if (choice.equals("set meal times")){
             return "Set Meal Timings Window";
         }else {
             return "Log Out";
