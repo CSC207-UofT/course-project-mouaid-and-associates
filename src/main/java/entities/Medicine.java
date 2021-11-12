@@ -21,18 +21,21 @@ public class Medicine {
      *
      */
     private String medicineName;
+    private String unitOfMeasurement;
     private int amount;
     private String methodOfAdministration;
     private String extraInstructions;
     private int idNumber;
     private MedicineSchedule myMedicineSchedule;
 
-    public Medicine(String medicineName, int amount, String methodOfAdministration, String extraInstructions) {
+    public Medicine(String medicineName, int amount, String unitOfMeasurement, String methodOfAdministration,
+                    String extraInstructions) {
         this.medicineName = medicineName;
         this.amount = amount;
         this.methodOfAdministration = methodOfAdministration;
         this.extraInstructions = extraInstructions;
         this.idNumber = 0;
+        this.unitOfMeasurement = unitOfMeasurement;
     }
 
     /**
@@ -42,15 +45,7 @@ public class Medicine {
     public void addMedicineSchedule(List<Map<String, Double>> times){
         // Make an event
         String description;
-        if (amount == -1){
-            description = methodOfAdministration + " " +
-                    medicineName + ". " +
-                    extraInstructions;
-        } else {
-            description = methodOfAdministration + " " + amount + " " +
-                    medicineName + ". " +
-                    extraInstructions;
-        }
+        description = makeDescription();
 
 
         List<Event> events = new ArrayList<>();
@@ -65,6 +60,21 @@ public class Medicine {
         }
 
 
+    }
+
+    public String makeDescription() {
+        String description;
+        if (amount == -1){
+            description = methodOfAdministration + " " +
+                    medicineName + ". " +
+                    extraInstructions;
+        } else {
+            description = methodOfAdministration + " " + amount + " " +
+                    medicineName + " " +
+                    unitOfMeasurement + ". " +
+                    extraInstructions;
+        }
+        return description;
     }
 
     /**
@@ -114,38 +124,40 @@ public class Medicine {
 //    public int getIdNumber() {
 //        return idNumber;
 //    }
-//
-//    /**
-//     * Sets the medicineName in this Medicine Class
-//     * @param medicineName The medicineName to be set to this Medicine Class
-//     */
-//    public void setMedicineName(String medicineName) {
-//        this.medicineName = medicineName;
-//    }
-//
-//    /**
-//     * Sets the amount in this Medicine Class
-//     * @param amount The medicineName to be set to this Medicine Class
-//     */
-//    public void setAmount(int amount) {
-//        this.amount = amount;
-//    }
-//
-//    /**
-//     * Sets the methodOfAdministration in this Medicine Class
-//     * @param methodOfAdministration The medicineName to be set to this Medicine Class
-//     */
-//    public void setMethodOfAdministration(String methodOfAdministration) {
-//        this.methodOfAdministration = methodOfAdministration;
-//    }
-//
-//    /**
-//     * Sets the extraInstructions in this Medicine Class
-//     * @param extraInstructions The medicineName to be set to this Medicine Class
-//     */
-//    public void setExtraInstructions(String extraInstructions) {
-//        this.extraInstructions = extraInstructions;
-//    }
+
+    /**
+     * Sets the medicineName in this Medicine Class
+     * @param medicineName The medicineName to be set to this Medicine Class
+     */
+    public void setMedicineName(String medicineName) {
+        this.medicineName = medicineName;
+        myMedicineSchedule.setMedicineName(medicineName);
+        myMedicineSchedule.setEventNames(medicineName);
+    }
+
+    /**
+     * Sets the amount in this Medicine Class
+     * @param amount The medicineName to be set to this Medicine Class
+     */
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    /**
+     * Sets the methodOfAdministration in this Medicine Class
+     * @param methodOfAdministration The medicineName to be set to this Medicine Class
+     */
+    public void setMethodOfAdministration(String methodOfAdministration) {
+        this.methodOfAdministration = methodOfAdministration;
+    }
+
+    /**
+     * Sets the extraInstructions in this Medicine Class
+     * @param extraInstructions The medicineName to be set to this Medicine Class
+     */
+    public void setExtraInstructions(String extraInstructions) {
+        this.extraInstructions = extraInstructions;
+    }
 
     /**
      * Sets the idNumber in this Medicine Class
@@ -155,25 +167,42 @@ public class Medicine {
         this.idNumber = idNumber;
     }
 
+    /**
+     * Sets the unit of measurement of this medicine
+     * @param unitOfMeasurement     The new unit of measurement.
+     */
+    public void setUnitOfMeasurement(String unitOfMeasurement){
+        this.unitOfMeasurement = unitOfMeasurement;
+    }
+
+    /**
+     * Returns the information about this medicine in a formatted string array. The elements are as
+     * follows: medicine name, unit used to measure dosage, dosage amount, method of administration, extra
+     * instructions, and times to take the medication.
+     *
+     * @return  A formatted string array of the medicine in this Medicine. The order is as listed in the
+     *          documentation.
+     */
     public String[] getMedicineInfo(){
         String[] info = new String[5 + myMedicineSchedule.getNumberOfEvents()];
         String[] listOfMedicineTimes;
         info[0] = "Name of Medicine: " + medicineName;
-        info[1] = "Amount of Medicine: ";
+        info[1] = "How the dosage is measured: " + unitOfMeasurement;
+        info[2] = "Dosage amount: ";
 
         // We will return the amount if there is a value associated with it.
         if (amount >= 0){
-            info[1] = info[1] + amount;
+            info[2] = info[2] + amount;
         }
 
-        info[2] = "Method of Administration: " + methodOfAdministration;
-        info[3] = "Extra Instructions: " + extraInstructions;
-        info[4] = "Times: ";
+        info[3] = "Method of Administration: " + methodOfAdministration;
+        info[4] = "Extra Instructions: " + extraInstructions;
+        info[5] = "Times: ";
         listOfMedicineTimes = myMedicineSchedule.getEventTimes();
 
         // Format the times:
-        for (int i = 5; i < info.length; i++){
-            info[i] = "   - " + listOfMedicineTimes[i - 5];
+        for (int i = 6; i < info.length; i++){
+            info[i] = "   - " + listOfMedicineTimes[i - 6];
         }
 
         return info;

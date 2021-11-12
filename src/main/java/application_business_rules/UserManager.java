@@ -1,11 +1,9 @@
 package application_business_rules;
 
-import entities.Medicine;
-import entities.User;
+import entities.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class UserManager {
     /**
@@ -20,6 +18,7 @@ public class UserManager {
      */
     private User user;
     public MedicineManager medicineManager;
+    public SleepManager sleepManager;
 
 //    public UserManager(User user){
 //        this.user = user;
@@ -32,6 +31,7 @@ public class UserManager {
      */
     public UserManager(){
         this.medicineManager = new MedicineManager();
+        this.sleepManager = new SleepManager();
     }
 
     /**
@@ -41,6 +41,7 @@ public class UserManager {
      */
     public User addNewUser(String name,String username){
         this.user = new User(name, username);
+        createUserSleepClass();// Create a default Sleep Class with an empty SleepSchedule
         return this.user;
     }
 
@@ -52,13 +53,12 @@ public class UserManager {
      * @param extraInstructions Extra instructions for this medicine
      * @param times The times to take this medication.
      */
-    public void createMedicine(String medicineName, int amount,
-                                   String methodOfAdministration, String extraInstructions,
-                                   List<Map<String, Double>> times){
+    public void createMedicine(String medicineName, int amount, String unitOfMeasurement,
+                               String methodOfAdministration, String extraInstructions,
+                               List<Map<String, Double>> times){
 
-        user.addMedicine(this.medicineManager.createNewMedicine(medicineName, amount,
-                methodOfAdministration, extraInstructions,
-                times));
+        user.addMedicine(this.medicineManager.createNewMedicine(medicineName, amount, unitOfMeasurement,
+                methodOfAdministration, extraInstructions, times));
     }
 
     /**
@@ -96,15 +96,104 @@ public class UserManager {
     }
 
     /**
-     * Gets the medicineList of the user that is managed by UserManger
-     * @return The medicineList of the user that is managed by UserManger
+     * Gets the medicine schedules for every medicine associated with this user.
+     * @return All the medicine schedules associated with this user.
      */
-    public HashMap<String, Medicine> getMedicines(){
-        return this.user.getMedicineList();
+    public List<Schedule> getMedicineSchedules(){
+        List<Schedule> schedules = new ArrayList<>();
+        for (Medicine med: user.getMedicineList().values()){
+            schedules.add(medicineManager.getMedicineSchedule(med));
+        }
+        return schedules;
+    }
+
+    /**
+     * @return The names of the medicines that are associated with this user.
+     */
+    public String[] getMedicineNames(){
+        return user.getMedicineList().keySet().toArray(new String[0]);
     }
 
     public String[] getMedicineInfo(String medName){
         Medicine medicine = user.getMedicine(medName);
         return medicineManager.getMedicineInfo(medicine);
+    }
+
+    /**
+     * Sets the attributes of the medicine with the given medName, using the information in info.
+     * @param medName       The name of the medicine that will be changed.
+     * @param info          The new information that will replace the old information.
+     */
+    public void editMedicine(String medName, String[] info){
+        // Get the medicine to be edited.
+        Medicine med = user.getMedicine(medName);
+
+        // First create a mapping that maps a variable/attribute name to a value in the list.
+        // The order is pre-determined.
+        Map<String, String> newInfo = new HashMap<>();
+        newInfo.put("name", info[0]);
+        newInfo.put("unit of measurement", info[1]);
+        newInfo.put("method of administration", info[2]);
+        newInfo.put("amount", info[3]);
+        newInfo.put("extra instructions", info[4]);
+
+        // Call medicine manager to edit the medicine.
+        medicineManager.editMedicine(med, newInfo);
+    }
+
+    /**
+     * Changes the mapping so that newName refers to the medicine object instead of oldName.
+     * @param oldName       The old name of the medicine.
+     * @param newName       The new name of the medicine.
+     */
+    public void changeMedicineNameInMapping(String oldName, String newName){
+        user.changeMedicineNameInMapping(oldName, newName);
+    }
+
+    /**
+     * Returns the medicine schedule of the medicine with the given name.
+     * @param medName       The name of the medicine.
+     * @return              The medicine's schedule.
+     */
+    public Schedule getMedicineSchedule(String medName){
+        Medicine med = user.getMedicine(medName);
+        return medicineManager.getMedicineSchedule(med);
+    }
+
+    /**
+     * Returns all the schedules related to this User.
+     * @return  A list of schedules associated with the user.
+     */
+    public List<Schedule> getSchedules(){
+        // Initialize a schedule list, and get the medicine schedules.
+        List<Schedule> schedules = getMedicineSchedules();
+        // Gets the sleep schedule
+        schedules.add(getSleepSchedule());
+
+        return schedules;
+    }
+
+    /**
+     * Create a new Sleep Class and assign it to the User's Sleep Class
+     */
+    public void createUserSleepClass(){
+        Sleep sleep = this.sleepManager.createNewSleepClass();
+        this.user.setSleepClass(sleep);
+    }
+
+    /**
+     * Set the Sleep and wakeup times of the users Sleep Class
+     * @param times A list containing the new sleep time and wakeup time of the user
+     */
+    public void setUserSleepAndWakeUpTimes(List<Double> times){
+        this.sleepManager.setSleepAndWakeUpTimes(this.user.getSleepClass(), times);
+    }
+
+    /**
+     * Get the Sleep Schedule of the User
+     * @return The User's SleepSchedule
+     */
+    public Schedule getSleepSchedule(){
+        return this.sleepManager.getSleepSchedule(this.user.getSleepClass());
     }
 }

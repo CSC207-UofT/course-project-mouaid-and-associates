@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class User {
     /**
@@ -17,6 +18,7 @@ public class User {
     private String name;
     private String userName;
     private HashMap<String, Medicine> medicineList;
+    private Sleep sleepClass;
 
     public User(String name, String userName){
         this.name = name;
@@ -67,6 +69,7 @@ public class User {
         }
     }
 
+
     /**
      * Removes the medicine with the specified name, if it exists.
      * @param medName   The name of the medicine to be removed.
@@ -79,7 +82,37 @@ public class User {
         return medicineList.get(medName);
     }
 
+    /**
+     * Changes the mapping so that the new name of the medicine maps to the medicine instead of the old name.
+     * @param oldName       The old name of the medicine.
+     * @param newName       The new name of the medicine.
+     */
+    public void changeMedicineNameInMapping(String oldName, String newName){
+        Medicine med = medicineList.get(oldName);
+        removeMedicine(oldName);
+        medicineList.put(newName, med);
+    }
+
 //    /**
+
+    /**
+     * Set the SleepClass instance with a Sleep Class
+     * @param sleep the Sleep Class to be set
+     */
+    public void setSleepClass(Sleep sleep){
+        this.sleepClass = sleep;
+    }
+
+    /**
+     * Get the Sleep Class of this User class
+     * @return This User's Sleep Class
+     */
+    public Sleep getSleepClass() {
+        return sleepClass;
+    }
+
+    //    /**
+
 //     * Remove a medicine from this User's medicineList.
 //     * @param newMedicine The medicine to be removed from this User's medicineList.
 //     */
