@@ -43,9 +43,8 @@ public class ChoosePrescriptionToEditWindow extends Window implements DisplayEnt
             if (!validInput) {
                 System.out.println("Please enter the name of one a prescription in the list above");
             }
-            return userInput;
         }
-        return userInput; //just to run
+        return userInput;
     }
 
 

@@ -208,6 +208,12 @@ public class ManagementSystem {
             if (!nameInPres){
                 //adds the medicine to the prescription
                 prescription.addMedicine(medicine);
+                List times = new ArrayList();
+                for (int i = 4; i<data.length; i++){
+                    times.add(data[i]);
+                }
+                addNewMedicine(data[0], Integer.parseInt(data[1]), data[2], data[3], times);
+
             }
 
 /*            return "View Acccount Window";

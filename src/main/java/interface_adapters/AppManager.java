@@ -1,6 +1,7 @@
 package interface_adapters;
 
 import application_business_rules.ManagementSystem;
+import frameworks_and_drivers.ChoosePrescriptionToEditWindow;
 
 import java.io.IOException;
 import java.util.*;
@@ -241,7 +242,7 @@ public class AppManager {
     public String editPrescription(){
         Window editPrescriptionWindow = windows.get("Edit Prescription Window");
         List<String[]> data = ((PrescriptionWindow) editPrescriptionWindow).getUserPrescriptionInput();
-        String presName = data.get(0)[0];
+        String presName = choosePrescriptionToEditWindow.getUserInput()[0];
         data.remove(0);
         for(int i = 1; i < data.size()/2; i++ ){
             if (data.get(2*i+1)[0].equals("-1")){
