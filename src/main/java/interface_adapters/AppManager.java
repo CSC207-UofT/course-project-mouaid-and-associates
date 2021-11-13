@@ -1,6 +1,7 @@
 package interface_adapters;
 
 import application_business_rules.ManagementSystem;
+import frameworks_and_drivers.AddMedicineWindow;
 
 import java.util.*;
 import java.util.Random;
@@ -70,6 +71,9 @@ public class AppManager {
                     break;
                 case "Edit Medicine Window":
                     next_window = editMedicine();
+                    break;
+                case "Edit Prescription Window":
+                    next_window = editPrescription();
                     break;
                 case "Remove Medicine Window":
                     next_window = removeMedicine();
@@ -187,6 +191,8 @@ public class AppManager {
             return "TimeTable Window";
         } else if (choice.equals("edit")){
             return "Edit Medicine Window";
+        }else if (choice.equals("edit pres")) {
+            return "Edit Prescription Window";
         } else if (choice.equals("pres")){
             return "Add Prescription Window";
         } else if (choice.equals("remove pres")){
@@ -326,6 +332,36 @@ public class AppManager {
         return "View Account Window";
     }
 
+    /**
+     * Edits a prescription which user specifies
+     */
+    public String editPrescription(){
+        Window editPrescriptionWindow = windows.get("Edit Prescription Window");
+        Window choosePrescriptionToEditWindow = windows.get("Choose Prescription To Edit Window");
+        String[] prescriptions = managementSystem.getPrescriptions();
+        String[] presList = getFormattedList("List of prescriptions to choose from: ", prescriptions,
+                0, prescriptions.length);
+
+        if (choosePrescriptionToEditWindow instanceof DisplayEntityInformation){
+            ((DisplayEntityInformation) choosePrescriptionToEditWindow).displayInfo(presList);
+        }
+        String presName = choosePrescriptionToEditWindow.getUserInput()[0];
+        String[] change = editPrescriptionWindow.getUserInput();
+        if(!change[0].equals("")){
+            managementSystem.changePrescriptionName(presName, change[0]);
+        }else if(!change[1].equals("")){
+            managementSystem.removeMedicineFromPres(presName, change[1]);
+            String[] medToRemove = new String[1];
+            medToRemove[0] = change[1];
+            managementSystem.removeMedicines(medToRemove);
+        }else if(!change[2].equals("")){
+            Window addMedicineWindow = windows.get("Add Medicine Window");
+            String[] data = addMedicineWindow.getUserInput();
+            addMedicineHelper(data);
+            managementSystem.addMedicineToPres(presName, data[0]);
+        }
+        return "View Account Window";
+    }
     private void addMedicineHelper(String[] data) {
         String name = data[0];
         String methodOfAdmin = data[1];
