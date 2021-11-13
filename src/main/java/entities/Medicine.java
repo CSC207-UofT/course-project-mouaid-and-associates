@@ -62,9 +62,14 @@ public class Medicine {
 
     }
 
+    /**
+     * Creates a new description for the events in this medicine's schedule, based
+     * on the attributes of this Medicine.
+     * @return      A string representing the event description of this medicine.
+     */
     public String makeDescription() {
         String description;
-        if (amount == -1){
+        if (amount <= 0){
             description = methodOfAdministration + " " +
                     medicineName + ". " +
                     extraInstructions;
@@ -152,7 +157,7 @@ public class Medicine {
      *          documentation.
      */
     public String[] getMedicineInfo(){
-        String[] info = new String[5 + myMedicineSchedule.getNumberOfEvents()];
+        String[] info = new String[6 + myMedicineSchedule.getNumberOfEvents()];
         String[] listOfMedicineTimes;
         info[0] = "Name of Medicine: " + medicineName;
         info[1] = "How the dosage is measured: " + unitOfMeasurement;
