@@ -11,12 +11,10 @@ public class MedicineSchedule extends Schedule {
      * User's medicine list.
      */
     private String medicineName;
-    private int id;
 
-    public MedicineSchedule(String name, int id, List<Event> events){
+    public MedicineSchedule(String name, List<Event> events){
         super(events);
         this.medicineName = name;
-        this.id = id;
     }
 
     /**
@@ -35,19 +33,4 @@ public class MedicineSchedule extends Schedule {
         this.medicineName = medicineName;
     }
 
-    /**
-     * Gets the id in this MedicineSchedule
-     * @return  The id in this MedicineSchedule
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Sets the id in this MedicineSchedule
-     * @param id The medicineName to be set to this MedicineSchedule
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
 }

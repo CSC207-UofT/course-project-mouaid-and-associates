@@ -51,7 +51,7 @@ public class Medicine {
         List<Event> events = new ArrayList<>();
 
         // Make a schedule
-        this.myMedicineSchedule = new MedicineSchedule(medicineName, idNumber, events);
+        this.myMedicineSchedule = new MedicineSchedule(medicineName, events);
 
         // Iterate through the list of times
         for(Map<String, Double> time : times){
@@ -62,9 +62,14 @@ public class Medicine {
 
     }
 
+    /**
+     * Creates a new description for the events in this medicine's schedule, based
+     * on the attributes of this Medicine.
+     * @return      A string representing the event description of this medicine.
+     */
     public String makeDescription() {
         String description;
-        if (amount == -1){
+        if (amount <= 0){
             description = methodOfAdministration + " " +
                     medicineName + ". " +
                     extraInstructions;
@@ -92,38 +97,6 @@ public class Medicine {
     public String getMedicineName(){
         return this.medicineName;
     }
-
-//    /**
-//     * Gets the Amount in this Medicine Class
-//     * @return  The Amount in this Medicine Class
-//     */
-//    public int getAmount(){
-//        return this.amount;
-//    }
-//
-//    /**
-//     * Gets the methodOfAdministration in this Medicine Class
-//     * @return  The methodOfAdministration in this Medicine Class
-//     */
-//    public String getMethodOfAdministration() {
-//        return methodOfAdministration;
-//    }
-//
-//    /**
-//     * Gets the extraInstructions in this Medicine Class
-//     * @return  The extraInstructions in this Medicine Class
-//     */
-//    public String getExtraInstructions() {
-//        return extraInstructions;
-//    }
-//
-//    /**
-//     * Gets the idNumber in this Medicine Class
-//     * @return  The idNumber in this Medicine Class
-//     */
-//    public int getIdNumber() {
-//        return idNumber;
-//    }
 
     /**
      * Sets the medicineName in this Medicine Class
@@ -184,7 +157,7 @@ public class Medicine {
      *          documentation.
      */
     public String[] getMedicineInfo(){
-        String[] info = new String[5 + myMedicineSchedule.getNumberOfEvents()];
+        String[] info = new String[6 + myMedicineSchedule.getNumberOfEvents()];
         String[] listOfMedicineTimes;
         info[0] = "Name of Medicine: " + medicineName;
         info[1] = "How the dosage is measured: " + unitOfMeasurement;

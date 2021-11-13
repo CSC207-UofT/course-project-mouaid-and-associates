@@ -3,12 +3,10 @@ package application_business_rules;
 import java.util.*;
 
 import entities.Medicine;
-import entities.MedicineSchedule;
 import entities.Schedule;
 import entities.User;
 import entities.PrescriptionMedicine;
 
-import javax.lang.model.type.NullType;
 
 public class ManagementSystem {
     /**
@@ -118,7 +116,7 @@ public class ManagementSystem {
     }
 
     public void addNewPrescription(List<String> medicines, String presName){
-        List<Medicine> allMedicines = List.copyOf(userManager.getUser().getMedicineList().values());
+        List<Medicine> allMedicines = userManager.getMedicineEntites();
         List<Medicine> presMedicines = new ArrayList<>();
         for(Medicine medicine : allMedicines){
             if (medicines.contains(medicine.getMedicineName())){

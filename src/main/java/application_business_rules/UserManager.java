@@ -19,11 +19,6 @@ public class UserManager {
     public MedicineManager medicineManager;
     public OtherActivitiesManager otherActivitiesManager;
 
-//    public UserManager(User user){
-//        this.user = user;
-//        this.medicineManager = new MedicineManager();
-//    }
-
     /**
      * Creates a new instance of UserManager, with no user defined yet.
      * A user needs to added using addNewUser().

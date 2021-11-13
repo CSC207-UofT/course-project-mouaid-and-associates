@@ -77,14 +77,104 @@ class ScheduleTest {
                 "Wednesday: \n" +
                 "    Advil\n    15:30 - Take Advil \n" +
                 "Thursday: \n" +
-                " NO EVENTS FOUND :( \n" +
+                "Nothing today \n" +
                 "Friday: \n" +
-                " NO EVENTS FOUND :( \n"+
+                "Nothing today \n"+
                 "Saturday: \n" +
-                " NO EVENTS FOUND :( \n"+
+                "Nothing today \n"+
                 "Sunday: \n" +
-                " NO EVENTS FOUND :( \n");
+                "Nothing today \n");
 
         assertEquals(expected, schedule.toString());
+    }
+
+    @Test
+    void addEventNoMapping() {
+        Map<String, Double> time = new HashMap<>();
+        time.put("Monday", 10.0);
+        Event expected = new Event("Advil", "Take Advil", time);
+        // Clear all the events to ensure there is only one event in the schedule.
+        // We are just checking if the event is added.
+        schedule.removeAllEvents();
+        schedule.addEvent("Advil", "Take Advil", "Monday", 10.0);
+        Event actual = schedule.getEvents().get(0);
+
+        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getDescription(), actual.getDescription());
+        assertEquals(expected.decimalToHourFormat(), actual.decimalToHourFormat());
+    }
+
+    @Test
+    void addEventWithMapping() {
+        Map<String, Double> time = new HashMap<>();
+        time.put("Monday", 10.0);
+        Event expected = new Event("Advil", "Take Advil", time);
+        // Clear all the events to ensure there is only one event in the schedule.
+        // We are just checking if the event is added.
+        schedule.removeAllEvents();
+        schedule.addEvent("Advil", "Take Advil", time);
+        Event actual = schedule.getEvents().get(0);
+
+        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getDescription(), actual.getDescription());
+        assertEquals(expected.decimalToHourFormat(), actual.decimalToHourFormat());
+    }
+
+    @Test
+    void removeAllEvents() {
+        schedule.removeAllEvents();
+        //Check if the list of events is empty
+        assertEquals(schedule.getEvents(), new ArrayList<>());
+    }
+
+    @Test
+    void getNumberOfEvents() {
+        int expected = 3;
+        assertEquals(expected, schedule.getEvents().size());
+    }
+
+    @Test
+    void getEventTimes() {
+        String[] expected = new String[]{"Monday: 2:00", "Tuesday: 23:00", "Wednesday: 15:30"};
+        String[] actual = schedule.getEventTimes();
+        for (int i = 0; i < expected.length; i++){
+            assertEquals(expected[i], actual[i]);
+        }
+    }
+
+    @Test
+    void setEventTimes() {
+        Map<String, Double> newTime1 = new HashMap<>();
+        Map<String, Double> newTime2 = new HashMap<>();
+        newTime1.put("Thursday", 10.0);
+        newTime2.put("Thursday", 15.0);
+        List<Map<String, Double>> times = new ArrayList<>();
+        times.add(newTime1);
+        times.add(newTime2);
+        schedule.setEventTimes(times);
+
+        String[] expected = new String[]{"Thursday: 10:00", "Thursday: 15:00"};
+        String[] actual = schedule.getEventTimes();
+        for (int i = 0; i < expected.length; i++){
+            assertEquals(expected[i], actual[i]);
+        }
+    }
+
+    @Test
+    void setEventNames() {
+        String expected = "Tylenol";
+        schedule.setEventNames(expected);
+        for (Event actual_event: schedule.getEvents()){
+            assertEquals(expected, actual_event.getName());
+        }
+    }
+
+    @Test
+    void setEventDescriptions() {
+        String expected = "Drink Tylenol";
+        schedule.setEventDescriptions(expected);
+        for (Event actual_event: schedule.getEvents()){
+            assertEquals(expected, actual_event.getDescription());
+        }
     }
 }

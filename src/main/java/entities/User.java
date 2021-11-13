@@ -1,7 +1,6 @@
 package entities;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class User {
     /**
@@ -51,14 +50,6 @@ public class User {
         return this.medicineList;
     }
 
-//    /**
-//     * Change the name of the User to newName.
-//     * @param newName The new name of the User.
-//     */
-//    public void changeName(String newName){
-//        this.name = newName;
-//    }
-
     /**
      * Add a medicine to this User's medicineList.
      * @param newMedicine The medicine to be added to this User's medicineList.
@@ -94,8 +85,6 @@ public class User {
         medicineList.put(newName, med);
     }
 
-//    /**
-
     /**
      * Set the SleepClass instance with a Sleep Class
      * @param sleep the Sleep Class to be set
@@ -117,18 +106,6 @@ public class User {
     }
 
     public Meal getMealClass(){ return this.mealClass;}
-
-    //    /**
-
-//     * Remove a medicine from this User's medicineList.
-//     * @param newMedicine The medicine to be removed from this User's medicineList.
-//     */
-//    public void removeMedicine(Medicine newMedicine){
-//        if (this.medicineList.containsKey(newMedicine)){
-//            this.medicineList.remove(newMedicine.getMedicineName(), newMedicine);
-//            newMedicine.setIdNumber(0);
-//        }
-//    }
 
 }
 
