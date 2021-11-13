@@ -118,7 +118,7 @@ public class ManagementSystem {
     }
 
     public void addNewPrescription(List<String> medicines, String presName){
-        List<Medicine> allMedicines = List.copyOf(userManager.getMedicines().values());
+        List<Medicine> allMedicines = List.copyOf(userManager.getUser().getMedicineList().values());
         List<Medicine> presMedicines = new ArrayList<>();
         for(Medicine medicine : allMedicines){
             if (medicines.contains(medicine.getMedicineName())){
@@ -145,8 +145,13 @@ public class ManagementSystem {
     public List<String> getPrescriptionsNames(){
         return List.copyOf(prescriptionManager.keySet());
     }
-    public void addMedicineToPres(String presName, Medicine medicine){
-        prescriptionManager.get(presName).addMedicine(medicine);
+    public void addMedicineToPres(String presName, String medicine){
+        List<Medicine> meds = userManager.getMedicineEntites();
+        for(Medicine med : meds){
+            if(med.getMedicineName().equals(medicine)){
+                prescriptionManager.get(presName).addMedicine(med);
+            }
+        }
     }
 
     /**
@@ -159,14 +164,27 @@ public class ManagementSystem {
     }
 
     /**
+     * Returns the name of all the prescriptions
+     * @return a set of prescription names
+     */
+    public String[] getPrescriptions(){
+        return prescriptionManager.keySet().toArray(new String[0]);
+    }
+    /**
      * Removes a prescription from the user's list of prescriptions
      * @param presName The name of the prescription
      */
-    public void removePrescription(String presName){
+    public void removePrescription(String presName) {
         PrescriptionMedicine prescription = prescriptionManager.get(presName);
         String[] medicines = prescription.getPresMedicines();
         userManager.removeMeds(medicines);
         prescriptionManager.remove(presName);
+    }
+    public void changePrescriptionName(String oldPresName, String newPresName){
+        prescriptionManager.get(oldPresName).setPrescriptionName(newPresName);
+        PrescriptionMedicine prescription = prescriptionManager.remove(oldPresName);
+        prescriptionManager.put(newPresName, prescription);
+    }
 
     /**
      * Edits a medicine using the given info. The first element is the new name of the medicine.

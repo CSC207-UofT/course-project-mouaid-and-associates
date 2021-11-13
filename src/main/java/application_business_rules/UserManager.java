@@ -114,6 +114,9 @@ public class UserManager {
         return user.getMedicineList().keySet().toArray(new String[0]);
     }
 
+    public List<Medicine> getMedicineEntites(){
+        return new ArrayList<>(user.getMedicineList().values());
+    }
     public String[] getMedicineInfo(String medName){
         Medicine medicine = user.getMedicine(medName);
         return medicineManager.getMedicineInfo(medicine);
