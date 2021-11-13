@@ -79,6 +79,7 @@ public class AppManager {
                     break;
                 case "Set Meal Timings Window":
                     next_window = setMealTimes();
+                    break;
                 case "Add Prescription Window":
                     next_window = addPrescription();
                     break;

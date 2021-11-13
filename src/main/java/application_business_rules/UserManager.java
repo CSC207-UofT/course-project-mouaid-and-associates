@@ -19,11 +19,6 @@ public class UserManager {
     public MedicineManager medicineManager;
     public OtherActivitiesManager otherActivitiesManager;
 
-//    public UserManager(User user){
-//        this.user = user;
-//        this.medicineManager = new MedicineManager();
-//    }
-
     /**
      * Creates a new instance of UserManager, with no user defined yet.
      * A user needs to added using addNewUser().
@@ -112,6 +107,10 @@ public class UserManager {
      */
     public String[] getMedicineNames(){
         return user.getMedicineList().keySet().toArray(new String[0]);
+    }
+
+    public Medicine[] getMedicines(){
+        return user.getMedicineList().values().toArray(new Medicine[0]);
     }
 
     public String[] getMedicineInfo(String medName){

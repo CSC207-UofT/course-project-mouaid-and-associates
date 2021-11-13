@@ -51,7 +51,7 @@ public class Medicine {
         List<Event> events = new ArrayList<>();
 
         // Make a schedule
-        this.myMedicineSchedule = new MedicineSchedule(medicineName, idNumber, events);
+        this.myMedicineSchedule = new MedicineSchedule(medicineName, events);
 
         // Iterate through the list of times
         for(Map<String, Double> time : times){
@@ -92,38 +92,6 @@ public class Medicine {
     public String getMedicineName(){
         return this.medicineName;
     }
-
-//    /**
-//     * Gets the Amount in this Medicine Class
-//     * @return  The Amount in this Medicine Class
-//     */
-//    public int getAmount(){
-//        return this.amount;
-//    }
-//
-//    /**
-//     * Gets the methodOfAdministration in this Medicine Class
-//     * @return  The methodOfAdministration in this Medicine Class
-//     */
-//    public String getMethodOfAdministration() {
-//        return methodOfAdministration;
-//    }
-//
-//    /**
-//     * Gets the extraInstructions in this Medicine Class
-//     * @return  The extraInstructions in this Medicine Class
-//     */
-//    public String getExtraInstructions() {
-//        return extraInstructions;
-//    }
-//
-//    /**
-//     * Gets the idNumber in this Medicine Class
-//     * @return  The idNumber in this Medicine Class
-//     */
-//    public int getIdNumber() {
-//        return idNumber;
-//    }
 
     /**
      * Sets the medicineName in this Medicine Class

@@ -1,5 +1,6 @@
 package test_entities;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import entities.User;
 import entities.Medicine;
@@ -7,13 +8,42 @@ import entities.Medicine;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
+    User user;
+    Medicine myMedicine;
+
+    @BeforeEach
+    void setUp(){
+        this.user = new User("Mouaid Alim", "alimmoua");
+        myMedicine = new Medicine("Mouaid's medicine", 60, "mL",
+                "Injection","needs to be taken 1 hour before eating");
+    }
 
     @Test
     public void TestAddMedicine(){
-        User myUser = new User("Mouaid Alim", "alimmoua");
-        Medicine myMedicine = new Medicine("Mouaid's medicine", 60, "mL",
-                "Injection","needs to be taken 1 hour before eating");
-        myUser.addMedicine(myMedicine);
-        assertTrue(myUser.getMedicineList().containsValue(myMedicine));
+        user.addMedicine(myMedicine);
+        assertTrue(user.getMedicineList().containsValue(myMedicine));
+    }
+
+    @Test
+    void removeMedicine() {
+        user.addMedicine(myMedicine);
+        user.removeMedicine(myMedicine.getMedicineName());
+        assertFalse(user.getMedicineList().containsValue(myMedicine));
+    }
+
+    @Test
+    void getMedicine() {
+        user.addMedicine(myMedicine);
+        Medicine actual_med = user.getMedicine("Mouaid's medicine");
+        assertEquals(actual_med, myMedicine);
+    }
+
+    @Test
+    void changeMedicineNameInMapping() {
+        user.addMedicine(myMedicine);
+        Medicine expected = user.getMedicine("Mouaid's medicine");
+        user.changeMedicineNameInMapping("Mouaid's medicine", "Sujoy's Med");
+        Medicine actual = user.getMedicine("Sujoy's Med");
+        assertEquals(actual, expected);
     }
 }

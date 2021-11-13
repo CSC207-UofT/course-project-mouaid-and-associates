@@ -3,12 +3,10 @@ package application_business_rules;
 import java.util.*;
 
 import entities.Medicine;
-import entities.MedicineSchedule;
 import entities.Schedule;
 import entities.User;
 import entities.PrescriptionMedicine;
 
-import javax.lang.model.type.NullType;
 
 public class ManagementSystem {
     /**
@@ -118,7 +116,7 @@ public class ManagementSystem {
     }
 
     public void addNewPrescription(List<String> medicines, String presName){
-        List<Medicine> allMedicines = List.copyOf(userManager.getMedicines().values());
+        Medicine[] allMedicines = userManager.getMedicines();
         List<Medicine> presMedicines = new ArrayList<>();
         for(Medicine medicine : allMedicines){
             if (medicines.contains(medicine.getMedicineName())){
@@ -145,6 +143,7 @@ public class ManagementSystem {
     public List<String> getPrescriptionsNames(){
         return List.copyOf(prescriptionManager.keySet());
     }
+
     public void addMedicineToPres(String presName, Medicine medicine){
         prescriptionManager.get(presName).addMedicine(medicine);
     }
@@ -162,11 +161,12 @@ public class ManagementSystem {
      * Removes a prescription from the user's list of prescriptions
      * @param presName The name of the prescription
      */
-    public void removePrescription(String presName){
+    public void removePrescription(String presName) {
         PrescriptionMedicine prescription = prescriptionManager.get(presName);
         String[] medicines = prescription.getPresMedicines();
         userManager.removeMeds(medicines);
         prescriptionManager.remove(presName);
+    }
 
     /**
      * Edits a medicine using the given info. The first element is the new name of the medicine.
