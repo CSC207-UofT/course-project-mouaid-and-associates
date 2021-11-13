@@ -16,7 +16,7 @@ public class ChoosePrescriptionToEditWindow extends Window implements DisplayEnt
      * This is an interface that allows classes in frameworks_and_drivers to get information
      * from classes in the inner levels, and display that information.
      *
-     * @param info   The information to be printed. In this case, a list of medicine names,
+     * @param info   The information to be printed. In this case, a list of prescription names,
      *               and a title.
      */
     @Override
@@ -26,7 +26,7 @@ public class ChoosePrescriptionToEditWindow extends Window implements DisplayEnt
         }
 
         // Also add the list of medicine names as valid inputs to verify user input.
-        setValidInputs(Arrays.copyOfRange(info, 1, info.length));
+        setValidInputs(Arrays.copyOfRange(info, 0, info.length));
     }
 
     private void setValidInputs(String[] inputs){
@@ -37,13 +37,13 @@ public class ChoosePrescriptionToEditWindow extends Window implements DisplayEnt
     public String[] getUserInput() {
         String[] userInput = new String[1];
         boolean validInput = false;
-        System.out.println("Please enter the name of the medicine you would like to choose:");
+        System.out.println("Please enter the name of the prescription you would like to edit:");
 
         while(!validInput){
             userInput[0] = scanner.nextLine();
             validInput = verifyInput(userInput[0]);
             if (!validInput){
-                System.out.println("Please enter a medicine in the list above. You can even copy and paste the name.");
+                System.out.println("Please enter a valid prescription name.");
             }
         }
 
