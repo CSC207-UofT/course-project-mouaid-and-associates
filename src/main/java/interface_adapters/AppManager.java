@@ -325,6 +325,27 @@ public class AppManager {
         return "View Account Window";
     }
 
+    /**
+     * Edits a prescription which user specifies
+     */
+    public String editPrescription(){
+        Window editPrescriptionWindow = windows.get("Edit Prescription Window");
+        Window choosePrescriptionToEditWindow = windows.get("Choose Prescription To Edit Window");
+        List<String[]> data = ((PrescriptionWindow) editPrescriptionWindow).getUserPrescriptionInput();
+        String presName = choosePrescriptionToEditWindow.getUserInput()[0];
+        data.remove(0);
+        for(int i = 1; i < data.size()/2; i++ ){
+            if (data.get(2*i+1)[0].equals("-1")){
+                //removes the medicine
+                managementSystem.removePrescription(data.get(2*i)[0]);
+            }
+            managementSystem.editPrescription(presName, data.get(2*i)[0], data.get(2*i+1));
+        }
+
+
+        managementSystem.setPrescriptionName(data.get(0)[0], data.get(1)[0]);
+        return "View Account Window";
+    }
     private void addMedicineHelper(String[] data) {
         String name = data[0];
         String methodOfAdmin = data[1];

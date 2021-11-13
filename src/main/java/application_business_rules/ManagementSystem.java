@@ -118,7 +118,7 @@ public class ManagementSystem {
     }
 
     public void addNewPrescription(List<String> medicines, String presName){
-        List<Medicine> allMedicines = List.copyOf(userManager.getMedicines().values());
+        List<Medicine> allMedicines = List.copyOf(userManager.getUser().getMedicineList().values());
         List<Medicine> presMedicines = new ArrayList<>();
         for(Medicine medicine : allMedicines){
             if (medicines.contains(medicine.getMedicineName())){
@@ -162,11 +162,12 @@ public class ManagementSystem {
      * Removes a prescription from the user's list of prescriptions
      * @param presName The name of the prescription
      */
-    public void removePrescription(String presName){
+    public void removePrescription(String presName) {
         PrescriptionMedicine prescription = prescriptionManager.get(presName);
         String[] medicines = prescription.getPresMedicines();
         userManager.removeMeds(medicines);
         prescriptionManager.remove(presName);
+    }
 
     /**
      * Edits a medicine using the given info. The first element is the new name of the medicine.
