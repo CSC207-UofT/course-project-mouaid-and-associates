@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Event implements Comparable<Event>{
@@ -23,7 +24,6 @@ public class Event implements Comparable<Event>{
      */
     private String name;
     private String description;
-
     private Map<String, Double> timeStamp;
 
 
@@ -44,6 +44,10 @@ public class Event implements Comparable<Event>{
      */
     public String getName() {
         return name;
+    }
+
+    public void setTimeStamp(Map<String, Double> timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     /**
@@ -84,6 +88,9 @@ public class Event implements Comparable<Event>{
      * negative integer, zero, or a positive integer as this Event is less
      * than, equal to, or greater than the specified Event.
      *
+     * Precondition:
+     * - this.timeStamp.getDay().equals(o.getDay)
+     *
      * @param o the object to be compared.
      * @return a negative integer, zero, or a positive integer as this object
      * is less than, equal to, or greater than the specified object.
@@ -105,25 +112,31 @@ public class Event implements Comparable<Event>{
         int min = (int) ((((time * 100) % 100) / 100.0) * 60);
         int hour = (int) (((time * 100) - min) / 100.0);
 
-        return (hour + ":" + min);
+        if (min < 10){
+            return (hour + ":0" + min);
+        } else {
+            return (hour + ":" + min);
+        }
+
     }
 
-    //    /**
-    //     * Sets the description of the event.
-    //     * @param description  The description of the event
-    //     */
-    //    public void setDescription(String description) {
-    //        this.description = description;
-    //    }
+    /**
+     * Creates a time stamp for an event.
+     * @param day The time an event takes place.
+     * @param hour The hour this event takes place.
+     */
+    public static Map<String, Double> makeTimeStamp(String day, Double hour) {
+        Map<String, Double> time = new HashMap<>();
+        time.put(day, hour);
+        return time;
+    }
 
-    //    /**
-    //     * Sets the time an event takes place.
-    //     * @param day The time an event takes place.
-    //     * @param hour The hour this event takes place.
-    //     */
-    //    public void setTimeStamp(String day, Double hour) {
-    //        this.timeStamp = new HashMap<>();
-    //        this.timeStamp.put(day, hour);
-    //    }
+    /**
+     * Sets the description of the event.
+     * @param description  The description of the event
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }
