@@ -1,6 +1,6 @@
 package test_entities;
 
-import entities.Sleep;
+import entities.Meal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,27 +9,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SleepTest {
-
-    Sleep sleep;
+public class MealTest {
+    Meal meal;
 
     @BeforeEach
     void setUp(){
-        this.sleep = new Sleep();
+        this.meal = new Meal();
     }
 
     @Test
     void createScheduleIsEmptyByDefault(){
-        this.sleep.createSchedule();
-        assertTrue(this.sleep.getMySchedule().getEvents().isEmpty());
+        this.meal.createSchedule();
+        assertTrue(this.meal.getMySchedule().getEvents().isEmpty());
     }
 
     @Test
     void setScheduleTimes(){
         List<Double> times = new ArrayList<>();
-        times.add(23.0);
-        times.add(7.0);
-        this.sleep.setTime(times);
-        assertFalse(this.sleep.getMySchedule().getEvents().isEmpty());
+        times.add(8.0);
+        times.add(13.0);
+        times.add(18.0);
+        this.meal.setTime(times);
+        assertFalse(this.meal.getMySchedule().getEvents().isEmpty());
     }
 }
