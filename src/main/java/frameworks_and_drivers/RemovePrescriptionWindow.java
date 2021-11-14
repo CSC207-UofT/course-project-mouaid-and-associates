@@ -1,10 +1,7 @@
 package frameworks_and_drivers;
 
-import interface_adapters.PrescriptionWindow;
 import interface_adapters.Window;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class RemovePrescriptionWindow extends Window {

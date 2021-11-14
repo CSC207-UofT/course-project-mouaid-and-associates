@@ -35,8 +35,8 @@ public class UserManager {
      */
     public User addNewUser(String name,String username){
         this.user = new User(name, username);
-        createUserSleepClass();// Create a default Sleep Class with an empty OtherActivitiesSchedule
-        createUserMealClass();// Create a default Meal Class with an empty OtherActivitiesSchedule
+        createUserSleepClass();// Create a default Sleep Class with an empty Schedule
+        createUserMealClass();// Create a default Meal Class with an empty Schedule
         return this.user;
     }
 

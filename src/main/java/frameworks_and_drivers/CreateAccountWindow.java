@@ -2,7 +2,6 @@ package frameworks_and_drivers;
 
 import interface_adapters.Window;
 
-import java.io.Console;
 import java.util.Scanner;
 
 public class CreateAccountWindow extends Window {

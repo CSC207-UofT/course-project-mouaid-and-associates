@@ -1,10 +1,8 @@
 package interface_adapters;
 
 import application_business_rules.ManagementSystem;
-import frameworks_and_drivers.AddMedicineWindow;
 
 import java.util.*;
-import java.util.Random;
 public class AppManager {
     /** This is the main class that runs the entire app.
      *
