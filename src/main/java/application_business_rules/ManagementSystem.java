@@ -38,7 +38,7 @@ public class ManagementSystem {
     /**
      * Creates a new user instance and stores it in the userDatabase
      * @param name The name of the user
-     * @param username the username that the user will use to login
+     * @param username the username that the user will use to log in
      */
     public void createNewUser(String name, String username){
         this.userDatabase.put(username, this.userManager.addNewUser(name, username));
@@ -51,7 +51,6 @@ public class ManagementSystem {
      * @return returns a list that contains the user's username, name and list of medicines (names only).
      */
     public List<String> getUserInfo(){
-        String[] medNames;
         List<String> userInfo = new ArrayList<>();
         userInfo.add(userManager.getName());
         userInfo.add(userManager.getUserName());
@@ -205,7 +204,7 @@ public class ManagementSystem {
     }
 
     /**
-     * Sets new Sleep and Wakup times for the User
+     * Sets new Sleep and Wake up times for the User
      * @param times the Sleep and Wakeup times
      */
     public void setSleepAndWakeUpTimes(List<Double> times){
