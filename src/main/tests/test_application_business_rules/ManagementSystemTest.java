@@ -17,9 +17,9 @@ class ManagementSystemTest {
 
     @Test
     public void testCreateNewUser() {
-        testSystem.createNewUser("Benjamin", "Ben");
-        assertEquals(1,testSystem.getDatabase().size());
-        assertTrue(testSystem.getDatabase().containsKey("Ben"));
+        testSystem.createNewUser("Benjamin", "Ben", "password");
+        assertEquals(1,testSystem.getAccounts().size());
+        assertTrue(testSystem.getAccounts().containsKey("Ben"));
         List<String>info = testSystem.getUserInfo();
         assertEquals(info.indexOf("Ben"), 1);
         assertEquals(info.indexOf("Benjamin"), 0);

@@ -12,12 +12,12 @@ public class ManagementSystem {
     /**
      * The main manager class that manages all the other manager classes
      * Instance Attributes:
-     * UserDatabase: Stores a map of usernames to User entities
+     * accounts: Stores a map of usernames to User entities
      * UserManager: Stores an instance of UserManager class
      * ScheduleManager: Stores an instance of ScheduleManager
-     * ScheduleCompiler: Stores an instance ScheduleCompiler
+     * prescriptionManager: A map of Prescription names to PrescriptionMedicine entities.
      */
-    private HashMap<String, User> userDatabase;
+    private HashMap<String, User> accounts;
     private UserManager userManager;
     private ScheduleManager scheduleManager;
     private HashMap<String, PrescriptionMedicine> prescriptionManager;
@@ -29,23 +29,67 @@ public class ManagementSystem {
     public ManagementSystem(){
         this.userManager = new UserManager();
         this.scheduleManager = new ScheduleManager();
-        this.userDatabase = new HashMap<>();
+        this.accounts = new HashMap<>();
         this.prescriptionManager = new HashMap<>();
     }
-    public Map<String, User> getDatabase(){
-        return this.userDatabase;
+    public Map<String, User> getAccounts(){
+        return this.accounts;
     }
     /**
-     * Creates a new user instance and stores it in the userDatabase
+     * Creates a new user instance and stores it in the accounts
      * @param name The name of the user
      * @param username the username that the user will use to log in
      */
-    public void createNewUser(String name, String username){
-        this.userDatabase.put(username, this.userManager.addNewUser(name, username));
+    public void createNewUser(String name, String username, String password){
+        this.accounts.put(username, this.userManager.addNewUser(name, username, password));
     }
 
-    // FUTURE TODO: findUser is not required for Phase 0. Needs to be discussed further.
+    /**
+     * This method sets up the user accounts prior to program starting.
+     * @param filename          The file containing user accounts
+     * @param readerAndWriter   The data access interface used to read the file.
+     */
+    public void setUpAccounts(String filename, FileReaderAndWriter readerAndWriter){
+        // Here we create the objects from the file.
+        this.accounts = (HashMap<String, User>) readerAndWriter.read(filename);
+        if (accounts == null){
+            accounts = new HashMap<>();
+        }
 
+    }
+
+    /**
+     * Saves the user accounts to the file with filename.
+     * @param filename          The file we are saving user accounts to.
+     * @param readerAndWriter   The data access interface used to write into the file.
+     */
+    public void saveAccounts(String filename, FileReaderAndWriter readerAndWriter){
+        //Save the accounts back into the file.
+        readerAndWriter.write(filename, accounts);
+    }
+
+    /**
+     *
+     * @param input The input that the user gave
+     * @return Whether or not the input the user gave is for an account
+     *
+     * Preconditions:
+     *  - length(input) == 2
+     */
+    public boolean verifyUserAccount(String[] input){
+        String username = input[0];
+        String password = input[1];
+        if (!accounts.containsKey(username)){
+            return false;
+        } else if (accounts.get(username).getPassword().equals(password)){
+            userManager.setUser(accounts.get(username));
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
     /**
      * Gets the info of the user using the username that the user uses
      * @return returns a list that contains the user's username, name and list of medicines (names only).

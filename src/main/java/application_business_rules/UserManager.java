@@ -33,8 +33,8 @@ public class UserManager {
      * @param name The name of the user.
      * @param username the username of the account
      */
-    public User addNewUser(String name,String username){
-        this.user = new User(name, username);
+    public User addNewUser(String name,String username, String password){
+        this.user = new User(name, username, password);
         createUserSleepClass();// Create a default Sleep Class with an empty Schedule
         createUserMealClass();// Create a default Meal Class with an empty Schedule
         return this.user;
@@ -137,6 +137,14 @@ public class UserManager {
 
         // Call medicine manager to edit the medicine.
         medicineManager.editMedicine(med, newInfo);
+    }
+
+    /**
+     * Sets the User for this UserManager.
+     * @param user  The new User.
+     */
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**

@@ -1,8 +1,9 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class User {
+public class User implements Serializable {
     /**
      * A class representing the user of the app
      * Instance Attributes:
@@ -24,6 +25,7 @@ public class User {
         this.name = name;
         this.userName = userName;
         this.medicineList = new HashMap<>();
+        this.password = password;
     }
 
     /**
@@ -32,6 +34,14 @@ public class User {
      */
     public String getName(){
         return this.name;
+    }
+
+    /**
+     * Gets the user's password
+     * @return The password of the user.
+     */
+    public String getPassword() {
+        return password;
     }
 
     /**
@@ -76,6 +86,7 @@ public class User {
 
     /**
      * Changes the mapping so that the new name of the medicine maps to the medicine instead of the old name.
+     *
      * @param oldName       The old name of the medicine.
      * @param newName       The new name of the medicine.
      */
