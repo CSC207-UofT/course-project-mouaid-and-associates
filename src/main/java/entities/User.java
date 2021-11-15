@@ -9,6 +9,7 @@ public class User implements Serializable {
      * Instance Attributes:
      * name: THe name of the user.
      * userName: the username the user uses to log in.
+     * password: The password required for login
      * medicineList: A list of all the medicines used by the user. It is a mapping of a name of a medication to it's
      * instance of Medicine
      *
@@ -17,11 +18,12 @@ public class User implements Serializable {
      */
     private String name;
     private String userName;
+    private String password;
     private HashMap<String, Medicine> medicineList;
     private Sleep sleepClass;
     private Meal mealClass;
 
-    public User(String name, String userName){
+    public User(String name, String userName, String password){
         this.name = name;
         this.userName = userName;
         this.medicineList = new HashMap<>();
