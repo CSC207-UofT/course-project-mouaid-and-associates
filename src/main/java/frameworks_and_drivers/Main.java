@@ -17,11 +17,20 @@ public class Main {
         Map<String, Window> windows = new HashMap<>();
 
         windows.put("Add Medicine Window", new AddMedicineWindow(scanner));
+        windows.put("Add Prescription Window", new AddPrescriptionWindow(scanner));
+        windows.put("Remove Prescription Window", new RemovePrescriptionWindow(scanner));
         windows.put("Create Account Window", new CreateAccountWindow(scanner));
         windows.put("Login Window", new LoginWindow(scanner));
         windows.put("Start Screen Window", new StartScreenWindow(scanner));
         windows.put("TimeTable Window", new TimeTableWindow(scanner));
         windows.put("View Account Window", new ViewAccountWindow(scanner));
+        windows.put("Remove Medicine Window", new RemoveMedicineWindow(scanner));
+        windows.put("Choose Medicine To Edit Window", new ChooseMedicineToEditWindow(scanner));
+        windows.put("Choose Prescription To Edit Window", new ChoosePrescriptionToEditWindow(scanner));
+        windows.put("Edit Medicine Window", new EditMedicineWindow(scanner));
+        windows.put("Edit Prescription Window", new EditPrescriptionWindow(scanner));
+        windows.put("Set Sleep Timings Window", new SetSleepTimingsWindow(scanner));
+        windows.put("Set Meal Timings Window", new SetMealTimingsWindow(scanner));
 
         appManager.run(windows);
 
