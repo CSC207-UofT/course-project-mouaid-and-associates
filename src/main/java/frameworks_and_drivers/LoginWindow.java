@@ -1,9 +1,10 @@
 package frameworks_and_drivers;
 
+import interface_adapters.DisplayEntityInformation;
 import interface_adapters.Window;
 import java.util.Scanner;
 
-public class LoginWindow extends Window {
+public class LoginWindow extends Window implements DisplayEntityInformation {
     /*
      * The window that displays the Login page.
      */
@@ -30,4 +31,16 @@ public class LoginWindow extends Window {
         return returnList;
         }
 
+    /**
+     * This is an interface that allows classes in frameworks_and_drivers to get information
+     * from classes in the inner levels, and display that information.
+     *
+     * @param info      The information to be displayed.
+     */
+    @Override
+    public void displayInfo(String[] info) {
+        for (String line: info){
+            System.out.println(line);
+        }
     }
+}

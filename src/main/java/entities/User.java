@@ -1,13 +1,15 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class User {
+public class User implements Serializable {
     /**
      * A class representing the user of the app
      * Instance Attributes:
      * name: THe name of the user.
      * userName: the username the user uses to log in.
+     * password: The password required for login
      * medicineList: A list of all the medicines used by the user. It is a mapping of a name of a medication to it's
      * instance of Medicine
      *
@@ -16,14 +18,16 @@ public class User {
      */
     private String name;
     private String userName;
+    private String password;
     private HashMap<String, Medicine> medicineList;
     private Sleep sleepClass;
     private Meal mealClass;
 
-    public User(String name, String userName){
+    public User(String name, String userName, String password){
         this.name = name;
         this.userName = userName;
         this.medicineList = new HashMap<>();
+        this.password = password;
     }
 
     /**
@@ -32,6 +36,14 @@ public class User {
      */
     public String getName(){
         return this.name;
+    }
+
+    /**
+     * Gets the user's password
+     * @return The password of the user.
+     */
+    public String getPassword() {
+        return password;
     }
 
     /**
@@ -76,6 +88,7 @@ public class User {
 
     /**
      * Changes the mapping so that the new name of the medicine maps to the medicine instead of the old name.
+     *
      * @param oldName       The old name of the medicine.
      * @param newName       The new name of the medicine.
      */

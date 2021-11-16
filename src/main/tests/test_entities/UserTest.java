@@ -15,7 +15,7 @@ public class UserTest {
 
     @BeforeEach
     void setUp(){
-        this.user = new User("Mouaid Alim", "alimmoua");
+        this.user = new User("Mouaid Alim", "alimmoua", "myPasswordIsSafe");
         myMedicine = new Medicine("Mouaid's medicine", 60, "mL",
                 "Injection","needs to be taken 1 hour before eating");
     }

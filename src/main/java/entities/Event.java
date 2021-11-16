@@ -1,9 +1,10 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Event implements Comparable<Event>{
+public class Event implements Comparable<Event>, Serializable {
     /**
      * A class containing a singular occurrence of an event that would appear on a schedule
      * Instance Attributes:
