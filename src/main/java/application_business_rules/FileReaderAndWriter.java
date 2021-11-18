@@ -1,5 +1,4 @@
 package application_business_rules;
-import entities.User;
 
 import java.io.*;
 import java.util.Map;
@@ -14,7 +13,7 @@ public interface FileReaderAndWriter {
      * @param file      The file to be read.
      * @return          The object stored in the file.
      */
-    Map<String, User> read(String file);
+    Map<String, Object> read(String file);
 
     /**
      * Writes objects into the file so that they are stored.

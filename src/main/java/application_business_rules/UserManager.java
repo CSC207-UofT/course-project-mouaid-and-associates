@@ -41,6 +41,24 @@ public class UserManager {
     }
 
     /**
+     * Returns a new user object by casting the passed in object.
+     *
+     * Preconditions:
+     * - newUser is an instance of User
+     *
+     * @param newUser   The new user.
+     * @return          The new user, as a User object.
+     */
+    public User createNewUser(Object newUser){
+        if (newUser instanceof User){
+            return (User) newUser;
+        }
+
+        // Should never reach this line based on the Precondition.
+        return null;
+    }
+
+    /**
      * Creates a new medicine entity (Object). Adds the medicine to User's list of medicine.
      * @param medicineName The name of the medicine
      * @param amount The amount of this medicine

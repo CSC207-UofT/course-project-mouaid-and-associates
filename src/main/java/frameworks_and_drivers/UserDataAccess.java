@@ -2,10 +2,8 @@ package frameworks_and_drivers;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map;
 
 import application_business_rules.FileReaderAndWriter;
-import entities.User;
 
 public class UserDataAccess implements FileReaderAndWriter {
     /**
@@ -18,12 +16,12 @@ public class UserDataAccess implements FileReaderAndWriter {
      * - The object being read from the file is of type Map<String, User>
      */
     @Override
-    public Map<String, User> read(String fileName) {
+    public Map<String, Object> read(String fileName) {
         try(FileInputStream f1 = new FileInputStream(fileName)) {
 
             ObjectInputStream o = new ObjectInputStream(f1);
             @SuppressWarnings("unchecked")  // Since this class will always be used
-            Map<String, User> accounts = (HashMap<String, User>) o.readObject();
+            Map<String, Object> accounts = (HashMap<String, Object>) o.readObject();
             o.close();
             return accounts;
         } catch (EOFException e) {

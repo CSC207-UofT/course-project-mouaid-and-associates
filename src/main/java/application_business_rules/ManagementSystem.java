@@ -51,11 +51,13 @@ public class ManagementSystem {
      */
     public void setUpAccounts(String filename, FileReaderAndWriter readerAndWriter){
         // Here we create the objects from the file.
-        this.accounts = (HashMap<String, User>) readerAndWriter.read(filename);
-        if (accounts == null){
-            accounts = new HashMap<>();
-        }
+        Map<String, Object> readObjects = readerAndWriter.read(filename);
+        this.accounts = new HashMap<>();
 
+        // If there are no accounts in the file, then we will have an empty hashmap.
+        for (String username: readObjects.keySet()){
+            this.accounts.put(username, userManager.createNewUser(readObjects.get(username)));
+        }
     }
 
     /**
