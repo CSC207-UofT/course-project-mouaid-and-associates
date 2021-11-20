@@ -1,9 +1,9 @@
 package entities;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
-public class PrescriptionMedicine {
+public class PrescriptionMedicine implements Serializable {
     private List<Medicine> listOfMedicines;
     private String prescriptionName;
 

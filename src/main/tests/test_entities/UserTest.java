@@ -1,5 +1,7 @@
 package test_entities;
 
+import entities.Meal;
+import entities.Sleep;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import entities.User;
@@ -13,7 +15,7 @@ public class UserTest {
 
     @BeforeEach
     void setUp(){
-        this.user = new User("Mouaid Alim", "alimmoua");
+        this.user = new User("Mouaid Alim", "alimmoua", "myPasswordIsSafe");
         myMedicine = new Medicine("Mouaid's medicine", 60, "mL",
                 "Injection","needs to be taken 1 hour before eating");
     }
@@ -45,5 +47,19 @@ public class UserTest {
         user.changeMedicineNameInMapping("Mouaid's medicine", "Sujoy's Med");
         Medicine actual = user.getMedicine("Sujoy's Med");
         assertEquals(actual, expected);
+    }
+
+    @Test
+    void testSleepClass(){
+        Sleep sleep = new Sleep();
+        this.user.setSleepClass(sleep);
+        assertEquals(this.user.getSleepClass(), sleep);
+    }
+
+    @Test
+    void testGetMealClass(){
+        Meal meal = new Meal();
+        this.user.setMealClass(meal);
+        assertEquals(this.user.getMealClass(), meal);
     }
 }

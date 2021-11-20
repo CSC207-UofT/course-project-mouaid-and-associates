@@ -1,7 +1,6 @@
 package frameworks_and_drivers;
 
 import interface_adapters.ScheduleInputWindow;
-import interface_adapters.Window;
 
 import java.util.Scanner;
 
