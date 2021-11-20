@@ -15,6 +15,8 @@ public class Main {
         AppManager appManager = new AppManager();
         Scanner scanner = new Scanner(System.in);
         Map<String, Window> windows = new HashMap<>();
+        UserDataAccess dataAccess = new UserDataAccess();
+        String accountFile = "src/main/data/users.ser";
 
         windows.put("Add Medicine Window", new AddMedicineWindow(scanner));
         windows.put("Add Prescription Window", new AddPrescriptionWindow(scanner));
@@ -32,7 +34,7 @@ public class Main {
         windows.put("Set Sleep Timings Window", new SetSleepTimingsWindow(scanner));
         windows.put("Set Meal Timings Window", new SetMealTimingsWindow(scanner));
 
-        appManager.run(windows);
+        appManager.run(windows, dataAccess, accountFile);
 
         scanner.close();
 

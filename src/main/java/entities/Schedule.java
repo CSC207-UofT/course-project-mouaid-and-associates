@@ -1,8 +1,9 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class  Schedule {
+public class Schedule implements Serializable {
     /**
      * The Schedule that contains all the events.
      * Instance Attributes:

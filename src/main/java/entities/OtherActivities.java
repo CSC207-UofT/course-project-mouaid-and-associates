@@ -1,9 +1,10 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class OtherActivities {
+public abstract class OtherActivities implements Serializable {
     /**
      * The Super Class for other events in the schedule like sleep times and meal times
      */
