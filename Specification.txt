@@ -1,7 +1,0 @@
-Specification:
-A medicine can either be prescribed or not. If the medicine is prescribed then each prescribed medicine should have the times to take the medication (or a number of times per day), when they should take the medicine, activities (with a duration), an expiration date, amount, type (pill, liquid, etc.), edibility, and any extra instructions or conditions. If the medicine is not prescribed, then it should just store the number of times you took it that day, how much you took, the type, and the time you took it.The system should track the time in order to remind users to take their medication, in a visual and auditory way. 
-
-Each user should be able to create an account, with a username and password. Users should be able to add, edit and remove prescriptions and medicine from their account. The user should be able to see when to take their medication, as a list or a calendar. Users should also be able to enter their meal times and sleep schedules so that they see if the times they chose to take the medicine work well. A user-friendly interface should be considered.
-
-When a user looks at the schedule they have made, they should be able to see when they plan to take the medicine, what they are taking that day, how much to take, and any additional instructions. They should be able to edit their schedule as they see fit. They should be able to look at their schedule for the whole week.
-
