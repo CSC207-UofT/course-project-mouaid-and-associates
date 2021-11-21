@@ -2,6 +2,7 @@ package application_business_rules;
 
 import entities.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class UserManager {
@@ -68,7 +69,7 @@ public class UserManager {
      */
     public void createMedicine(String medicineName, int amount, String unitOfMeasurement,
                                String methodOfAdministration, String extraInstructions,
-                               List<Map<String, Double>> times){
+                               List<LocalDateTime> times){
 
         user.addMedicine(this.medicineManager.createNewMedicine(medicineName, amount, unitOfMeasurement,
                 methodOfAdministration, extraInstructions, times));
@@ -219,7 +220,7 @@ public class UserManager {
      * Set the Activity times of the User's given OtherActivities Class
      * @param times A list containing the new activity time
      */
-    public void setActivityTimes(OtherActivities activities, List<Double> times){
+    public void setActivityTimes(OtherActivities activities, List<String> times){
         this.otherActivitiesManager.setActivityTimes(activities, times);
     }
 

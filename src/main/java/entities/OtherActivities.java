@@ -8,7 +8,7 @@ public abstract class OtherActivities implements Serializable {
     /**
      * The Super Class for other events in the schedule like sleep times and meal times
      */
-    protected List<Double> times;
+    protected List<String> times;
     protected Schedule schedule;
 
     public OtherActivities(){
@@ -33,7 +33,7 @@ public abstract class OtherActivities implements Serializable {
      * Set the activity times of this Activity Class
      * @param times A list containing the new activity times
      */
-    public void setTime(List<Double> times) {
+    public void setTime(List<String> times) {
         this.times = times;
         createSchedule();
     }

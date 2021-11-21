@@ -1,5 +1,6 @@
 package application_business_rules;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import entities.Medicine;
@@ -53,12 +54,17 @@ public class ManagementSystem {
         // Here we create the objects from the file.
         Map<String, Object> readObjects = readerAndWriter.read(filename);
         this.accounts = new HashMap<>();
-
+        if (Objects.isNull(readObjects)){
+            readObjects = new HashMap<>();
+        }
         // If there are no accounts in the file, then we will have an empty hashmap.
-        for (String username: readObjects.keySet()){
-            this.accounts.put(username, userManager.createNewUser(readObjects.get(username)));
+        if (!readObjects.isEmpty()) {
+            for (String username : readObjects.keySet()) {
+                this.accounts.put(username, userManager.createNewUser(readObjects.get(username)));
+            }
         }
     }
+
 
     /**
      * Saves the user accounts to the file with filename.
@@ -142,7 +148,7 @@ public class ManagementSystem {
      */
     public void addNewMedicine(String medicineName, int amount, String unitOfMeasurement,
                                String methodOfAdministration, String extraInstructions,
-                               List<Map<String, Double>> times) {
+                               List<LocalDateTime> times) {
         userManager.createMedicine(medicineName, amount, unitOfMeasurement,
                 methodOfAdministration, extraInstructions, times);
     }
@@ -239,7 +245,7 @@ public class ManagementSystem {
      * @param info      The info used to edit the medicine. The first element is the medicine name.
      * @param times     The new times to take this medicine.
      */
-    public void editMedicine(String medName, String[] info, List<Map<String, Double>> times){
+    public void editMedicine(String medName, String[] info, List<LocalDateTime> times){
         userManager.editMedicine(medName, info);
         scheduleManager.editScheduleTimes(userManager.getMedicineSchedule(medName), times);
 
@@ -253,7 +259,7 @@ public class ManagementSystem {
      * Sets new Sleep and Wake up times for the User
      * @param times the Sleep and Wakeup times
      */
-    public void setSleepAndWakeUpTimes(List<Double> times){
+    public void setSleepAndWakeUpTimes(List<String> times){
         this.userManager.setActivityTimes(this.userManager.getUser().getSleepClass(), times);
     }
     
@@ -261,7 +267,7 @@ public class ManagementSystem {
      * Sets new meal times for the User
      * @param times the Meal times
      */
-    public void setMealTimes(List<Double> times){
+    public void setMealTimes(List<String> times){
         this.userManager.setActivityTimes(this.userManager.getUser().getMealClass(), times);
 
     }

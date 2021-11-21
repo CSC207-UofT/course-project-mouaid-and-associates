@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Schedule implements Serializable {
@@ -42,7 +43,7 @@ public class Schedule implements Serializable {
      * @param description   Description of the event.
      * @param timeStamp     Mapping of a day to a time. The time the event takes place.
      */
-    public void addEvent(String name, String description, Map<String, Double> timeStamp){
+    public void addEvent(String name, String description, LocalDateTime timeStamp){
         // First we create a new event:
         Event event = new Event(name, description, timeStamp);
 
@@ -56,12 +57,12 @@ public class Schedule implements Serializable {
      *
      * @param name          Name of the event.
      * @param description   Description of the event.
-     * @param day           The day the event takes place.
+     * @param date          The date of the event.
      * @param time          The time the event takes place.
      */
-    public void addEvent(String name, String description, String day, double time){
+    public void addEvent(String name, String description, String date, String time){
         // Make a time stamp and call the other addEvent.
-        Map<String, Double> timeStamp = Event.makeTimeStamp(day, time);
+        LocalDateTime timeStamp = LocalDateTime.parse(date + "T" + time);
 
         // Just call the other addEvent method to add the event. No need to repeat code.
         this.addEvent(name, description, timeStamp);
@@ -92,32 +93,37 @@ public class Schedule implements Serializable {
     public String toString() {
         Map<String, List<Event>> sortedEvents = sortEvents();
         StringBuilder scheduleRep = new StringBuilder();
-        String[] days = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
-                                     "Sunday"};
-
+        List<String> days = getOrderedEventDays(events);
         for (String day: days){
             scheduleRep.append(day).append(": \n");
+            for (Event event: sortedEvents.get(day)){
+                String eventDescription = new String(event.getDescription() + " \n");
+                String eventHour = event.getTime();
+                // Add the strings to the string builder.
+                scheduleRep.append(eventHour);
+                scheduleRep.append(" - ").append(eventDescription);
 
-            if (sortedEvents.containsKey(day)) {
-                for (Event event : sortedEvents.get(day)) {
-                    String eventName = "    " + event.getName() + "\n";
-                    String eventDescription = event.getDescription() + " \n";
-                    String eventHour = "    " + event.decimalToHourFormat();
-
-                    // Add the strings to the string builder.
-                    scheduleRep.append(eventName);
-                    scheduleRep.append(eventHour);
-                    scheduleRep.append(" - ").append(eventDescription);
-
-                }
-            } else {
-                scheduleRep.append("Nothing today \n");
             }
         }
 
         return scheduleRep.toString();
     }
 
+    /**
+     * Orders the events by day
+     * @param events The events have days that need to be ordered
+     * @return A list representing the days that the person has to take medicine on
+     */
+    public List<String> getOrderedEventDays(List<Event> events){
+        Collections.sort(events);
+        ArrayList<String> daysSoFar = new ArrayList<>();
+        for (Event event : events){
+            if (!daysSoFar.contains(event.getDay())){
+                daysSoFar.add(event.getDay());
+            }
+        }
+        return daysSoFar;
+    }
     /**
      *  This method organizes the events so that events occurring in the same
      *  day are grouped together. And events occurring on the same day are also
@@ -148,16 +154,20 @@ public class Schedule implements Serializable {
      *
      * @return The dictionary made from organizing the events by day.
      */
+    /**
+     * Sorts the events in the events attribute into a dictionary mapping a
+     * day to events taking place on that day.
+     *
+     * @return The dictionary made from organizing the events by day.
+     */
     private Map<String, List<Event>> sortEventsByDay() {
         // Start and accumulator collection. This is a dictionary mapping
         // days to events occurring on that day.
         Map<String, List<Event>> newDictOfEvents = new HashMap<>();
-
         // iterate through the list of events:
         for(Event event : this.events){
             // First get the Event's day.
             String day = event.getDay();
-
             // Check if the key already exists in the mapping
             if (newDictOfEvents.containsKey(day)){
                 // if it exists, add to it.
@@ -186,10 +196,10 @@ public class Schedule implements Serializable {
      */
     public String[] getEventTimes(){
         String[] times = new String[events.size()];
+        String date;
         for (int i = 0; i < times.length; i++){
-            String day = events.get(i).getDay();
-            String hour = events.get(i).decimalToHourFormat();
-            times[i] = day + ": " + hour;
+            date = events.get(i).getDate();
+            times[i] = date;
         }
         return times;
     }
@@ -201,7 +211,7 @@ public class Schedule implements Serializable {
      * - All the names and descriptions of the events of this schedule are the same.
      * @param times     The new times of the events.
      */
-    public void setEventTimes(List<Map<String, Double>> times){
+    public void setEventTimes(List<LocalDateTime> times){
         // Since all the event names and descriptions are the same, just get the name and
         // descriptions from the first event.
         String eventName = events.get(0).getName();
@@ -210,7 +220,7 @@ public class Schedule implements Serializable {
         // Delete all the old events:
         events.clear();
 
-        for (Map<String, Double> time: times){
+        for (LocalDateTime time: times){
             addEvent(eventName, eventDescription, time);
         }
     }

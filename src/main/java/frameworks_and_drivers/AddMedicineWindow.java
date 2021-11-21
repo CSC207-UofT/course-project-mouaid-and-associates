@@ -41,9 +41,10 @@ public class AddMedicineWindow extends ScheduleInputWindow {
         String extra = scanner.nextLine();
 
         String wdm = super.selectWD(scanner); // Weekly, daily
-        String startDate = super.selectDay(scanner);
+        String startDay = selectDay(scanner);
+        String startMonth = selectMonth(scanner);
         String[] times = super.getTimes(scanner);
-        String[] returnList = new String[7 + times.length];
+        String[] returnList = new String[8 + times.length];
 
         // Format it to a specific order according to the documentation.
         returnList[0] = name;
@@ -52,9 +53,10 @@ public class AddMedicineWindow extends ScheduleInputWindow {
         returnList[3] = amount;
         returnList[4] = extra;
         returnList[5] = wdm;
-        returnList[6] = startDate;
-        for (int i = 7; i < (times.length + 7); i++){
-            returnList[i] = times[i - 7];
+        returnList[6] = startDay;
+        returnList[7] = startMonth;
+        for (int i = 8; i < (times.length + 8); i++){
+            returnList[i] = times[i - 8];
         }
 
         return returnList;

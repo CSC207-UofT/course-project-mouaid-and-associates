@@ -3,7 +3,7 @@ package entities;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.time.LocalDateTime;
 public class Event implements Comparable<Event>, Serializable {
     /**
      * A class containing a singular occurrence of an event that would appear on a schedule
@@ -25,7 +25,7 @@ public class Event implements Comparable<Event>, Serializable {
      */
     private String name;
     private String description;
-    private Map<String, Double> timeStamp;
+    private LocalDateTime timeStamp;
 
 
     /**
@@ -33,7 +33,7 @@ public class Event implements Comparable<Event>, Serializable {
      * @param description   The description of the event.
      * @param timeStamp         The times the event takes place.
      */
-    public Event(String name, String description, Map<String, Double> timeStamp){
+    public Event(String name, String description, LocalDateTime timeStamp){
         this.name = name;
         this.description = description;
         this.timeStamp = timeStamp;
@@ -47,7 +47,7 @@ public class Event implements Comparable<Event>, Serializable {
         return name;
     }
 
-    public void setTimeStamp(Map<String, Double> timeStamp) {
+    public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
     }
 
@@ -73,16 +73,22 @@ public class Event implements Comparable<Event>, Serializable {
      * @return  The day this event takes place.
      */
     public String getDay(){
-        return (String) timeStamp.keySet().toArray()[0];
+        return timeStamp.getMonthValue() + "/"+ timeStamp.getDayOfMonth();
     }
 
     /**
      * Returns the hour of the day this event takes place.
      * @return  The hour this event takes place.
      */
-    public Double getHour(){
-        return (Double) timeStamp.values().toArray()[0];
+    public String getTime(){
+        return timeStamp.getHour() + ":" + timeStamp.getMinute();
     }
+
+    /**
+     * Returns the date the event takes place
+     * @return Returns a string representing the date in the form YYYY-MM-DDTHH:MM:SS
+     */
+    public String getDate(){ return timeStamp.toString();}
 
     /**
      * Compares this Event with the specified Event for order.  Returns a
@@ -101,35 +107,7 @@ public class Event implements Comparable<Event>, Serializable {
      */
     @Override
     public int compareTo(Event o) {
-        return this.getHour().compareTo(o.getHour());
-    }
-
-    /**
-     * Changes the format of the hour into proper hour attribute.
-     * @return  The hour in normal time format.
-     */
-    public String decimalToHourFormat(){
-        double time = this.getHour();
-        int min = (int) ((((time * 100) % 100) / 100.0) * 60);
-        int hour = (int) (((time * 100) - min) / 100.0);
-
-        if (min < 10){
-            return (hour + ":0" + min);
-        } else {
-            return (hour + ":" + min);
-        }
-
-    }
-
-    /**
-     * Creates a time stamp for an event.
-     * @param day The time an event takes place.
-     * @param hour The hour this event takes place.
-     */
-    public static Map<String, Double> makeTimeStamp(String day, Double hour) {
-        Map<String, Double> time = new HashMap<>();
-        time.put(day, hour);
-        return time;
+        return this.timeStamp.compareTo(o.timeStamp);
     }
 
     /**
