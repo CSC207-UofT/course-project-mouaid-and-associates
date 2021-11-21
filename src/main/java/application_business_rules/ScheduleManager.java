@@ -2,6 +2,7 @@ package application_business_rules;
 
 import entities.Schedule;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class ScheduleManager {
      * @param schedule      The schedule to be edited
      * @param times         The new time stamps
      */
-    public void editScheduleTimes(Schedule schedule, List<Map<String, Double>> times){
+    public void editScheduleTimes(Schedule schedule, List<LocalDateTime> times){
         if (times.size() > 0) {
             schedule.setEventTimes(times);
         }

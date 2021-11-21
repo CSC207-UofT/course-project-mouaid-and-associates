@@ -3,6 +3,7 @@ package interface_adapters;
 import application_business_rules.FileReaderAndWriter;
 import application_business_rules.ManagementSystem;
 
+import java.time.LocalDateTime;
 import java.util.*;
 public class AppManager {
     /** This is the main class that runs the entire app.
@@ -265,7 +266,7 @@ public class AppManager {
         String medName;
         String[] medInfo;
         String[] changes; // Represents the changes the user wants to make.
-        List<Map<String, Double>> newTimes = new ArrayList<>();
+        List<LocalDateTime> newTimes = new ArrayList<>();
 
         // Check if ChooseMedicineToEditWindow is an instance of DisplayEntityInformation to print
         // out the list of medicine names, like in removeMedicine()
@@ -286,7 +287,7 @@ public class AppManager {
 
         // Format the given times.
         if (changes.length > 5) {
-            formatTimes(changes, changes[5], changes[6], newTimes);
+            formatTimes(changes, changes[5], changes[6], changes[7], newTimes);
         }
 
         // Call management system to edit the entities.
@@ -405,7 +406,8 @@ public class AppManager {
         String extraInstruct = data[4];
         String wOrD = data[5]; // Stores frequency. Weekly/Daily
         String startDay = data[6];
-        List<Map<String, Double>> times = new ArrayList<>();
+        String startMonth = data[7];
+        List<LocalDateTime> times = new ArrayList<>();
 
         // In case the user decided to not enter a proper value.
         try {
@@ -414,7 +416,7 @@ public class AppManager {
             amount = -1;
         }
 
-        formatTimes(data, wOrD, startDay, times);
+        formatTimes(data, wOrD, startDay, startMonth, times);
 
         //Done: call managementSystem.addNewMedicine() and pass in this information.
         managementSystem.addNewMedicine(name, amount, unitOfMeasurement, methodOfAdmin, extraInstruct, times);
@@ -430,10 +432,10 @@ public class AppManager {
 
         String[] stringTimings = setSleepTimingsWindow.getUserInput();
 
-        Double sleepTime = Double.parseDouble(stringTimings[0]);
-        Double wakeUpTime = Double.parseDouble(stringTimings[1]);
+        String sleepTime = stringTimings[0];
+        String wakeUpTime = stringTimings[1];
 
-        List<Double> times = new ArrayList<>();
+        List<String> times = new ArrayList<>();
         times.add(sleepTime);
         times.add(wakeUpTime);
 
@@ -452,10 +454,10 @@ public class AppManager {
         Window setMealTimingsWindow = windows.get("Set Meal Timings Window");
 
         String[] stringTimings = setMealTimingsWindow.getUserInput();
-        List<Double> times = new ArrayList<>();
+        List<String> times = new ArrayList<>();
 
         for (String timings: stringTimings){
-            times.add(Double.valueOf(timings));
+            times.add(timings);
         }
 
         this.managementSystem.setMealTimes(times);
@@ -471,20 +473,22 @@ public class AppManager {
      * @param startDay  The day the first time occurs.
      * @param times     The mapping on which we will save the formatted times.
      */
-    private void formatTimes(String[] data, String wOrD, String startDay, List<Map<String, Double>> times) {
-        for(int i = 0; i < (data.length - 7); i++) {
+    private void formatTimes(String[] data, String wOrD, String startDay, String startMonth, List<LocalDateTime> times) {
+        for(int i = 0; i < (data.length - 8); i++) {
+            if (startDay.length() == 1){
+                startDay = "0" + startDay;
+            }
             if (wOrD.equals("weekly")) {
-                Map<String, Double> map = new HashMap<>();
-                map.put(DAYS[Integer.parseInt(startDay) - 1], Double.parseDouble(data[i + 7]));
-                times.add(map);
+                times.add(LocalDateTime.parse("2021-" + startMonth + "-" + startDay + "T" +  data[i + 8]));
             } else {
-                for (String day : DAYS) {
-                    Map<String, Double> map2 = new HashMap<>();
-                    map2.put(day, Double.parseDouble(data[i + 7]));
-                    times.add(map2);
+                for (int j = 0; j <8; j++) {
+                    startDay = Integer.toString(Integer.parseInt(startDay) + 1);
+                    if (startDay.length() == 1){
+                        startDay = "0" + startDay;
+                    }
+                    times.add(LocalDateTime.parse("2021-" + startMonth + "-" + startDay + "T" +  data[i + 8]));
                 }
             }
-
         }
     }
     /**

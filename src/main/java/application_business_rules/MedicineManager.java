@@ -3,6 +3,7 @@ package application_business_rules;
 import entities.Medicine;
 import entities.MedicineSchedule;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class MedicineManager {
      */
     public Medicine createNewMedicine(String medicineName, int amount, String unitOfMeasurement,
                                       String methodOfAdministration, String extraInstructions,
-                                      List<Map<String, Double>> times){
+                                      List<LocalDateTime> times){
         Medicine medicine = new Medicine(medicineName, amount, unitOfMeasurement,
                 methodOfAdministration, extraInstructions);
 

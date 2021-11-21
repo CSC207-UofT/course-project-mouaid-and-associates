@@ -1,5 +1,6 @@
 package entities;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ public class Meal extends OtherActivities{
      * schedule: This Meal Class' OtherActivitiesSchedule
      * times: This Meal Class' sleep and wakeup times
      */
+
 
 
     public Meal() {
@@ -23,19 +25,31 @@ public class Meal extends OtherActivities{
      */
     @Override
     public void createSchedule() {
-        String[]  daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
         this.schedule.removeAllEvents();
-
+        LocalDateTime currentDate = LocalDateTime.now();
+        String appendYear;
+        String appendDay;
+        String appendMonth;
+        LocalDateTime appendTo;
         // Checks if the meal times isEmpty() which indicates that the MealClass is being created for
         // the first time and therefore there are no set meal times so the ActivitiesSchedule is empty
         if (!(times.isEmpty())) {
-            for (String i : daysOfWeek) {
-                for (Double time : this.times) {
-                    Map<String, Double> meal = new HashMap<>();
-                    meal.put(i, time);
+            for (int i = 0; i<14; i++) {
+                appendTo = currentDate.plusDays(i);
+                appendDay = String.valueOf(appendTo.getDayOfMonth());
+                appendMonth = String.valueOf(appendTo.getMonthValue());
+                appendYear = String.valueOf(appendTo.getYear());
+                for (String time : this.times) {
+                if (appendDay.length() == 1){
+                    appendDay = "0" + appendDay;
+                }
+                if (appendMonth.length() == 1){
+                    appendMonth = "0" + appendMonth;
+                }
 
                     // Add the events to the schedule.
-                    schedule.addEvent("Meal Time", "Time to eat", meal);
+                    schedule.addEvent("Meal Time", "Time to eat",
+                            LocalDateTime.parse(appendYear+ "-" + appendMonth + "-" + appendDay + "T" + time));
                 }
             }
         }

@@ -19,10 +19,9 @@ public abstract class ScheduleInputWindow extends Window{
         String[] times = new String[howManyTimesInt];
         String time = " ";
         for (int i = 0; i < howManyTimesInt; i++){
-            while(!isNumeric(time) || 0 > Double.parseDouble(time) || 24 <= Double.parseDouble(time)){
-                System.out.println("For the "+ (i + 1) + "'st time, pick a time (In the form of XX.XX." +
-                        "Note that  such as 10:30 becomes " +
-                        "10.5, or 13:45 as 13.75");
+            while(!isValidTime(time)){
+                System.out.println("For the "+ (i + 1) + "'st time, pick a time (In the form of XX:XX. Use the 24 hour " +
+                        "format, so that 10:30 is 10:30 am and 22:30 is 10:30 pm");
                 time = scanner.nextLine();
             }
             times[i] = time;
@@ -50,13 +49,28 @@ public abstract class ScheduleInputWindow extends Window{
      * @return A string representing the day to start on
      */
     public String selectDay(Scanner scanner){
-        String input = "";
-        while (!isNumeric(input) || 0 > Integer.parseInt(input) || Integer.parseInt(input)  > 7){
-            System.out.println("What day would you like to start? Press 1 for Monday, 2 for Tuesday," +
-                    "3 for Wednesday, 4 for Thursday, 5 for Friday, 6 for Saturday, 7 for Sunday");
-            input = scanner.nextLine();
+        String day = "";
+        while (!isNumeric(day) || 0 > Integer.parseInt(day) || Integer.parseInt(day)  > 32){
+            System.out.println("What day of the month would you like to start?");
+            day = scanner.nextLine();
         }
-        return input;
+
+        return day;
+    }
+
+    /**
+     * Allows the user to select the month they want to start on
+     * @return An integer representing the starting month
+     */
+    public String selectMonth (Scanner scanner) {
+        String month = "  ";
+        while (!isNumeric(month) || 0 > Integer.parseInt(month) || Integer.parseInt(month)  > 12 ||
+                month.length() != 2){
+            System.out.println("What month would you like to start? Please month the month in the form 01 for January" +
+                    "02 for February and so on");
+            month = scanner.nextLine();
+        }
+        return month;
     }
 
     /**
@@ -86,5 +100,27 @@ public abstract class ScheduleInputWindow extends Window{
         } catch(NumberFormatException e){
             return false;
         }
+    }
+
+    /**
+     * Checks to see if the user inputted time correctly
+     * @param time a string given that should represent the time
+     * @return Whether time is of the right format
+     */
+    public boolean isValidTime(String time){
+        if (time.length() != 5 || !isNumeric(String.valueOf(time.charAt(0))) ||
+                !isNumeric(String.valueOf(time.charAt(1))) || !isNumeric(String.valueOf(time.charAt(3))) ||
+                !isNumeric(String.valueOf(time.charAt(4))) || time.charAt(2) != ':'){
+            return false;
+        }
+        else if (Character.getNumericValue(time.charAt(0)) * 10 + Character.getNumericValue(time.charAt(1)) >= 24 ||
+                Character.getNumericValue(time.charAt(3)) * 10 + Character.getNumericValue(time.charAt(4)) > 59){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+
     }
 }

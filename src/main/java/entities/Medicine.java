@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class Medicine implements Serializable {
      * Adds a new MedicineSchedule to this Medicine object.
      * @param times The times to take this medication.
      */
-    public void addMedicineSchedule(List<Map<String, Double>> times){
+    public void addMedicineSchedule(List<LocalDateTime> times){
         // Make an event
         String description;
         description = makeDescription();
@@ -55,12 +56,10 @@ public class Medicine implements Serializable {
         this.myMedicineSchedule = new MedicineSchedule(medicineName, events);
 
         // Iterate through the list of times
-        for(Map<String, Double> time : times){
+        for(LocalDateTime time : times){
             // Add an event to the list of events in the schedule.
             myMedicineSchedule.addEvent(medicineName, description, time);
         }
-
-
     }
 
     /**

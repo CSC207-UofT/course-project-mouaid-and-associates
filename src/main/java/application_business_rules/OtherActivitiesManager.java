@@ -45,7 +45,7 @@ public class OtherActivitiesManager {
      * @param activity The OtherActivities class to set the times for
      * @param times A list containing the new times
      */
-    public void setActivityTimes(OtherActivities activity, List<Double> times){
+    public void setActivityTimes(OtherActivities activity, List<String> times){
         activity.setTime(times);
     }
 }

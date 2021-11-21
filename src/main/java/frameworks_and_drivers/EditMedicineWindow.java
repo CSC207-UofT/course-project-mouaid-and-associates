@@ -60,6 +60,7 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
 
                 changes.add(super.selectWD(scanner));
                 changes.add(super.selectDay(scanner));
+                changes.add(super.selectMonth(scanner));
                 times = super.getTimes(scanner);
                 // Add the new entry.
                 Collections.addAll(changes, times);
