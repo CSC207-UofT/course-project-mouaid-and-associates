@@ -10,9 +10,9 @@ public class AppManagerPresenters {
      * The class that takes care of the presenter methods in the AppManagerFacade
      */
 
-    Map<String, Window> windows;
-    ManagementSystem managementSystem;
-    AppManagerHelpers appManagerHelpers;
+    private Map<String, Window> windows;
+    private ManagementSystem managementSystem;
+    private AppManagerHelpers appManagerHelpers;
 
     public AppManagerPresenters(Map<String, Window> windows, ManagementSystem managementSystem) {
         this.windows = windows;
