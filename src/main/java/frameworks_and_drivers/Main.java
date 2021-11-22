@@ -1,6 +1,6 @@
 package frameworks_and_drivers;
 
-import interface_adapters.AppManager;
+import interface_adapters.AppManagerFacade;
 import interface_adapters.Window;
 
 import java.util.HashMap;
@@ -12,7 +12,7 @@ public class Main {
      * The main method.
      */
     public static void main(String[] args) {
-        AppManager appManager = new AppManager();
+        AppManagerFacade appManagerFacade = new AppManagerFacade();
         Scanner scanner = new Scanner(System.in);
         Map<String, Window> windows = new HashMap<>();
         UserDataAccess dataAccess = new UserDataAccess();
@@ -34,7 +34,7 @@ public class Main {
         windows.put("Set Sleep Timings Window", new SetSleepTimingsWindow(scanner));
         windows.put("Set Meal Timings Window", new SetMealTimingsWindow(scanner));
 
-        appManager.run(windows, dataAccess, accountFile);
+        appManagerFacade.run(windows, dataAccess, accountFile);
 
         scanner.close();
 
