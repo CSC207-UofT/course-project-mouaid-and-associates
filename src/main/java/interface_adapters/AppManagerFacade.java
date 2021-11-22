@@ -5,11 +5,11 @@ import application_business_rules.ManagementSystem;
 
 import java.time.LocalDateTime;
 import java.util.*;
-public class AppManager {
+public class AppManagerFacade {
     /** This is the main class that runs the entire app.
      *
      * Instance Attributes:
-     * - managementSystem: An input and output boundary between the interface adapters like AppManager
+     * - managementSystem: An input and output boundary between the interface adapters like AppManagerFacade
      *                     and use case interactors like UserManager and MedicineManager.
      * - windows: A mapping of a string name for a window to a Window object.
      * - accounts: A mapping of usernames to passwords. Will likely be changed to be stored in a database
@@ -32,7 +32,7 @@ public class AppManager {
     private static final String[] DAYS = new String[]{"Monday", "Tuesday", "Wednesday",
     "Thursday", "Friday", "Saturday", "Sunday"};
 
-    public AppManager(){
+    public AppManagerFacade(){
         managementSystem = new ManagementSystem();
     }
 
@@ -510,6 +510,8 @@ public class AppManager {
 
         return "View Account Window";
     }
+
+
     public List<String> getPrescriptionNames(){
         return managementSystem.getPrescriptionsNames();
     }
