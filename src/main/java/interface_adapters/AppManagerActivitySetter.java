@@ -11,8 +11,8 @@ public class AppManagerActivitySetter {
      * The class that takes care of setting the activity times in the AppManagerFacade
      */
 
-    Map<String, Window> windows;
-    ManagementSystem managementSystem;
+    private Map<String, Window> windows;
+    private ManagementSystem managementSystem;
 
     public AppManagerActivitySetter(Map<String, Window> windows, ManagementSystem managementSystem) {
         this.windows = windows;

@@ -35,6 +35,7 @@ public class AppManagerFacade {
     private AppManagerMedicine appManagerMedicine;
     private AppManagerPrescription appManagerPrescription;
     private AppManagerAccounts appManagerAccounts;
+    private AppManagerPresenters appManagerPresenters;
 
     public AppManagerFacade(){
         managementSystem = new ManagementSystem();
@@ -52,6 +53,7 @@ public class AppManagerFacade {
         this.appManagerMedicine = new AppManagerMedicine(this.windows, this.managementSystem);
         this.appManagerPrescription = new AppManagerPrescription(this.windows, this.managementSystem);
         this.appManagerAccounts = new AppManagerAccounts(this.windows, this.managementSystem);
+        this.appManagerPresenters = new AppManagerPresenters(this.windows, this.managementSystem);
 
         // Set up the user accounts from the file
         setUpAccounts(accountFile, readerAndWriter);
@@ -144,7 +146,7 @@ public class AppManagerFacade {
      * Shows the start screen window.
      */
     public String showStartScreenWindow(){
-        return this.appManagerAccounts.showStartScreenWindow();
+        return this.appManagerPresenters.showStartScreenWindow();
     }
 
     /**
@@ -160,7 +162,7 @@ public class AppManagerFacade {
      * interact with the page.
      */
     public String showAccountWindow(){
-        return this.appManagerAccounts.showAccountWindow();
+        return this.appManagerPresenters.showAccountWindow();
     }
 
     /**
