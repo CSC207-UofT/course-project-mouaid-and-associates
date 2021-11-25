@@ -12,9 +12,9 @@ public class AppManagerMedicine {
      * The class that takes care of Medicine related tasks in the AppManagerFacade
      */
 
-    Map<String, Window> windows;
-    ManagementSystem managementSystem;
-    AppManagerHelpers appManagerHelpers;
+    private Map<String, Window> windows;
+    private ManagementSystem managementSystem;
+    private AppManagerHelpers appManagerHelpers;
 
     public AppManagerMedicine(Map<String, Window> windows, ManagementSystem managementSystem) {
         this.windows = windows;

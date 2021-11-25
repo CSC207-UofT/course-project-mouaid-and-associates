@@ -8,12 +8,12 @@ import java.util.Map;
 
 public class AppManagerPrescription {
     /**
-     * The class that takes care of Medicine related tasks in the AppManagerFacade
+     * The class that takes care of prescription related tasks in the AppManagerFacade
      */
 
-    Map<String, Window> windows;
-    ManagementSystem managementSystem;
-    AppManagerHelpers appManagerHelpers;
+    private  Map<String, Window> windows;
+    private ManagementSystem managementSystem;
+    private AppManagerHelpers appManagerHelpers;
 
     public AppManagerPrescription(Map<String, Window> windows, ManagementSystem managementSystem) {
         this.windows = windows;
