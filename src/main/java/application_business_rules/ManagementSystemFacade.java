@@ -9,7 +9,7 @@ import entities.User;
 import entities.PrescriptionMedicine;
 
 
-public class ManagementSystem {
+public class ManagementSystemFacade {
     /**
      * The main manager class that manages all the other manager classes
      * Instance Attributes:
@@ -22,19 +22,28 @@ public class ManagementSystem {
     private UserManager userManager;
     private ScheduleManager scheduleManager;
     private HashMap<String, PrescriptionMedicine> prescriptionManager;
+    private ManagementSystemAccounts managementSystemAccounts;
+    private ManagementSystemActivitySetter managementSystemActivitySetter;
+    private ManagementSystemMedicine managementSystemMedicine;
+    private ManagementSystemPrescription managementSystemPrescription;
 
     /**
-     * Creates a new ManagementSystem instance. Also
+     * Creates a new ManagementSystemFacade instance. Also
      * Creates a new UserManager and ScheduleManager.
      */
-    public ManagementSystem(){
+    public ManagementSystemFacade(){
         this.userManager = new UserManager();
         this.scheduleManager = new ScheduleManager();
         this.accounts = new HashMap<>();
         this.prescriptionManager = new HashMap<>();
+        this.managementSystemAccounts = new ManagementSystemAccounts(this.userManager, this.accounts);
+        this.managementSystemActivitySetter = new ManagementSystemActivitySetter(this.userManager);
+        this.managementSystemMedicine = new ManagementSystemMedicine(this.userManager, this.scheduleManager);
+        this.managementSystemPrescription = new ManagementSystemPrescription(this.userManager,
+                this.prescriptionManager);
     }
     public Map<String, User> getAccounts(){
-        return this.accounts;
+        return this.managementSystemAccounts.getAccounts();
     }
     /**
      * Creates a new user instance and stores it in the accounts
@@ -42,7 +51,7 @@ public class ManagementSystem {
      * @param username the username that the user will use to log in
      */
     public void createNewUser(String name, String username, String password){
-        this.accounts.put(username, this.userManager.addNewUser(name, username, password));
+        this.managementSystemAccounts.createNewUser(name, username, password);
     }
 
     /**
@@ -51,18 +60,7 @@ public class ManagementSystem {
      * @param readerAndWriter   The data access interface used to read the file.
      */
     public void setUpAccounts(String filename, FileReaderAndWriter readerAndWriter){
-        // Here we create the objects from the file.
-        Map<String, Object> readObjects = readerAndWriter.read(filename);
-        this.accounts = new HashMap<>();
-        if (Objects.isNull(readObjects)){
-            readObjects = new HashMap<>();
-        }
-        // If there are no accounts in the file, then we will have an empty hashmap.
-        if (!readObjects.isEmpty()) {
-            for (String username : readObjects.keySet()) {
-                this.accounts.put(username, userManager.createNewUser(readObjects.get(username)));
-            }
-        }
+        this.managementSystemAccounts.setUpAccounts(filename, readerAndWriter);
     }
 
 
@@ -72,8 +70,7 @@ public class ManagementSystem {
      * @param readerAndWriter   The data access interface used to write into the file.
      */
     public void saveAccounts(String filename, FileReaderAndWriter readerAndWriter){
-        //Save the accounts back into the file.
-        readerAndWriter.write(filename, accounts);
+        this.managementSystemAccounts.saveAccounts(filename, readerAndWriter);
     }
 
     /**
@@ -85,41 +82,23 @@ public class ManagementSystem {
      *  - length(input) == 2
      */
     public boolean verifyUserAccount(String[] input){
-        String username = input[0];
-        String password = input[1];
-        if (!accounts.containsKey(username)){
-            return false;
-        } else if (accounts.get(username).getPassword().equals(password)){
-            userManager.setUser(accounts.get(username));
-            return true;
-        }
-        else {
-            return false;
-        }
-
+        return this.managementSystemAccounts.verifyUserAccount(input);
     }
+
     /**
      * Gets the info of the user using the username that the user uses
      * @return returns a list that contains the user's username, name and list of medicines (names only).
      */
     public List<String> getUserInfo(){
-        List<String> userInfo = new ArrayList<>();
-        userInfo.add(userManager.getName());
-        userInfo.add(userManager.getUserName());
-
-        // Get specifically the names of the medicine.
-        Collections.addAll(userInfo, userManager.getMedicineNames());
-
-        return userInfo;
+        return this.managementSystemAccounts.getUserInfo();
     }
-
 
     /**
      * Removes the medicines from the list of medicines the user has.
      * @param medsToRemove      The list of meds to be removed.
      */
     public void removeMedicines(String[] medsToRemove){
-        userManager.removeMeds(medsToRemove);
+        this.managementSystemMedicine.removeMedicines(medsToRemove);
     }
 
     /**
@@ -149,13 +128,11 @@ public class ManagementSystem {
     public void addNewMedicine(String medicineName, int amount, String unitOfMeasurement,
                                String methodOfAdministration, String extraInstructions,
                                List<LocalDateTime> times) {
-        userManager.createMedicine(medicineName, amount, unitOfMeasurement,
+        this.managementSystemMedicine.addNewMedicine(medicineName, amount, unitOfMeasurement,
                 methodOfAdministration, extraInstructions, times);
     }
 
-    public String[] getMedicineInfo(String medName){
-        return userManager.getMedicineInfo(medName);
-    }
+    public String[] getMedicineInfo(String medName){return this.managementSystemMedicine.getMedicineInfo(medName);}
 
     /**
      * Checks if the ID is in the hashmap
@@ -163,19 +140,11 @@ public class ManagementSystem {
      * @return Returns True if it is in the hashmap and false otherwise
      */
     public boolean presNameChecker(String presName){
-        return this.prescriptionManager.containsKey(presName);
+        return this.managementSystemPrescription.presNameChecker(presName);
     }
 
     public void addNewPrescription(List<String> medicines, String presName){
-        List<Medicine> allMedicines = userManager.getMedicineEntites();
-        List<Medicine> presMedicines = new ArrayList<>();
-        for(Medicine medicine : allMedicines){
-            if (medicines.contains(medicine.getMedicineName())){
-                presMedicines.add(medicine);
-            }
-        }
-        PrescriptionMedicine prescriptionMedicine = new PrescriptionMedicine(presMedicines, presName);
-        prescriptionManager.put(presName, prescriptionMedicine);
+       this.managementSystemPrescription.addNewPrescription(medicines, presName);
     }
 
     /**
@@ -184,7 +153,7 @@ public class ManagementSystem {
      * @return A prescriptionMedicine Object
      */
     public PrescriptionMedicine getPrescription(String presName){
-        return prescriptionManager.get(presName);
+        return this.managementSystemPrescription.getPrescription(presName);
     }
 
     /**
@@ -192,15 +161,10 @@ public class ManagementSystem {
      * @return A set of keys
      */
     public List<String> getPrescriptionsNames(){
-        return List.copyOf(prescriptionManager.keySet());
+        return this.managementSystemPrescription.getPrescriptionsNames();
     }
     public void addMedicineToPres(String presName, String medicine){
-        List<Medicine> meds = userManager.getMedicineEntites();
-        for(Medicine med : meds){
-            if(med.getMedicineName().equals(medicine)){
-                prescriptionManager.get(presName).addMedicine(med);
-            }
-        }
+        this.managementSystemPrescription.addMedicineToPres(presName, medicine);
     }
 
     /**
@@ -209,7 +173,7 @@ public class ManagementSystem {
      * @param name the name of the medicine
      */
     public void removeMedicineFromPres(String presName, String name){
-        prescriptionManager.get(presName).removeMedicine(name);
+        this.managementSystemPrescription.removeMedicineFromPres(presName, name);
     }
 
     /**
@@ -217,22 +181,17 @@ public class ManagementSystem {
      * @return a set of prescription names
      */
     public String[] getPrescriptions(){
-        return prescriptionManager.keySet().toArray(new String[0]);
+        return this.managementSystemPrescription.getPrescriptions();
     }
     /**
      * Removes a prescription from the user's list of prescriptions
      * @param presName The name of the prescription
      */
     public void removePrescription(String presName) {
-        PrescriptionMedicine prescription = prescriptionManager.get(presName);
-        String[] medicines = prescription.getPresMedicines();
-        userManager.removeMeds(medicines);
-        prescriptionManager.remove(presName);
+        this.managementSystemPrescription.removePrescription(presName);
     }
     public void changePrescriptionName(String oldPresName, String newPresName){
-        prescriptionManager.get(oldPresName).setPrescriptionName(newPresName);
-        PrescriptionMedicine prescription = prescriptionManager.remove(oldPresName);
-        prescriptionManager.put(newPresName, prescription);
+        this.managementSystemPrescription.changePrescriptionName(oldPresName, newPresName);
     }
 
     /**
@@ -246,13 +205,7 @@ public class ManagementSystem {
      * @param times     The new times to take this medicine.
      */
     public void editMedicine(String medName, String[] info, List<LocalDateTime> times){
-        userManager.editMedicine(medName, info);
-        scheduleManager.editScheduleTimes(userManager.getMedicineSchedule(medName), times);
-
-        // Change the mapping from the old name to the new name.
-        if (!info[0].equals("")){
-            userManager.changeMedicineNameInMapping(medName, info[0]);
-        }
+        this.managementSystemMedicine.editMedicine(medName, info, times);
     }
 
     /**
@@ -260,7 +213,7 @@ public class ManagementSystem {
      * @param times the Sleep and Wakeup times
      */
     public void setSleepAndWakeUpTimes(List<String> times){
-        this.userManager.setActivityTimes(this.userManager.getUser().getSleepClass(), times);
+        this.managementSystemActivitySetter.setSleepAndWakeUpTimes(times);
     }
     
     /**
@@ -268,7 +221,7 @@ public class ManagementSystem {
      * @param times the Meal times
      */
     public void setMealTimes(List<String> times){
-        this.userManager.setActivityTimes(this.userManager.getUser().getMealClass(), times);
+        this.managementSystemActivitySetter.setMealTimes(times);
 
     }
 
