@@ -52,4 +52,21 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
             System.out.println(pieceOfInfo);
         }
     }
+
+    /**
+     * Notify the observer of a change
+     *
+     * @param frame
+     * @param source
+     */
+    @Override
+    public void update(ObservableFrame frame, Object source) {
+
+    }
+
+
+    @Override
+    public void createView() {
+
+    }
 }

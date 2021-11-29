@@ -9,8 +9,10 @@ public class CreateAccountWindow extends Window {
      * The window that displays the Create an Account page.
      */
 
-    public CreateAccountWindow(Scanner scanner) {
-        super(scanner);
+    public CreateAccountWindow(Scanner scanner, ObservableFrame frame) {
+        super(scanner, frame);
+        // Create the view for this window
+        createView();
     }
 
     /**

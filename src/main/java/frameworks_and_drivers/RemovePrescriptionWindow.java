@@ -1,15 +1,14 @@
 package frameworks_and_drivers;
 
+import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import java.util.Scanner;
 
 public class RemovePrescriptionWindow extends Window {
-    public RemovePrescriptionWindow(Scanner scanner){
-        super(scanner);
+    public RemovePrescriptionWindow(Scanner scanner, ObservableFrame frame){
+        super(scanner, frame);
     }
-
-
 
     @Override
     public String[] getUserInput() {
@@ -20,6 +19,17 @@ public class RemovePrescriptionWindow extends Window {
         String[] returnedPres = new String[1];
         returnedPres[0] = prescription;
         return returnedPres;
+
+    }
+
+    /**
+     * Notify the observer of a change
+     *
+     * @param frame
+     * @param source
+     */
+    @Override
+    public void update(ObservableFrame frame, Object source) {
 
     }
 }

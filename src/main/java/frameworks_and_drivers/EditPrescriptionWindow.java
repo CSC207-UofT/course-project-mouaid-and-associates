@@ -39,4 +39,20 @@ public class EditPrescriptionWindow extends ScheduleInputWindow {
 
         return change.toArray(new String[0]);
     }
+
+    /**
+     * Notify the observer of a change
+     *
+     * @param frame
+     * @param source
+     */
+    @Override
+    public void update(ObservableFrame frame, Object source) {
+
+    }
+
+    @Override
+    public void createView() {
+
+    }
 }

@@ -1,6 +1,8 @@
 package frameworks_and_drivers;
 
 import interface_adapters.Window;
+
+import javax.swing.*;
 import java.util.Scanner;
 
 public class StartScreenWindow extends Window {
@@ -17,19 +19,59 @@ public class StartScreenWindow extends Window {
      */
     public String[] getUserInput() {
          // returns 0 if the user selects login and returns 1 if the user selects signup
-        String[] returnList = new String[1];
-
-        while (true) {
-            System.out.println("For Login type L, for Sign up type S");
-            String input = scanner.nextLine();
-            if (input.equals("L")) {
-                returnList[0] = "0";
-                return returnList;
-            } else if (input.equals("S")) {
-                returnList[0] = "1";
-                return returnList;
-            }
-        }
+        return userInput;
     }
 
+    /**
+     * Create the view for the Window.
+     */
+    @Override
+    public void createView() {
+        // Our container for the components (like a board on which you pin things)
+        JPanel panel = new JPanel();
+        // The layout in which components are placed.
+        // BoxLayout places things top to bottom, when you specify the Y_AXIS attribute
+        panel.setLayout(null);
+
+        // Set the size of the panel.
+        super.setPanelSize(panel);
+
+        // Make the two buttons:
+        JButton login = new JButton("LOGIN");
+        login.setSize(286, 200);        // Set the size
+        login.setLocation(100, 100);           // Set the location
+
+        JButton signUp = new JButton("SIGN UP");
+        signUp.setSize(286, 200);
+        signUp.setLocation(100, 500);
+
+        // Add the two buttons to the super buttonResponse map
+        super.buttonResponses.put(login, "0");
+        super.buttonResponses.put(signUp, "1");
+
+        // createVerticalGlue adds space between the frame or panel border and the component.
+        panel.add(login);
+
+        panel.add(signUp);
+
+        // Make sure the buttons have action listeners.
+        super.addActionListenerToAllButtons();
+
+        // Sets the view for this Window.
+        super.view = panel;
+    }
+
+    /**
+     * Notify the observer of a change
+     *
+     * @param frame     The frame from which we get our change
+     * @param source    The source of the change, in this case a button.
+     */
+    @Override
+    public void update(ObservableFrame frame, Object source) {
+        if (super.buttonResponses.containsKey(source)){
+            super.userResponded = true;
+            userInput = new String[]{super.buttonResponses.get(source)};
+        }
+    }
 }

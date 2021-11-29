@@ -11,7 +11,7 @@ public class AppManagerPrescription {
      * The class that takes care of prescription related tasks in the AppManagerFacade
      */
 
-    private  Map<String, Window> windows;
+    private Map<String, Window> windows;
     private ManagementSystem managementSystem;
     private AppManagerHelpers appManagerHelpers;
 
@@ -26,7 +26,8 @@ public class AppManagerPrescription {
      */
     public String addPrescription(){
         Window addPrescriptionWindow = windows.get("Add Prescription Window");
-        List<String[]> data = ((PrescriptionWindow) addPrescriptionWindow).getUserPrescriptionInput();
+        Window addMedicineWindow = windows.get("Add Medicine Window");
+        List<String[]> data = ((PrescriptionWindow) addPrescriptionWindow).getUserPrescriptionInput(addMedicineWindow);
         List<String> medicinesNames = new ArrayList<>();
         for(String[] medicine : data){
             if(medicine.length > 1){

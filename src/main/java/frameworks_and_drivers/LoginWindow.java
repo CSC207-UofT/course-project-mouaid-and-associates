@@ -1,6 +1,7 @@
 package frameworks_and_drivers;
 
 import interface_adapters.DisplayEntityInformation;
+import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 import java.util.Scanner;
 
@@ -9,8 +10,8 @@ public class LoginWindow extends Window implements DisplayEntityInformation {
      * The window that displays the Login page.
      */
 
-    public LoginWindow(Scanner scanner) {
-        super(scanner);
+    public LoginWindow(Scanner scanner, ObservableFrame frame) {
+        super(scanner, frame);
     }
 
     //The user logs in.
@@ -42,5 +43,21 @@ public class LoginWindow extends Window implements DisplayEntityInformation {
         for (String line: info){
             System.out.println(line);
         }
+    }
+
+    /**
+     * Notify the observer of a change
+     *
+     * @param frame
+     * @param source
+     */
+    @Override
+    public void update(ObservableFrame frame, Object source) {
+
+    }
+
+    @Override
+    public void createView() {
+
     }
 }

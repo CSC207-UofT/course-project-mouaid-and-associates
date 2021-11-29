@@ -18,7 +18,22 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
         return new String[0];
     }
 
-    public List<String[]> getUserPrescriptionInput() {
+    /**
+     * Return the user input on their new prescription.
+     *
+     * Preconditions:
+     *  - addMedicineWindow is an instance of AddMedicineWindow.
+     *
+     * @param addMedicineWindow  The window that allows users to add a medicine
+     * @return   The user's new prescription information.
+     */
+    @Override
+    public List<String[]> getUserPrescriptionInput(Window addMedicineWindow) {
+        AddMedicineWindow medicineWindow = null;
+        // This is always true:
+        if (addMedicineWindow instanceof AddMedicineWindow) {
+            medicineWindow = (AddMedicineWindow) addMedicineWindow;
+        }
         System.out.println("What would you like to name this prescription?");
         String presName = scanner.nextLine();
         // Add the prescription name into a string list, so it can be added to the return statement
@@ -32,6 +47,8 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
         int accumulator = 0;
         while(accumulator != Integer.parseInt(noMedicines)){
             System.out.println("Enter the information for Medicine " + (accumulator + 1));
+            // Make sure that the medicine window is not null.
+            assert medicineWindow != null;
             medicines.add(medicineWindow.getUserInput());
             accumulator += 1;
         }
