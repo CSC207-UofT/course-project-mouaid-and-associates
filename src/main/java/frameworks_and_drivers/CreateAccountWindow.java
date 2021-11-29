@@ -62,7 +62,7 @@ public class CreateAccountWindow extends Window {
         // BoxLayout places things top to bottom, when you specify the Y_AXIS attribute
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JTextField name = new JTextField("Name");
+        JTextField name = new JTextField("Name");       // A text box.
         name.setSize(300, 200);
         JTextField userName = new JTextField("Username");
         name.setSize(300, 200);

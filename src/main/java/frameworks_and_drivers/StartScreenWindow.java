@@ -16,7 +16,7 @@ public class StartScreenWindow extends Window {
         super(scanner, frame);
         // Create the view for this window.
         createView();
-        userInput = new String[0];
+        userInput = new String[1];
     }
 
     /**
@@ -36,13 +36,13 @@ public class StartScreenWindow extends Window {
         // Our container for the components (like a board on which you pin things)
         JPanel panel = new JPanel();
         // The layout in which components are placed.
-        // BoxLayout places things top to bottom, when you specify the Y_AXIS attribute
         panel.setLayout(null);
 
         // Set the size of the panel.
         super.setPanelSize(panel);
 
         // Make the two buttons:
+//        JLabel label = new JLabel("Message");     // A text label for printing out information.
         JButton login = new JButton("LOGIN");
         login.setSize(286, 200);        // Set the size
         login.setLocation(100, 100);           // Set the location
@@ -68,7 +68,8 @@ public class StartScreenWindow extends Window {
     }
 
     /**
-     * Notify the observer of a change
+     * Checks if a button on this view is the source of the event (i.e. A button has
+     * been pressed from this view) and performs the appropriate actions.
      *
      * @param frame     The frame from which we get our change
      * @param source    The source of the change, in this case a button.
@@ -77,7 +78,7 @@ public class StartScreenWindow extends Window {
     public void update(ObservableFrame frame, Object source) {
         if (super.buttonResponses.containsKey(source)){
             super.userResponded = true;
-            userInput = new String[]{super.buttonResponses.get(source)};
+            userInput[0] = super.buttonResponses.get(source);
         }
     }
 }

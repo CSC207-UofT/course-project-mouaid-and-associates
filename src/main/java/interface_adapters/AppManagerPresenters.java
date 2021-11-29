@@ -31,7 +31,7 @@ public class AppManagerPresenters {
         String[] choice = new String[0];        // Initialize the variable
 
         // Wait until the user has actually responded.
-        while (choice.length == 0) {
+        while (!window.userResponded) {
             choice = windows.get("Start Screen Window").getUserInput();      // Currently, placeholder.
         }
 

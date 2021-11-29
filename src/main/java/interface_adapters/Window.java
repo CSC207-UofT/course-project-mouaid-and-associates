@@ -16,12 +16,16 @@ public abstract class Window implements FrameObserver{
      *         the view will be implemented by the subclasses of this class.
      * - buttonResponses: Also related to the subclasses of this class. This is a map of the buttons
      *                    in the view of a Window to the response if that button is pressed.
+     * - userResponded: Used to check if the user has responded.
      */
     protected Scanner scanner;
     private ObservableFrame frame;
     protected Component view;
     protected Map<JButton, String> buttonResponses;
-    protected boolean userResponded;
+
+    // The volatile keyword is used to ensure that multiple threads (in this case the frame
+    // and the main program run on separate threads, can use the same object safely.
+    protected volatile boolean userResponded;
 
     public Window(Scanner scanner, ObservableFrame frame){
         this.frame = frame;
