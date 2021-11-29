@@ -1,9 +1,8 @@
 package interface_adapters;
 
 import application_business_rules.FileReaderAndWriter;
-import application_business_rules.ManagementSystem;
+import application_business_rules.ManagementSystemFacade;
 
-import java.util.List;
 import java.util.Map;
 
 public class AppManagerAccounts {
@@ -12,11 +11,11 @@ public class AppManagerAccounts {
      */
 
     private Map<String, Window> windows;
-    private ManagementSystem managementSystem;
+    private ManagementSystemFacade managementSystemFacade;
 
-    public AppManagerAccounts(Map<String, Window> windows, ManagementSystem managementSystem) {
+    public AppManagerAccounts(Map<String, Window> windows, ManagementSystemFacade managementSystemFacade) {
         this.windows = windows;
-        this.managementSystem = managementSystem;
+        this.managementSystemFacade = managementSystemFacade;
     }
 
     /**
@@ -29,7 +28,7 @@ public class AppManagerAccounts {
      * @param readerAndWriter   The data access interface
      */
     public void setUpAccounts(String filename, FileReaderAndWriter readerAndWriter){
-        managementSystem.setUpAccounts(filename, readerAndWriter);
+        managementSystemFacade.setUpAccounts(filename, readerAndWriter);
     }
 
     /**
@@ -42,7 +41,7 @@ public class AppManagerAccounts {
      * @param readerAndWriter   The data access interface.
      */
     public void saveAccounts(String filename, FileReaderAndWriter readerAndWriter){
-        managementSystem.saveAccounts(filename, readerAndWriter);
+        managementSystemFacade.saveAccounts(filename, readerAndWriter);
     }
 
     /**
@@ -54,7 +53,7 @@ public class AppManagerAccounts {
         boolean userIsVerified;
         do {
             input = loginWindow.getUserInput();
-            userIsVerified = managementSystem.verifyUserAccount(input);
+            userIsVerified = managementSystemFacade.verifyUserAccount(input);
 
             if(!userIsVerified && loginWindow instanceof DisplayEntityInformation){
                 ((DisplayEntityInformation) loginWindow).displayInfo(new String[]{
@@ -80,8 +79,8 @@ public class AppManagerAccounts {
         String username = inputInfo[1];
         String password = inputInfo[2];
 
-        //Done: call managementSystem.createNewUser, with name and username as parameters
-        managementSystem.createNewUser(name, username, password);
+        //Done: call managementSystemFacade.createNewUser, with name and username as parameters
+        managementSystemFacade.createNewUser(name, username, password);
 
         //Done: call showAccountWindow()
         return "View Account Window";
