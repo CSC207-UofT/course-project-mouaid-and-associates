@@ -15,22 +15,20 @@ class EventTest {
 
     @BeforeEach
     void setUp() {
-        Map<String, Double> timeStamp = new HashMap<>();
-        timeStamp.put("Monday", 10.5);
+        LocalDateTime timeStamp = LocalDateTime.parse(2021-12-03T10:15);
         event = new Event("Tylenol", "Take Tylenol with Water.",
                 timeStamp);
     }
 
     @Test
-    void getHour() {
-        double expected = 10.5;
-        assertEquals(expected, event.getHour());
+    void getTime() {
+        String expected = "10:15";
+        assertEquals(expected, event.getTime());
     }
 
     @Test
     void compareTo() {
-        Map<String, Double> timeStamp2 = new HashMap<>();
-        timeStamp2.put("Monday", 11.5);
+        LocalDateTime timeStamp2 = LocalDateTime.parse(2021-12-03T10:25);
         Event event2 = new Event("Advil", "Swallow Advil",
                 timeStamp2);
         int expected = -1;
@@ -38,8 +36,5 @@ class EventTest {
     }
 
     @Test
-    void decimalToHourFormat() {
-        String expected = "10:30";
-        assertEquals(expected, event.decimalToHourFormat());
-    }
+    void getDate()
 }
