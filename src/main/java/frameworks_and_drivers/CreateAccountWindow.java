@@ -1,7 +1,9 @@
 package frameworks_and_drivers;
 
+import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class CreateAccountWindow extends Window {
@@ -38,6 +40,39 @@ public class CreateAccountWindow extends Window {
 
 
         return returnList;
+
+    }
+    /**
+     * Notify the observer of a change
+     *
+     * @param frame
+     * @param source
+     */
+    @Override
+    public void update(ObservableFrame frame, Object source) {
+
+    }
+
+
+    @Override
+    public void createView() {
+        // Our container for the components (like a board on which you pin things)
+        JPanel panel = new JPanel();
+        // The layout in which components are placed.
+        // BoxLayout places things top to bottom, when you specify the Y_AXIS attribute
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        JTextField name = new JTextField("Name");
+        name.setSize(300, 200);
+        JTextField userName = new JTextField("Username");
+        name.setSize(300, 200);
+        JTextField password = new JTextField("Password");
+        name.setSize(300, 200);
+
+        JButton submit = new JButton("Submit");
+        submit.setSize(286, 200);
+
+        super.buttonResponses.put(submit, "1");
 
     }
 

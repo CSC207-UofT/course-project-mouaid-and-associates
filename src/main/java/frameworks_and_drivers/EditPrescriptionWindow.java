@@ -1,5 +1,6 @@
 package frameworks_and_drivers;
 
+import interface_adapters.ObservableFrame;
 import interface_adapters.ScheduleInputWindow;
 
 import java.util.ArrayList;
@@ -8,8 +9,8 @@ import java.util.Scanner;
 
 public class EditPrescriptionWindow extends ScheduleInputWindow {
 
-    public EditPrescriptionWindow(Scanner scanner){
-        super(scanner);
+    public EditPrescriptionWindow(Scanner scanner, ObservableFrame frame){
+        super(scanner, frame);
     }
     @Override
     public String[] getUserInput() {

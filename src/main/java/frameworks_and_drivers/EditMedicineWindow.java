@@ -1,6 +1,7 @@
 package frameworks_and_drivers;
 
 import interface_adapters.DisplayEntityInformation;
+import interface_adapters.ObservableFrame;
 import interface_adapters.ScheduleInputWindow;
 
 import java.util.ArrayList;
@@ -9,8 +10,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEntityInformation{
-    public EditMedicineWindow(Scanner scanner) {
-        super(scanner);
+    public EditMedicineWindow(Scanner scanner, ObservableFrame frame) {
+        super(scanner, frame);
     }
 
     @Override

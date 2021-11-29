@@ -32,4 +32,10 @@ public class RemovePrescriptionWindow extends Window {
     public void update(ObservableFrame frame, Object source) {
 
     }
+
+
+    @Override
+    public void createView() {
+
+    }
 }

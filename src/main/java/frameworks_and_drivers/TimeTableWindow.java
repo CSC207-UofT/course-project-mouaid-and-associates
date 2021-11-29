@@ -2,6 +2,7 @@ package frameworks_and_drivers;
 
 
 import interface_adapters.DisplayEntityInformation;
+import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 import java.util.Scanner;
 
@@ -9,8 +10,8 @@ public class TimeTableWindow extends Window implements DisplayEntityInformation 
     /**
      * The window that displays the Timetable page.
      */
-    public TimeTableWindow(Scanner scanner) {
-        super(scanner);
+    public TimeTableWindow(Scanner scanner, ObservableFrame frame) {
+        super(scanner, frame);
     }
 
     /**

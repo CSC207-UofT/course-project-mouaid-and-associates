@@ -1,6 +1,7 @@
 package frameworks_and_drivers;
 
 import interface_adapters.DisplayEntityInformation;
+import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import java.util.Scanner;
@@ -8,8 +9,8 @@ import java.util.Scanner;
 public class ViewAccountWindow extends Window implements DisplayEntityInformation {
     String[] returnList = new String[1];
 
-    public ViewAccountWindow(Scanner scanner) {
-        super(scanner);
+    public ViewAccountWindow(Scanner scanner, ObservableFrame frame) {
+        super(scanner, frame);
     }
 
     /**

@@ -1,7 +1,10 @@
 package frameworks_and_drivers;
 
+import interface_adapters.ObservableFrame;
 import interface_adapters.PrescriptionWindow;
+import interface_adapters.Window;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,8 +12,8 @@ import java.util.Scanner;
 public class AddPrescriptionWindow extends PrescriptionWindow {
 
 
-    public AddPrescriptionWindow(Scanner scanner){
-        super(scanner);
+    public AddPrescriptionWindow(Scanner scanner, ObservableFrame frame){
+        super(scanner, frame);
     }
 
     @Override
@@ -41,7 +44,6 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
         presNameLst[0] = presName;
         System.out.println("Number of medicines that come under this prescription");
         String noMedicines = scanner.nextLine();
-        AddMedicineWindow medicineWindow = new AddMedicineWindow(scanner);
         List<String[]> medicines = new ArrayList<>();
         medicines.add(presNameLst);
         int accumulator = 0;
@@ -54,6 +56,21 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
         }
 
         return medicines;
+
+    }
+    /**
+     * Notify the observer of a change
+     *
+     * @param frame
+     * @param source
+     */
+    @Override
+    public void update(ObservableFrame frame, Object source) {
+
+    }
+
+    @Override
+    public void createView() {
 
     }
 }

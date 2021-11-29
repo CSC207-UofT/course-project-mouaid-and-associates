@@ -1,5 +1,6 @@
 package frameworks_and_drivers;
 
+import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import javax.swing.*;
@@ -9,8 +10,13 @@ public class StartScreenWindow extends Window {
     /**
      * The window that displays the Start Screen page.
      */
-    public StartScreenWindow(Scanner scanner) {
-        super(scanner);
+    String[] userInput;
+
+    public StartScreenWindow(Scanner scanner, ObservableFrame frame) {
+        super(scanner, frame);
+        // Create the view for this window.
+        createView();
+        userInput = new String[0];
     }
 
     /**
