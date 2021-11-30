@@ -82,7 +82,15 @@ public class AppManagerAccounts {
     public String createNewAccount() {
         //DONE: call CreateAccountWindow to show information and get user input
         Window createAccountWindow = windows.get("Create Account Window");
-        String[] inputInfo = createAccountWindow.getUserInput();
+        // Change the view of the screen.
+        createAccountWindow.updateFrame();
+
+        String[] inputInfo = new String[3];
+        // Wait until the user has actually responded.
+        while (!createAccountWindow.userResponded) {
+            inputInfo = windows.get("Create Account Window").getUserInput();      // Currently, placeholder.
+        }
+//        String[] inputInfo = createAccountWindow.getUserInput();
 
         //DONE: obtain name, username and password
         String name = inputInfo[0];
