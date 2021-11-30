@@ -1,5 +1,6 @@
 package frameworks_and_drivers;
 
+import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class SetMealTimingsWindow extends Window {
      * The window that displays the Set Meal Time page.
      */
 
-    public SetMealTimingsWindow(Scanner scanner){ super(scanner);}
+    public SetMealTimingsWindow(Scanner scanner, ObservableFrame frame){ super(scanner, frame);}
 
     /**
      * Gets input from the user in order to Set the Meal Times.
@@ -31,5 +32,21 @@ public class SetMealTimingsWindow extends Window {
         }
 
         return returnList.toArray(new String[0]);
+    }
+
+    /**
+     * Notify the observer of a change
+     *
+     * @param frame
+     * @param source
+     */
+    @Override
+    public void update(ObservableFrame frame, Object source) {
+
+    }
+
+    @Override
+    public void createView() {
+
     }
 }

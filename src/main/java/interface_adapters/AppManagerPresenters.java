@@ -23,10 +23,17 @@ public class AppManagerPresenters {
      * Shows the start screen window.
      */
     public String showStartScreenWindow(){
+        Window window = windows.get("Start Screen Window");
 
+        // Change the view of the screen.
+        window.updateFrame();
         //Done make a call to StartScreenWindow to show information and get user input
-        String[] choice = windows.get("Start Screen Window").getUserInput();      // Currently, placeholder.
+        String[] choice = new String[0];        // Initialize the variable
 
+        // Wait until the user has actually responded.
+        while (!window.userResponded) {
+            choice = windows.get("Start Screen Window").getUserInput();      // Currently, placeholder.
+        }
 
         if (choice[0].equals("0")){
             return "Login Window";
