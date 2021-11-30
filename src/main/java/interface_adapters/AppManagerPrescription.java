@@ -13,6 +13,7 @@ public class AppManagerPrescription {
 
     private  Map<String, Window> windows;
     private ManagementSystemFacade managementSystemFacade;
+
     private AppManagerHelpers appManagerHelpers;
 
     public AppManagerPrescription(Map<String, Window> windows, ManagementSystemFacade managementSystemFacade) {
@@ -26,7 +27,8 @@ public class AppManagerPrescription {
      */
     public String addPrescription(){
         Window addPrescriptionWindow = windows.get("Add Prescription Window");
-        List<String[]> data = ((PrescriptionWindow) addPrescriptionWindow).getUserPrescriptionInput();
+        Window addMedicineWindow = windows.get("Add Medicine Window");
+        List<String[]> data = ((PrescriptionWindow) addPrescriptionWindow).getUserPrescriptionInput(addMedicineWindow);
         List<String> medicinesNames = new ArrayList<>();
         for(String[] medicine : data){
             if(medicine.length > 1){

@@ -49,11 +49,21 @@ public class AppManagerAccounts {
      */
     public String login(){
         Window loginWindow = windows.get("Login Window");
-        String [] input;
+        String [] input = new String[0];
         boolean userIsVerified;
+
+        // Update the view of the frame
+        loginWindow.updateFrame();
+
         do {
-            input = loginWindow.getUserInput();
-            userIsVerified = managementSystemFacade.verifyUserAccount(input);
+            while(!loginWindow.userResponded) {      // Keep asking for userInput until we get something.
+                input = loginWindow.getUserInput();
+
+                // For some reason, we don't exit the loop unless I add this line.
+                System.out.print("");
+            }
+            userIsVerified = managementSystem.verifyUserAccount(input);
+
 
             if(!userIsVerified && loginWindow instanceof DisplayEntityInformation){
                 ((DisplayEntityInformation) loginWindow).displayInfo(new String[]{
@@ -72,7 +82,15 @@ public class AppManagerAccounts {
     public String createNewAccount() {
         //DONE: call CreateAccountWindow to show information and get user input
         Window createAccountWindow = windows.get("Create Account Window");
-        String[] inputInfo = createAccountWindow.getUserInput();
+        // Change the view of the screen.
+        createAccountWindow.updateFrame();
+
+        String[] inputInfo = new String[3];
+        // Wait until the user has actually responded.
+        while (!createAccountWindow.userResponded) {
+            inputInfo = windows.get("Create Account Window").getUserInput();      // Currently, placeholder.
+        }
+//        String[] inputInfo = createAccountWindow.getUserInput();
 
         //DONE: obtain name, username and password
         String name = inputInfo[0];

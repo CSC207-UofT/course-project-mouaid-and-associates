@@ -1,6 +1,7 @@
 package frameworks_and_drivers;
 
 import interface_adapters.DisplayEntityInformation;
+import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import java.util.ArrayList;
@@ -9,8 +10,8 @@ import java.util.Scanner;
 
 public class RemoveMedicineWindow extends Window implements DisplayEntityInformation {
 
-    public RemoveMedicineWindow(Scanner scanner) {
-        super(scanner);
+    public RemoveMedicineWindow(Scanner scanner, ObservableFrame frame) {
+        super(scanner, frame);
     }
 
     @Override
@@ -48,5 +49,21 @@ public class RemoveMedicineWindow extends Window implements DisplayEntityInforma
         for (String sentence: info){
             System.out.println(sentence);
         }
+    }
+
+    /**
+     * Notify the observer of a change
+     *
+     * @param frame
+     * @param source
+     */
+    @Override
+    public void update(ObservableFrame frame, Object source) {
+
+    }
+
+    @Override
+    public void createView() {
+
     }
 }
