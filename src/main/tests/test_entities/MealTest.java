@@ -22,14 +22,4 @@ public class MealTest {
         this.meal.createSchedule();
         assertTrue(this.meal.getMySchedule().getEvents().isEmpty());
     }
-
-    @Test
-    void setScheduleTimes(){
-        List<Double> times = new ArrayList<>();
-        times.add(8.0);
-        times.add(13.0);
-        times.add(18.0);
-        this.meal.setTime(times);
-        assertFalse(this.meal.getMySchedule().getEvents().isEmpty());
-    }
 }

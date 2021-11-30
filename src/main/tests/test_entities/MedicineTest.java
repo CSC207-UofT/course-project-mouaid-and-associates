@@ -4,6 +4,7 @@ import entities.Medicine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,7 @@ class MedicineTest {
 
     @BeforeEach
     void setUp() {
-        List<Map<String, Double>> times = new ArrayList<>();
+        List<LocalDateTime> times = new ArrayList<>();
         med = new Medicine("Tylenol", 2, "pills",
                 "Take", "");
         med.addMedicineSchedule(times);
@@ -59,12 +60,11 @@ class MedicineTest {
 
     @Test
     void getMedicineInfoWithTimes() {
-        // Make a new timestamp for Monday at 10:00 AM
-        Map<String, Double> time1 = new HashMap<>();
-        time1.put("Monday", 10.0);
+        // Make a new timestamp for December 3, 2021 at 10:00 PM
+        LocalDateTime time1 = LocalDateTime.parse("2021-12-03T22:00");
 
         // Make a new list of maps for the time stamps, and add in time1
-        List<Map<String, Double>> times = new ArrayList<>();
+        List<LocalDateTime> times = new ArrayList<>();
         times.add(time1);
 
         // Add a new schedule with times to med.
@@ -76,7 +76,7 @@ class MedicineTest {
                 "Method of Administration: Take",
                 "Extra Instructions: ",
                 "Times: ",
-                "   - Monday: 10:00"};
+                "   - 2021-12-03T22:00"};
 
         String[] actual = med.getMedicineInfo();
 

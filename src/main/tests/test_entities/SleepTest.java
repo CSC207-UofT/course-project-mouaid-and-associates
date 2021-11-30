@@ -23,13 +23,4 @@ public class SleepTest {
         this.sleep.createSchedule();
         assertTrue(this.sleep.getMySchedule().getEvents().isEmpty());
     }
-
-    @Test
-    void setScheduleTimes(){
-        List<Double> times = new ArrayList<>();
-        times.add(23.0);
-        times.add(7.0);
-        this.sleep.setTime(times);
-        assertFalse(this.sleep.getMySchedule().getEvents().isEmpty());
-    }
 }

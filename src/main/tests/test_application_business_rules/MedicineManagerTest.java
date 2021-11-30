@@ -5,17 +5,15 @@ import entities.Medicine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MedicineManagerTest {
     Medicine expectedMed;
     MedicineManager medManager;
-    List<Map<String, Double>> timeStamps;
+    List<LocalDateTime> timeStamps;
 
     @BeforeEach
     void setUp() {
@@ -25,13 +23,9 @@ class MedicineManagerTest {
         expectedMed = new Medicine("Tylenol", 2, "pills",
                 "Take", "");
 
-        // Underneath, we create the times to take the medicine.
-        String[] days = new String[]{"Monday", "Tuesday", "Wednesday"};
-        double[] times = new double[]{2.0, 23.0, 15.5};
         timeStamps = new ArrayList<>();
         for (int i = 0; i < 3; i++){
-            Map<String, Double> timeStamp = new HashMap<>();
-            timeStamp.put(days[i], times[i]);
+            LocalDateTime timeStamp = LocalDateTime.parse("2021-12-03T10:25");
             timeStamps.add(timeStamp);
         }
 

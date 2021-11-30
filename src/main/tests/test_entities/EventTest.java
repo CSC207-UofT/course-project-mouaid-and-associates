@@ -4,6 +4,7 @@ import entities.Event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ class EventTest {
 
     @BeforeEach
     void setUp() {
-        LocalDateTime timeStamp = LocalDateTime.parse(2021-12-03T10:15);
+        LocalDateTime timeStamp = LocalDateTime.parse("2021-12-03T10:15");
         event = new Event("Tylenol", "Take Tylenol with Water.",
                 timeStamp);
     }
@@ -28,7 +29,7 @@ class EventTest {
 
     @Test
     void compareTo() {
-        LocalDateTime timeStamp2 = LocalDateTime.parse(2021-12-03T10:25);
+        LocalDateTime timeStamp2 = LocalDateTime.parse("2021-12-03T10:25");
         Event event2 = new Event("Advil", "Swallow Advil",
                 timeStamp2);
         int expected = -1;
@@ -36,5 +37,8 @@ class EventTest {
     }
 
     @Test
-    void getDate()
+    void getDate(){
+        String expected = "2021-12-03T10:15";
+        assertEquals(expected, event.getDate());
+    }
 }

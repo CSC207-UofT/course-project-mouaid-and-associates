@@ -6,6 +6,7 @@ import entities.Sleep;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +40,9 @@ public class OtherActivitiesManagerTest {
     @Test
     void setActivityTimes(){
         Sleep sleep = new Sleep();
-        List<Double> times = new ArrayList<>();
-        times.add(23.0);
-        times.add(7.0);
+        List<String> times = new ArrayList<>();
+        times.add("10:30");
+        times.add("22:30");
         manager.setActivityTimes(sleep, times);
         assertFalse(manager.getActivitySchedule(sleep).getEvents().isEmpty());
     }

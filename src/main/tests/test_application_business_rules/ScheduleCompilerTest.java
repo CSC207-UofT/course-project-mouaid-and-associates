@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,19 +24,21 @@ class ScheduleCompilerTest {
     ScheduleCompiler scheduleCompiler;
     List<Schedule> schedulesToTest;
     List<Event> masterEventsList;
+    LocalDateTime timestamp;
 
     @BeforeEach
     void setUp() {
         scheduleCompiler = new ScheduleCompiler();
         schedulesToTest = new ArrayList<>();
         masterEventsList = new ArrayList<>();
-        String[] dayList = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        timestamp = LocalDateTime.parse("2021-12-12T10:25");
+
 
         for (int i  = 1; i < 6; i++){
             Schedule schedule = new Schedule();
             String name = "Test " + i;
             String description = "Test Event" + i;
-            schedule.addEvent(name, description, dayList[i - 1], 10.0 + i);
+            schedule.addEvent(name, description, timestamp);
             masterEventsList.addAll(schedule.getEvents());
             schedulesToTest.add(schedule);
         }

@@ -5,6 +5,7 @@ import entities.Schedule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,42 +19,41 @@ class ScheduleTest {
 
     @BeforeEach
     void setUp(){
-        String[] days = new String[]{"Monday", "Tuesday", "Wednesday"};
-        double[] times = new double[]{2.0, 23.0, 15.5};
+        LocalDateTime timestamp1 = LocalDateTime.parse("2021-12-03T10:15");
+        LocalDateTime timestamp2 = LocalDateTime.parse("2021-12-04T10:15");
+        LocalDateTime timestamp3 = LocalDateTime.parse("2021-12-05T10:15");
+        LocalDateTime[] times = {timestamp1, timestamp2, timestamp3};
         events = new ArrayList<>();
         schedule = new Schedule(events);
         for (int i = 0; i < 3; i++) {
             String name = "Advil";
             String description = "Take Advil";
-            schedule.addEvent(name, description, days[i], times[i]);
+            schedule.addEvent(name, description, times[i]);
         }
 
     }
 
     @Test
     void addEvents() {
+        Schedule schedule2 = new Schedule();
         // Create a list of disposable events.
-        String[] days = new String[]{"Thursday", "Friday", "Saturday"};
-        double[] times = new double[]{2.0, 23.0, 15.5};
+        LocalDateTime timestamp1 = LocalDateTime.parse("2021-12-03T10:25");
+        LocalDateTime timestamp2 = LocalDateTime.parse("2021-12-03T11:25");
+        LocalDateTime timestamp3 = LocalDateTime.parse("2021-12-03T12:25");
         List<Event> events2 = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            String name = "Advil";
-            String description = "Take Advil";
-            schedule.addEvent(name, description, days[i], times[i]);
-        }
-
-        // First make a copy of the events before change:
-        List<Event> eventsCopy = new ArrayList<>(schedule.getEvents());
-
+        String name = "Advil";
+        String description = "Take Advil";
+        Event event1 = new Event(name, description, timestamp1);
+        Event event2 = new Event(name, description, timestamp2);
+        Event event3 = new Event(name, description, timestamp3);
+        events2.add(event1);
+        events2.add(event2);
+        events2.add(event3);
         // Now add the events to the schedule.
-        schedule.addEvents(events2);
-
-        // Now to ensure that the events in the schedule match the list of events outside.
-        eventsCopy.addAll(events2);
-
-        //Test to ensure the two lists are equal.
-        assertEquals(eventsCopy, schedule.getEvents());
-
+        schedule2.addEvents(events2);
+        assertEquals(true, schedule2.getEvents().contains(event1));
+        assertEquals(true, schedule2.getEvents().contains(event2));
+        assertEquals(true, schedule2.getEvents().contains(event3));
     }
 
     @Test
@@ -68,56 +68,38 @@ class ScheduleTest {
         assertEquals(eventsCopy, schedule.getEvents());
     }
 
-    @Test
-    void testToString() {
-        String expected = new String("Monday: \n" +
-                "    Advil\n    2:00 - Take Advil \n" +
-                "Tuesday: \n" +
-                "    Advil\n    23:00 - Take Advil \n" +
-                "Wednesday: \n" +
-                "    Advil\n    15:30 - Take Advil \n" +
-                "Thursday: \n" +
-                "Nothing today \n" +
-                "Friday: \n" +
-                "Nothing today \n"+
-                "Saturday: \n" +
-                "Nothing today \n"+
-                "Sunday: \n" +
-                "Nothing today \n");
+//    @Test
+//    void testToString() {
+//        String expected = new String("Monday: \n" +
+//                "    Advil\n    2:00 - Take Advil \n" +
+//                "Tuesday: \n" +
+//                "    Advil\n    23:00 - Take Advil \n" +
+//                "Wednesday: \n" +
+//                "    Advil\n    15:30 - Take Advil \n" +
+//                "Thursday: \n" +
+//                "Nothing today \n" +
+//                "Friday: \n" +
+//                "Nothing today \n"+
+//                "Saturday: \n" +
+//                "Nothing today \n"+
+//                "Sunday: \n" +
+//                "Nothing today \n");
+//
+//        assertEquals(expected, schedule.toString());
+//    }
 
-        assertEquals(expected, schedule.toString());
-    }
-
     @Test
-    void addEventNoMapping() {
-        Map<String, Double> time = new HashMap<>();
-        time.put("Monday", 10.0);
-        Event expected = new Event("Advil", "Take Advil", time);
+    void addEvent() {
+        LocalDateTime newTimeStamp = LocalDateTime.parse("2021-12-12T10:25");
+        Event expected = new Event("Advil", "Take Advil", newTimeStamp);
         // Clear all the events to ensure there is only one event in the schedule.
         // We are just checking if the event is added.
         schedule.removeAllEvents();
-        schedule.addEvent("Advil", "Take Advil", "Monday", 10.0);
+        schedule.addEvent("Advil", "Take Advil", newTimeStamp);
         Event actual = schedule.getEvents().get(0);
-
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getDescription(), actual.getDescription());
-        assertEquals(expected.decimalToHourFormat(), actual.decimalToHourFormat());
-    }
-
-    @Test
-    void addEventWithMapping() {
-        Map<String, Double> time = new HashMap<>();
-        time.put("Monday", 10.0);
-        Event expected = new Event("Advil", "Take Advil", time);
-        // Clear all the events to ensure there is only one event in the schedule.
-        // We are just checking if the event is added.
-        schedule.removeAllEvents();
-        schedule.addEvent("Advil", "Take Advil", time);
-        Event actual = schedule.getEvents().get(0);
-
-        assertEquals(expected.getName(), actual.getName());
-        assertEquals(expected.getDescription(), actual.getDescription());
-        assertEquals(expected.decimalToHourFormat(), actual.decimalToHourFormat());
+        assertEquals(expected.getTime(), actual.getTime());
     }
 
     @Test
@@ -135,7 +117,7 @@ class ScheduleTest {
 
     @Test
     void getEventTimes() {
-        String[] expected = new String[]{"Monday: 2:00", "Tuesday: 23:00", "Wednesday: 15:30"};
+        String[] expected = new String[]{"2021-12-03T10:15", "2021-12-04T10:15", "2021-12-05T10:15"};
         String[] actual = schedule.getEventTimes();
         for (int i = 0; i < expected.length; i++){
             assertEquals(expected[i], actual[i]);
@@ -144,16 +126,14 @@ class ScheduleTest {
 
     @Test
     void setEventTimes() {
-        Map<String, Double> newTime1 = new HashMap<>();
-        Map<String, Double> newTime2 = new HashMap<>();
-        newTime1.put("Thursday", 10.0);
-        newTime2.put("Thursday", 15.0);
-        List<Map<String, Double>> times = new ArrayList<>();
+        LocalDateTime newTime1 = LocalDateTime.parse("2021-12-12T10:25");
+        LocalDateTime newTime2 = LocalDateTime.parse("2021-12-13T10:25");
+        List<LocalDateTime> times = new ArrayList<>();
         times.add(newTime1);
         times.add(newTime2);
         schedule.setEventTimes(times);
 
-        String[] expected = new String[]{"Thursday: 10:00", "Thursday: 15:00"};
+        String[] expected = new String[]{"2021-12-12T10:25", "2021-12-13T10:25"};
         String[] actual = schedule.getEventTimes();
         for (int i = 0; i < expected.length; i++){
             assertEquals(expected[i], actual[i]);
