@@ -71,11 +71,10 @@ public class StartScreenWindow extends Window {
      * Checks if a button on this view is the source of the event (i.e. A button has
      * been pressed from this view) and performs the appropriate actions.
      *
-     * @param frame     The frame from which we get our change
      * @param source    The source of the change, in this case a button.
      */
     @Override
-    public void update(ObservableFrame frame, Object source) {
+    public void update(Object source) {
         if (super.buttonResponses.containsKey(source)){
             super.userResponded = true;
             userInput[0] = super.buttonResponses.get(source);

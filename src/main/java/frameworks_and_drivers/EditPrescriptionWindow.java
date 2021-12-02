@@ -44,11 +44,10 @@ public class EditPrescriptionWindow extends ScheduleInputWindow {
     /**
      * Notify the observer of a change
      *
-     * @param frame
      * @param source
      */
     @Override
-    public void update(ObservableFrame frame, Object source) {
+    public void update(Object source) {
 
     }
 
