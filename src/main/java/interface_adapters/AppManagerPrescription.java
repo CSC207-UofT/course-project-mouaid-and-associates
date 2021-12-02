@@ -1,6 +1,6 @@
 package interface_adapters;
 
-import application_business_rules.ManagementSystemFacade;
+import application_business_rules.ManagementSystem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +11,14 @@ public class AppManagerPrescription {
      * The class that takes care of prescription related tasks in the AppManagerFacade
      */
 
-    private  Map<String, Window> windows;
-    private ManagementSystemFacade managementSystemFacade;
-
+    private Map<String, Window> windows;
+    private ManagementSystem managementSystem;
     private AppManagerHelpers appManagerHelpers;
 
-    public AppManagerPrescription(Map<String, Window> windows, ManagementSystemFacade managementSystemFacade) {
+    public AppManagerPrescription(Map<String, Window> windows, ManagementSystem managementSystem) {
         this.windows = windows;
-        this.managementSystemFacade = managementSystemFacade;
-        this.appManagerHelpers = new AppManagerHelpers(managementSystemFacade);
+        this.managementSystem = managementSystem;
+        this.appManagerHelpers = new AppManagerHelpers(managementSystem);
     }
 
     /**
@@ -36,7 +35,7 @@ public class AppManagerPrescription {
                 medicinesNames.add(medicine[0]);
             }
         }
-        managementSystemFacade.addNewPrescription(medicinesNames, data.get(0)[0]);
+        managementSystem.addNewPrescription(medicinesNames, data.get(0)[0]);
         return "View Account Window";
 
     }
@@ -47,7 +46,7 @@ public class AppManagerPrescription {
     public String removePrescription(){
         Window removePrescriptionWindow = windows.get("Remove Prescription Window");
         String[] data = removePrescriptionWindow.getUserInput();
-        managementSystemFacade.removePrescription(data[0]);
+        managementSystem.removePrescription(data[0]);
         return "View Account Window";
     }
 
@@ -57,7 +56,7 @@ public class AppManagerPrescription {
     public String editPrescription(){
         Window editPrescriptionWindow = windows.get("Edit Prescription Window");
         Window choosePrescriptionToEditWindow = windows.get("Choose Prescription To Edit Window");
-        String[] prescriptions = managementSystemFacade.getPrescriptions();
+        String[] prescriptions = managementSystem.getPrescriptions();
         String[] presList = this.appManagerHelpers.getFormattedList("List of prescriptions to choose from: ",
                 prescriptions, 0, prescriptions.length);
 
@@ -67,17 +66,17 @@ public class AppManagerPrescription {
         String presName = choosePrescriptionToEditWindow.getUserInput()[0];
         String[] change = editPrescriptionWindow.getUserInput();
         if(!change[0].equals("")){
-            managementSystemFacade.changePrescriptionName(presName, change[0]);
+            managementSystem.changePrescriptionName(presName, change[0]);
         }else if(!change[1].equals("")){
-            managementSystemFacade.removeMedicineFromPres(presName, change[1]);
+            managementSystem.removeMedicineFromPres(presName, change[1]);
             String[] medToRemove = new String[1];
             medToRemove[0] = change[1];
-            managementSystemFacade.removeMedicines(medToRemove);
+            managementSystem.removeMedicines(medToRemove);
         }else if(!change[2].equals("")){
             Window addMedicineWindow = windows.get("Add Medicine Window");
             String[] data = addMedicineWindow.getUserInput();
             this.appManagerHelpers.addMedicineHelper(data);
-            managementSystemFacade.addMedicineToPres(presName, data[0]);
+            managementSystem.addMedicineToPres(presName, data[0]);
         }
         return "View Account Window";
     }

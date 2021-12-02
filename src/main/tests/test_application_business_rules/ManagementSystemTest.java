@@ -1,6 +1,6 @@
 package test_application_business_rules;
 
-import application_business_rules.ManagementSystemFacade;
+import application_business_rules.ManagementSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,11 +8,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ManagementSystemFacadeTest {
-    ManagementSystemFacade testSystem;
+class ManagementSystemTest {
+    ManagementSystem testSystem;
     @BeforeEach
     public void setUp() {
-        testSystem = new ManagementSystemFacade();
+        testSystem = new ManagementSystem();
     }
 
     @Test

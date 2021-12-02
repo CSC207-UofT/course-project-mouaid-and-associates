@@ -1,6 +1,6 @@
 package interface_adapters;
 
-import application_business_rules.ManagementSystemFacade;
+import application_business_rules.ManagementSystem;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,13 +13,13 @@ public class AppManagerMedicine {
      */
 
     private Map<String, Window> windows;
-    private ManagementSystemFacade managementSystemFacade;
+    private ManagementSystem managementSystem;
     private AppManagerHelpers appManagerHelpers;
 
-    public AppManagerMedicine(Map<String, Window> windows, ManagementSystemFacade managementSystemFacade) {
+    public AppManagerMedicine(Map<String, Window> windows, ManagementSystem managementSystem) {
         this.windows = windows;
-        this.managementSystemFacade = managementSystemFacade;
-        this.appManagerHelpers = new AppManagerHelpers(managementSystemFacade);
+        this.managementSystem = managementSystem;
+        this.appManagerHelpers = new AppManagerHelpers(managementSystem);
     }
 
     /**
@@ -34,7 +34,7 @@ public class AppManagerMedicine {
 
         // Get a list of medicine names, like for removeMedicine
         // First get a list of user information
-        String[] bigList = managementSystemFacade.getUserInfo().toArray(new String[0]);
+        String[] bigList = managementSystem.getUserInfo().toArray(new String[0]);
 
         // Isolate and get the list of medicine names
         String[] medList = this.appManagerHelpers.getFormattedList("List of medicines to choose from: ", bigList,
@@ -42,7 +42,7 @@ public class AppManagerMedicine {
         // First, instantiate a variable to store the name of the medicine the user would like to remove.
         String medName;
         String[] medInfo;
-        String[] changes = new String[5]; // Represents the changes the user wants to make.
+        String[] changes; // Represents the changes the user wants to make.
         List<LocalDateTime> newTimes = new ArrayList<>();
 
         // Check if ChooseMedicineToEditWindow is an instance of DisplayEntityInformation to print
@@ -54,10 +54,7 @@ public class AppManagerMedicine {
 
         medName = chooseMedicineToEditWindow.getUserInput()[0];
 
-        medInfo = managementSystemFacade.getMedicineInfo(medName);
-
-        // Update the view of the app.
-        editMedicineWindow.updateFrame();
+        medInfo = managementSystem.getMedicineInfo(medName);
 
         if (editMedicineWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) editMedicineWindow).displayInfo(medInfo);
@@ -71,7 +68,7 @@ public class AppManagerMedicine {
         }
 
         // Call management system to edit the entities.
-        managementSystemFacade.editMedicine(medName, changes, newTimes);
+        managementSystem.editMedicine(medName, changes, newTimes);
 
         return "View Account Window";
     }
@@ -83,7 +80,7 @@ public class AppManagerMedicine {
      */
     public String removeMedicine(){
         Window removeMedWindow = windows.get("Remove Medicine Window");
-        String[] userInfo = managementSystemFacade.getUserInfo().toArray(new String[0]);
+        String[] userInfo = managementSystem.getUserInfo().toArray(new String[0]);
 
         // Get a formatted list to make the printing of the medicine names nice.
         String[] infoToPrint = appManagerHelpers.getFormattedList("The list of medicines to pick from: ",
@@ -98,7 +95,7 @@ public class AppManagerMedicine {
         String[] inputs = removeMedWindow.getUserInput();
 
         // Call management system to remove the medicines
-        managementSystemFacade.removeMedicines(inputs);
+        managementSystem.removeMedicines(inputs);
 
         // go back to the account page.
         return "View Account Window";

@@ -1,20 +1,21 @@
 package interface_adapters;
 
-import application_business_rules.ManagementSystemFacade;
+import application_business_rules.ManagementSystem;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AppManagerHelpers {
     /**
      * A Class that has the helpers used by methods in AppManager
      */
 
-    private ManagementSystemFacade managementSystemFacade;
+    private ManagementSystem managementSystem;
 
-    public AppManagerHelpers(ManagementSystemFacade managementSystemFacade){
-        this.managementSystemFacade = managementSystemFacade;
+    public AppManagerHelpers(ManagementSystem managementSystem){
+        this.managementSystem = managementSystem;
     }
     public void addMedicineHelper(String[] data) {
         String name = data[0];
@@ -36,8 +37,8 @@ public class AppManagerHelpers {
 
         formatTimes(data, wOrD, startDay, startMonth, times);
 
-        //Done: call managementSystemFacade.addNewMedicine() and pass in this information.
-        managementSystemFacade.addNewMedicine(name, amount, unitOfMeasurement, methodOfAdmin, extraInstruct, times);
+        //Done: call managementSystem.addNewMedicine() and pass in this information.
+        managementSystem.addNewMedicine(name, amount, unitOfMeasurement, methodOfAdmin, extraInstruct, times);
     }
 
     /**

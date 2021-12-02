@@ -1,10 +1,10 @@
 package interface_adapters;
 /**
- * An interface representing an observer of the frame.
+ * An interface representing the observer interface from the Observer Design Pattern
  */
 public interface FrameObserver {
     /**
      * Notify the observer of a change
      */
-    void update(Object source);
+    void update(ObservableFrame frame, Object source);
 }

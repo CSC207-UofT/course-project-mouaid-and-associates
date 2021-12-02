@@ -1,14 +1,14 @@
 package interface_adapters;
 
 import application_business_rules.FileReaderAndWriter;
-import application_business_rules.ManagementSystemFacade;
+import application_business_rules.ManagementSystem;
 
 import java.util.*;
 public class AppManagerFacade {
     /** This is the main class that runs the entire app.
      *
      * Instance Attributes:
-     * - managementSystemFacade: An input and output boundary between the interface adapters like AppManagerFacade
+     * - managementSystem: An input and output boundary between the interface adapters like AppManagerFacade
      *                     and use case interactors like UserManager and MedicineManager.
      * - windows: A mapping of a string name for a window to a Window object.
      * - accounts: A mapping of usernames to passwords. Will likely be changed to be stored in a database
@@ -26,7 +26,7 @@ public class AppManagerFacade {
      *
      */
 
-    private ManagementSystemFacade managementSystemFacade;
+    private ManagementSystem managementSystem;
     private Map<String, Window> windows;
     private static final String[] DAYS = new String[]{"Monday", "Tuesday", "Wednesday",
     "Thursday", "Friday", "Saturday", "Sunday"};
@@ -37,7 +37,7 @@ public class AppManagerFacade {
     private AppManagerPresenters appManagerPresenters;
 
     public AppManagerFacade(){
-        managementSystemFacade = new ManagementSystemFacade();
+        managementSystem = new ManagementSystem();
     }
 
     /** The main runner of the program. It starts of the app.
@@ -48,11 +48,11 @@ public class AppManagerFacade {
         // Creates an array for Window objects. Once the program starts, we will only have a set
         // number of windows, thus an array makes sense.
         this.windows = windows;
-        this.appManagerActivitySetter = new AppManagerActivitySetter(this.windows, this.managementSystemFacade);
-        this.appManagerMedicine = new AppManagerMedicine(this.windows, this.managementSystemFacade);
-        this.appManagerPrescription = new AppManagerPrescription(this.windows, this.managementSystemFacade);
-        this.appManagerAccounts = new AppManagerAccounts(this.windows, this.managementSystemFacade);
-        this.appManagerPresenters = new AppManagerPresenters(this.windows, this.managementSystemFacade);
+        this.appManagerActivitySetter = new AppManagerActivitySetter(this.windows, this.managementSystem);
+        this.appManagerMedicine = new AppManagerMedicine(this.windows, this.managementSystem);
+        this.appManagerPrescription = new AppManagerPrescription(this.windows, this.managementSystem);
+        this.appManagerAccounts = new AppManagerAccounts(this.windows, this.managementSystem);
+        this.appManagerPresenters = new AppManagerPresenters(this.windows, this.managementSystem);
 
         // Set up the user accounts from the file
         setUpAccounts(accountFile, readerAndWriter);
@@ -225,13 +225,13 @@ public class AppManagerFacade {
     }
 
     /**
-     * Shows the final schedule by using managementSystemFacade to make the schedule and using the TimeTableWindow class
+     * Shows the final schedule by using managementSystem to make the schedule and using the TimeTableWindow class
      * to display the final schedule. It then gets user input from TimeTableWindow and calls ViewAccountWindow.
      */
     public String showFinalSchedule() {
         Window window = windows.get("TimeTable Window");
-        //Done: call managementSystemFacade.makeSchedule
-        String[] schedule = new String[]{managementSystemFacade.makeSchedule()};
+        //Done: call managementSystem.makeSchedule
+        String[] schedule = new String[]{managementSystem.makeSchedule()};
 
         if (window instanceof DisplayEntityInformation)
             ((DisplayEntityInformation) window).displayInfo(schedule);
@@ -246,6 +246,6 @@ public class AppManagerFacade {
 
 
     public List<String> getPrescriptionNames(){
-        return managementSystemFacade.getPrescriptionsNames();
+        return managementSystem.getPrescriptionsNames();
     }
 }
