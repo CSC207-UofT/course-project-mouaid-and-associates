@@ -24,6 +24,15 @@ public class AddMedicineWindow extends ScheduleInputWindow {
      * the medicine. All elements afterwords are the different times to take the medicine.
      * @return      A list containing the user input
      */
+    String[] userInput;
+    JTextField name;
+    JTextField methodOfAdministration;
+    JTextField unitOfMeasurement;
+    JTextField amount;
+    JTextField extra;
+    JTextField wdm;
+    JTextField startDay;
+    JTextField startMonth;
     @Override
     public String[] getUserInput() {
         // Ask the user for all the different values
