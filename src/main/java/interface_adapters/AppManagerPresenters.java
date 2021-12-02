@@ -1,6 +1,6 @@
 package interface_adapters;
 
-import application_business_rules.ManagementSystem;
+import application_business_rules.ManagementSystemFacade;
 
 import java.util.List;
 import java.util.Map;
@@ -11,12 +11,12 @@ public class AppManagerPresenters {
      */
 
     private Map<String, Window> windows;
-    private ManagementSystem managementSystem;
+    private ManagementSystemFacade managementSystemFacade;
     private AppManagerHelpers appManagerHelpers;
 
-    public AppManagerPresenters(Map<String, Window> windows, ManagementSystem managementSystem) {
+    public AppManagerPresenters(Map<String, Window> windows, ManagementSystemFacade managementSystemFacade) {
         this.windows = windows;
-        this.managementSystem = managementSystem;
+        this.managementSystemFacade = managementSystemFacade;
     }
 
     /**
@@ -48,10 +48,10 @@ public class AppManagerPresenters {
      * interact with the page.
      */
     public String showAccountWindow(){
-        //Done: call managementSystem.getUserInfo() to get user information.
-        String[] userInfo = managementSystem.getUserInfo().toArray(new String[0]);
+        //Done: call managementSystemFacade.getUserInfo() to get user information.
+        String[] userInfo = managementSystemFacade.getUserInfo().toArray(new String[0]);
         Window viewAccountWindow = windows.get("View Account Window");
-        List<String> prescriptionsIDS = managementSystem.getPrescriptionsNames();
+        List<String> prescriptionsIDS = managementSystemFacade.getPrescriptionsNames();
 
         // create a new array for properly formatted strings.
         String[] formattedUserInfo = new String[userInfo.length + prescriptionsIDS.size() + 2];

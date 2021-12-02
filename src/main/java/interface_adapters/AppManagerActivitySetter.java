@@ -1,6 +1,6 @@
 package interface_adapters;
 
-import application_business_rules.ManagementSystem;
+import application_business_rules.ManagementSystemFacade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +12,11 @@ public class AppManagerActivitySetter {
      */
 
     private Map<String, Window> windows;
-    private ManagementSystem managementSystem;
+    private ManagementSystemFacade managementSystemFacade;
 
-    public AppManagerActivitySetter(Map<String, Window> windows, ManagementSystem managementSystem) {
+    public AppManagerActivitySetter(Map<String, Window> windows, ManagementSystemFacade managementSystemFacade) {
         this.windows = windows;
-        this.managementSystem = managementSystem;
+        this.managementSystemFacade = managementSystemFacade;
     }
 
     /**
@@ -36,7 +36,7 @@ public class AppManagerActivitySetter {
         times.add(sleepTime);
         times.add(wakeUpTime);
 
-        this.managementSystem.setSleepAndWakeUpTimes(times);
+        this.managementSystemFacade.setSleepAndWakeUpTimes(times);
 
         // Return to the account page.
         return "View Account Window";
@@ -57,7 +57,7 @@ public class AppManagerActivitySetter {
             times.add(timings);
         }
 
-        this.managementSystem.setMealTimes(times);
+        this.managementSystemFacade.setMealTimes(times);
 
         // Return to the account page.
         return "View Account Window";
