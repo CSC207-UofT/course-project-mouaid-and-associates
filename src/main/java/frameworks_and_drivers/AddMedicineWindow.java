@@ -3,6 +3,7 @@ package frameworks_and_drivers;
 import interface_adapters.ObservableFrame;
 import interface_adapters.ScheduleInputWindow;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class AddMedicineWindow extends ScheduleInputWindow {
