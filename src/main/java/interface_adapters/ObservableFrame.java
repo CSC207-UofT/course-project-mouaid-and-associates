@@ -83,7 +83,7 @@ public class ObservableFrame extends JFrame implements ActionListener {
         for (FrameObserver observer: observers){
             // Sends an instance of this observable class and the source (i.e. the button)
             // that caused the ActionEvent e.
-            observer.update(this, e.getSource());
+            observer.update(e.getSource());
         }
         repaint();
     }
