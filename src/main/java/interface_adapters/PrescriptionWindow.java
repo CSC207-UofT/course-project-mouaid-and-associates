@@ -8,9 +8,19 @@ public abstract class PrescriptionWindow extends Window{
      * Informal Note: This interface may be useful for graphics (later phases), but for now I couldn't think of any
      * benefits of this interface when interacting with the console - Eren
      */
-    public PrescriptionWindow(Scanner scanner){
-        super(scanner);
+    public PrescriptionWindow(Scanner scanner, ObservableFrame frame){
+        super(scanner, frame);
     }
 
-    public abstract List<String[]> getUserPrescriptionInput();
+    public abstract List<String[]> getUserPrescriptionInput(Window addMedicineWindow);
+    /**
+     * Notify the observer of a change
+     *
+     * @param frame
+     * @param source
+     */
+    @Override
+    public void update(ObservableFrame frame, Object source) {
+
+    }
 }

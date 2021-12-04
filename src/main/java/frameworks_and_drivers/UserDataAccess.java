@@ -56,5 +56,7 @@ public class UserDataAccess implements FileReaderAndWriter {
             System.out.println("Sorry, something went wrong :P");
             e.printStackTrace();
         }
+
+        System.out.println("Finished saving User Information and Program State.");
     }
 }

@@ -1,6 +1,7 @@
 package frameworks_and_drivers;
 
 import interface_adapters.DisplayEntityInformation;
+import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import java.util.Arrays;
@@ -8,8 +9,8 @@ import java.util.Scanner;
 
 public class ChoosePrescriptionToEditWindow extends Window implements DisplayEntityInformation {
     private String[] validInputs;
-    public ChoosePrescriptionToEditWindow(Scanner scanner) {
-        super(scanner);
+    public ChoosePrescriptionToEditWindow(Scanner scanner, ObservableFrame frame) {
+        super(scanner, frame);
     }
 
     /**
@@ -57,5 +58,21 @@ public class ChoosePrescriptionToEditWindow extends Window implements DisplayEnt
             }
         }
         return false;
+    }
+    /**
+     * Notify the observer of a change
+     *
+     * @param frame
+     * @param source
+     */
+    @Override
+    public void update(ObservableFrame frame, Object source) {
+
+    }
+
+
+    @Override
+    public void createView() {
+
     }
 }

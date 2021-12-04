@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public abstract class ScheduleInputWindow extends Window{
 
-    public ScheduleInputWindow(Scanner scanner) {
-        super(scanner);
+    public ScheduleInputWindow(Scanner scanner, ObservableFrame frame) {
+        super(scanner, frame);
     }
 
     /**
