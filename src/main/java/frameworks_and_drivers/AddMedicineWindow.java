@@ -2,17 +2,31 @@ package frameworks_and_drivers;
 
 import interface_adapters.ObservableFrame;
 import interface_adapters.ScheduleInputWindow;
+import interface_adapters.Window;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-public class AddMedicineWindow extends ScheduleInputWindow {
+public class AddMedicineWindow extends Window {
     /*
      * The window that displays the Add a Medicine page.
      */
+    private ArrayList<String> userInput = new ArrayList<>();
+    private JTextField name = new JTextField();
+    private JTextField methodOfAdministration = new JTextField();
+    private JTextField unitOfMeasurement = new JTextField();
+    private JTextField amount = new JTextField();
+    private JTextField extra = new JTextField();
+
 
     public AddMedicineWindow(Scanner scanner, ObservableFrame frame) {
         super(scanner, frame);
+        createView();
+
+
     }
 
     /**
@@ -24,69 +38,95 @@ public class AddMedicineWindow extends ScheduleInputWindow {
      * the medicine. All elements afterwords are the different times to take the medicine.
      * @return      A list containing the user input
      */
-    String[] userInput;
-    JTextField name;
-    JTextField methodOfAdministration;
-    JTextField unitOfMeasurement;
-    JTextField amount;
-    JTextField extra;
-    JTextField wdm;
-    JTextField startDay;
-    JTextField startMonth;
     @Override
     public String[] getUserInput() {
-        // Ask the user for all the different values
-        System.out.println("What medicine do you want to take?");
-        String name = scanner.nextLine();
+        String[] returnList = new String[5];
+        while (!(super.userResponded && userInput.size() >= 5)){
 
-        System.out.println("How are you taking the medicine");
-        String methodOfAdministration = scanner.nextLine();
-
-        System.out.println("What is the unit of measurement (e.g. pill, mL, tsp, mg, etc.)");
-        String unitOfMeasurement = scanner.nextLine();
-
-        System.out.println("How much medicine do you need to take each time, using the unit entered before");
-        String amount = scanner.nextLine();
-
-        System.out.println("Are there any additional instructions that should be noted?");
-        String extra = scanner.nextLine();
-
-        String wdm = super.selectWD(scanner); // Weekly, daily
-        String startDay = selectDay(scanner);
-        String startMonth = selectMonth(scanner);
-        String[] times = super.getTimes(scanner);
-        String[] returnList = new String[8 + times.length];
-
-        // Format it to a specific order according to the documentation.
-        returnList[0] = name;
-        returnList[1] = methodOfAdministration;
-        returnList[2] = unitOfMeasurement;
-        returnList[3] = amount;
-        returnList[4] = extra;
-        returnList[5] = wdm;
-        returnList[6] = startDay;
-        returnList[7] = startMonth;
-        for (int i = 8; i < (times.length + 8); i++){
-            returnList[i] = times[i - 8];
+            // Only when we have a valid number of inputs do
+            // we get all the user input.
+            if (userInput.size() >= 5) {
+                for (int i = 0; i < 5; i++){
+                    returnList[i] = userInput.get(i);
+                }
+            }
         }
-
         return returnList;
     }
 
     /**
      * Notify the observer of a change
      *
-     * @param frame
      * @param source
      */
     @Override
     public void update(ObservableFrame frame, Object source) {
+        if (super.buttonResponses.containsKey(source)){
+            super.userResponded = true;
+            userInput.add(name.getText());
+            userInput.add(methodOfAdministration.getText());
+            userInput.add(unitOfMeasurement.getText());
+            userInput.add(amount.getText());
+            userInput.add(extra.getText());
+        }
 
     }
 
     @Override
     public void createView() {
+        // Create a new panel
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
 
+        JLabel nameLabel = new JLabel("Medicine Name: ");
+        JLabel methodOfAdministrationLabel = new JLabel("How are you taking the medicine? ");
+        JLabel unitOfMeasurementLabel = new JLabel("Unit of measurement (e.g. pill, mL, tsp, mg, etc.: ");
+        JLabel amountLabel = new JLabel("Enter the amount as an integer: ");
+        JLabel extraLabel = new JLabel("Additional information");
+
+        nameLabel.setSize(200, 40);
+        name.setSize(200, 50);
+        nameLabel.setLocation(100, 100);
+        name.setLocation(100, 150);
+
+        methodOfAdministrationLabel.setSize(200, 40);
+        methodOfAdministration.setSize(200, 50);
+        methodOfAdministrationLabel.setLocation(100, 250);
+        methodOfAdministration.setLocation(100, 300);
+
+        unitOfMeasurementLabel.setSize(200, 40);
+        unitOfMeasurement.setSize(200, 50);
+        unitOfMeasurementLabel.setLocation(100, 350);
+        unitOfMeasurement.setLocation(100, 400);
+
+        amountLabel.setSize(200, 40);
+        amount.setSize(200, 50);
+        amountLabel.setLocation(100, 450);
+        amount.setLocation(100, 500);
+
+        extraLabel.setSize(200, 40);
+        extra.setSize(200, 50);
+        extraLabel.setLocation(100, 550);
+        extra.setLocation(100, 600);
+
+        JButton inputTimes = new JButton("Input Times");
+        inputTimes.setLocation(100, 700);
+        inputTimes.setSize(100, 70);
+
+        panel.add(nameLabel);
+        panel.add(name);
+        panel.add(methodOfAdministrationLabel);
+        panel.add(methodOfAdministration);
+        panel.add(unitOfMeasurementLabel);
+        panel.add(unitOfMeasurement);
+        panel.add(amountLabel);
+        panel.add(amount);
+        panel.add(extra);
+        panel.add(extraLabel);
+
+        super.addActionListenerToAllButtons();
+        super.view = panel;
+        super.buttonResponses.put(inputTimes, "0");
     }
 }
 
