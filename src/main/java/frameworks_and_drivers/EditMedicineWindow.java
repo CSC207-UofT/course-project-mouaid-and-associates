@@ -197,7 +197,7 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
         // set the view to the panel for now, this will change in the displayInfo method
         // which will be called before we actually view the screen.
         super.view = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }
 
     /**
