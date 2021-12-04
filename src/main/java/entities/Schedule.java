@@ -41,7 +41,7 @@ public class Schedule implements Serializable {
      * Adds an event to the schedule with the event's name, description and a mapping of a day to a time.
      * @param name          Name of the event.
      * @param description   Description of the event.
-     * @param timeStamp     A LocalDateTime storing the date and time of the event.
+     * @param timeStamp     Mapping of a day to a time. The time the event takes place.
      */
     public void addEvent(String name, String description, LocalDateTime timeStamp){
         // First we create a new event:
@@ -49,6 +49,23 @@ public class Schedule implements Serializable {
 
         // Then add it to the list.
         this.events.add(event);
+    }
+
+    /**
+     * Adds an event to the schedule with the event's name, description, the day the event takes place
+     * and the hour it takes place. This hides the internal representation of how an event is made.
+     *
+     * @param name          Name of the event.
+     * @param description   Description of the event.
+     * @param date          The date of the event.
+     * @param time          The time the event takes place.
+     */
+    public void addEvent(String name, String description, String date, String time){
+        // Make a time stamp and call the other addEvent.
+        LocalDateTime timeStamp = LocalDateTime.parse(date + "T" + time);
+
+        // Just call the other addEvent method to add the event. No need to repeat code.
+        this.addEvent(name, description, timeStamp);
     }
 
     /**
@@ -131,6 +148,12 @@ public class Schedule implements Serializable {
         return newDictOfEvents;
     }
 
+    /**
+     * Sorts the events in the events attribute into a dictionary mapping a
+     * day to events taking place on that day.
+     *
+     * @return The dictionary made from organizing the events by day.
+     */
     /**
      * Sorts the events in the events attribute into a dictionary mapping a
      * day to events taking place on that day.
