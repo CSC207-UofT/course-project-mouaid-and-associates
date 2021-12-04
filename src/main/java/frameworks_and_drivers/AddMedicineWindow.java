@@ -60,7 +60,7 @@ public class AddMedicineWindow extends ScheduleInputWindow {
      * @param source
      */
     @Override
-    public void update(Object source) {
+    public void update(ObservableFrame frame, Object source) {
         if (super.buttonResponses.containsKey(source)){
             super.userResponded = true;
             userInput.add(name.getText());
