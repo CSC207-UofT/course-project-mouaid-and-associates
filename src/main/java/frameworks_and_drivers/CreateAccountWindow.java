@@ -72,6 +72,7 @@ public class CreateAccountWindow extends Window {
         submit.setSize(286, 200);
 
         super.buttonResponses.put(submit, "1");
+        super.view = panel;
 
     }
 
