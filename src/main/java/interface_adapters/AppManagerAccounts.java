@@ -62,7 +62,7 @@ public class AppManagerAccounts {
                 // For some reason, we don't exit the loop unless I add this line.
                 System.out.print("");
             }
-            userIsVerified = managementSystem.verifyUserAccount(input);
+            userIsVerified = managementSystemFacade.verifyUserAccount(input);
 
 
             if(!userIsVerified && loginWindow instanceof DisplayEntityInformation){

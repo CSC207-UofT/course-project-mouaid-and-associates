@@ -42,7 +42,7 @@ public class AppManagerMedicine {
         // First, instantiate a variable to store the name of the medicine the user would like to remove.
         String medName;
         String[] medInfo;
-        String[] changes; // Represents the changes the user wants to make.
+        String[] changes = new String[5]; // Represents the changes the user wants to make.
         List<LocalDateTime> newTimes = new ArrayList<>();
 
         // Check if ChooseMedicineToEditWindow is an instance of DisplayEntityInformation to print
@@ -55,6 +55,9 @@ public class AppManagerMedicine {
         medName = chooseMedicineToEditWindow.getUserInput()[0];
 
         medInfo = managementSystemFacade.getMedicineInfo(medName);
+
+        // Update the view of the app.
+        editMedicineWindow.updateFrame();
 
         if (editMedicineWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) editMedicineWindow).displayInfo(medInfo);
