@@ -10,12 +10,15 @@ public class Event implements Comparable<Event>, Serializable {
      * Instance Attributes:
      * name: The name of the current event
      * description: The description of the current event.
-     * timeStamp: The time this event takes place. Stored in a LocalDateTime
+     * time: The time this event takes place. Maps a day to an hour the event takes
+     *        place during that day.
      *        e.g.
-     *        LocalDateTime.parse("2021-12-03T10:15") means the event is on December 3, 2021, at 10:15am.
+     *        {"Monday": 8.0} means the event is on Monday at 8:00.
      *
      * Representation Invariants:
-     *  - Each value in time is between 00:00 and 23:59, inclusive.
+     *  - Each value in time is between 0 and 24, inclusive.
+     *  - Each key in time is an element of the set {"Monday", "Tuesday", "Wednesday", "Thursday",
+     *                                                  "Friday", "Saturday", "Sunday"}
      *  - name is not an empty string
      *  - description is not an empty string.
      *

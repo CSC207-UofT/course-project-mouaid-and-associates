@@ -12,10 +12,10 @@ public class LoginWindow extends Window implements DisplayEntityInformation {
     /*
      * The window that displays the Login page.
      */
-    private String[] userInput;
-    private JTextField username;
-    private JTextField password;
-    private JLabel errorMessage;
+    String[] userInput;
+    JTextField username;
+    JTextField password;
+    JLabel errorMessage;
 
     public LoginWindow(Scanner scanner, ObservableFrame frame) {
         super(scanner, frame);
@@ -57,14 +57,15 @@ public class LoginWindow extends Window implements DisplayEntityInformation {
     /**
      * Checks to see if the button that was clicked was in this window.
      *
+     * @param frame         The frame of the GUI
      * @param source        The button from which the change occurred.
      */
     @Override
-    public void update(Object source) {
+    public void update(ObservableFrame frame, Object source) {
         if (super.buttonResponses.containsKey(source)){
+            super.userResponded = true;
             userInput[0] = username.getText();
             userInput[1] = password.getText();
-            super.userResponded = true;
         }
     }
 
