@@ -1,5 +1,8 @@
 package interface_adapters;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
 import java.util.Scanner;
 
 public abstract class ScheduleInputWindow extends Window{
@@ -12,6 +15,12 @@ public abstract class ScheduleInputWindow extends Window{
      * Gets input from the user on the times they will be taking the medicine they are trying to add.
      * @return The times the user will be taking the medicine they are trying to add.
      */
+    private List<JTextField> changes;
+    private List<JLabel> changeLabels;
+    private JPanel panel;
+    private List<String> userInput;
+    private Font labelFont;
+    private List<JLabel> infoOfMed;
     protected String[] getTimes(Scanner scanner) {
         String howManyTimesStr = selectHowManyTimes(scanner);
 
