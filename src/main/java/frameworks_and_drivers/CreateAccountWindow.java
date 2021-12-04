@@ -30,11 +30,10 @@ public class CreateAccountWindow extends Window {
      */
     @Override
     public String[] getUserInput() {
-
         return userInput;
 
-
     }
+
 
     @Override
     public void createView() {
@@ -79,6 +78,7 @@ public class CreateAccountWindow extends Window {
      * Checks if a button on this view is the source of the event (i.e. A button has
      * been pressed from this view) and performs the appropriate actions.
      *
+     * @param frame     The frame from which we get our change
      * @param source    The source of the change, in this case a button.
      */
     @Override
@@ -89,7 +89,9 @@ public class CreateAccountWindow extends Window {
             userInput[1] = userName.getText();
             userInput[2] = password.getText();
 
+            System.out.println(Arrays.toString(userInput));
         }
 
     }
+
 }
