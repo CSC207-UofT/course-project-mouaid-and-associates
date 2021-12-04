@@ -13,6 +13,7 @@ import java.util.List;
  * Instance Attributes:
  * - currentView: The current view that is being shown on the frame.
  * - observers: All the observers that will be affected by an action identified by action listener.
+ *              In this case, it's all the windows in the program.
  * -
  */
 public class ObservableFrame extends JFrame implements ActionListener {

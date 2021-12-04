@@ -29,7 +29,7 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
     private List<JTextField> changes;
     private List<JLabel> changeLabels;
     private JPanel panel;
-    private List<String> userInput;
+    private volatile List<String> userInput;
     private Font labelFont;
     private List<JLabel> infoOfMed;
 
@@ -41,6 +41,11 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
         infoOfMed = new ArrayList<>();
     }
 
+    /**
+     * Returns user input
+     * @return  Returns a list of user input, must be of size greater than
+     * or equal to 5.
+     */
     @Override
     public String[] getUserInput() {
         String[] userResponse = new String[]{"", "", "", "", ""};
@@ -213,7 +218,7 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
         }
 
         for (JButton button: super.buttonResponses.keySet()){
-            button.setLocation(43, y + 80 + 140 * changes.size());
+            button.setLocation(43, y + 40 + 140 * changes.size());
         }
 
         panel.setPreferredSize(new Dimension(486, y + 160 + 140 * changes.size()));

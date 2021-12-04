@@ -8,10 +8,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Scanner;
 
+/**
+ * The window that displays the Login page.
+ *
+ * Instance Attributes:
+ *  - userInput: The user's input, stored in an array.
+ *  - username: A text box for the user to enter their username.
+ *  - password: A text box for the user to enter their password.
+ *  - errorMessage: An error message to show when the password is wrong.
+ */
 public class LoginWindow extends Window implements DisplayEntityInformation {
-    /*
-     * The window that displays the Login page.
-     */
+
     private String[] userInput;
     private JTextField username;
     private JTextField password;
@@ -61,7 +68,7 @@ public class LoginWindow extends Window implements DisplayEntityInformation {
      */
     @Override
     public void update(Object source) {
-        if (super.buttonResponses.containsKey(source)){
+        if (super.buttonResponses.containsKey((JButton) source)){
             userInput[0] = username.getText();
             userInput[1] = password.getText();
             super.userResponded = true;
