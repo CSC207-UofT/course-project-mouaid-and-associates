@@ -82,7 +82,7 @@ public class CreateAccountWindow extends Window {
      * @param source    The source of the change, in this case a button.
      */
     @Override
-    public void update(Object source) {
+    public void update(ObservableFrame frame, Object source) {
         if (super.buttonResponses.containsKey(source)){
             super.userResponded = true;
             userInput[0] = name.getText();
@@ -92,5 +92,4 @@ public class CreateAccountWindow extends Window {
         }
 
     }
-
 }
