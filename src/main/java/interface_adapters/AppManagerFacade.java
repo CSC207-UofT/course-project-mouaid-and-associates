@@ -28,8 +28,6 @@ public class AppManagerFacade {
 
     private ManagementSystemFacade managementSystemFacade;
     private Map<String, Window> windows;
-    private static final String[] DAYS = new String[]{"Monday", "Tuesday", "Wednesday",
-    "Thursday", "Friday", "Saturday", "Sunday"};
     private AppManagerActivitySetter appManagerActivitySetter;
     private AppManagerMedicine appManagerMedicine;
     private AppManagerPrescription appManagerPrescription;
