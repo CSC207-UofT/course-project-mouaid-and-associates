@@ -46,8 +46,15 @@ public class AppManagerPrescription {
      */
     public String removePrescription(){
         Window removePrescriptionWindow = windows.get("Remove Prescription Window");
-        String[] data = removePrescriptionWindow.getUserInput();
-        managementSystemFacade.removePrescription(data[0]);
+        // Change the view of the screen.
+        removePrescriptionWindow.updateFrame();
+
+        String[] inputInfo = new String[1];
+        // Wait until the user has actually responded.
+        while (!removePrescriptionWindow.userResponded) {
+            inputInfo = windows.get("Remove Prescription Window").getUserInput();      // Currently, placeholder.
+        }
+        managementSystemFacade.removePrescription(inputInfo[0]);
         return "View Account Window";
     }
 
