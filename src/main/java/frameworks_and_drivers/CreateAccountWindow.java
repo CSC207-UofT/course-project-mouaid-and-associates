@@ -78,18 +78,16 @@ public class CreateAccountWindow extends Window {
      * Checks if a button on this view is the source of the event (i.e. A button has
      * been pressed from this view) and performs the appropriate actions.
      *
-     * @param frame     The frame from which we get our change
      * @param source    The source of the change, in this case a button.
      */
     @Override
-    public void update(ObservableFrame frame, Object source) {
-        if (super.buttonResponses.containsKey(source)){
+    public void update(Object source) {
+        if (super.buttonResponses.containsKey((JButton) source)){
             super.userResponded = true;
             userInput[0] = name.getText();
             userInput[1] = userName.getText();
             userInput[2] = password.getText();
 
-            System.out.println(Arrays.toString(userInput));
         }
 
     }
