@@ -23,7 +23,8 @@ public class Main {
         String accountFile = "src/main/data/users.ser";
 
         // Create all the different windows.
-        windows.put("Add Medicine Window", new AddMedicineWindow(scanner, frame));
+        SelectTimesWindow selectTimesWindow = new SelectTimesWindow(scanner, frame);
+        windows.put("Add Medicine Window", new AddMedicineWindow(scanner, frame, selectTimesWindow));
         windows.put("Add Prescription Window", new AddPrescriptionWindow(scanner, frame));
         windows.put("Remove Prescription Window", new RemovePrescriptionWindow(scanner, frame));
         windows.put("Create Account Window", new CreateAccountWindow(scanner, frame));

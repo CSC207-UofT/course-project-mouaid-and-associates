@@ -25,12 +25,15 @@ public class AddMedicineWindow extends Window {
     private JTextField wOrD;
     private JTextField startDay;
     private JTextField startMonth;
+    private JTextField howManyTimes;
+    private String[] times;
 
 
     public AddMedicineWindow(Scanner scanner, ObservableFrame frame) {
         super(scanner, frame);
-        SelectTimesWindow selectTimes = new SelectTimesWindow(scanner, frame);
+        this.selectTimes = selectTimes;
         createView();
+        times = new String[0];
 
     }
 
@@ -45,14 +48,21 @@ public class AddMedicineWindow extends Window {
      */
     @Override
     public String[] getUserInput() {
-        String[] times = selectTimes.getUserInput();
-        selectTimes.setNumTimes(Integer.parseInt(userInput.get(5)));
-        String[] returnList = new String[userInput.size() + times.length];
-        while (!(super.userResponded && userInput.size() >= 9)){
+        String[] returnList = new String[0];
+        boolean askedTimes = false;
+        while (!(super.userResponded && returnList.length >= 9)){
+
+            if (super.userResponded && !askedTimes){
+                selectTimes.setNumTimes(Integer.parseInt(howManyTimes.getText()));
+                selectTimes.updateFrame();
+                times = selectTimes.getUserInput();
+                askedTimes = true;
+            }
 
             // Only when we have a valid number of inputs do
             // we get all the user input.
-            if (userInput.size() >= 9) {
+            if (userInput.size() >= 8 && askedTimes) {
+                returnList = new String[times.length + userInput.size()];
                 for (int i = 0; i < userInput.size(); i++){
                     returnList[i] = userInput.get(i);
                 }
@@ -82,6 +92,7 @@ public class AddMedicineWindow extends Window {
             userInput.add(startDay.getText());
             userInput.add(startMonth.getText());
 
+            super.userResponded = true;
         }
 
     }
@@ -91,7 +102,6 @@ public class AddMedicineWindow extends Window {
         // Create a new panel
         JPanel panel = new JPanel();
         panel.setLayout(null);
-
         name = new JTextField("");
         methodOfAdministration = new JTextField("");
         unitOfMeasurement= new JTextField("");
@@ -100,6 +110,7 @@ public class AddMedicineWindow extends Window {
         wOrD = new JTextField("");
         startDay = new JTextField("");
         startMonth = new JTextField("");
+        howManyTimes = new JTextField("");
 
         JLabel nameLabel = new JLabel("Medicine Name: ");
         JLabel methodOfAdministrationLabel = new JLabel("How are you taking the medicine? ");
@@ -109,6 +120,7 @@ public class AddMedicineWindow extends Window {
         JLabel wOrDLabel = new JLabel("Do you need to take it weekly or daily?");
         JLabel startDayLabel = new JLabel("What day of the month would you like to start?");
         JLabel startMonthLabel = new JLabel("What month would you like to start? Input a number, like 1 for January");
+        JLabel howManyTimesLabel = new JLabel("How many times do you need to take this medicine?");
 
         nameLabel.setSize(200, 40);
         name.setSize(200, 50);
@@ -150,8 +162,15 @@ public class AddMedicineWindow extends Window {
         startMonthLabel.setLocation(100, 750);
         startMonth.setLocation(100, 800);
 
+        howManyTimesLabel.setSize(200, 40);
+        howManyTimes.setSize(200, 50);
+        howManyTimesLabel.setLocation(100, 850);
+        howManyTimes.setLocation(100, 900);
+
+
+
         inputTimes = new JButton("Input Times");
-        inputTimes.setLocation(100, 850);
+        inputTimes.setLocation(100, 970);
         inputTimes.setSize(100, 70);
 
 
@@ -172,10 +191,13 @@ public class AddMedicineWindow extends Window {
         panel.add(startDay);
         panel.add(startMonthLabel);
         panel.add(startMonth);
+        panel.add(inputTimes);
+        panel.add(howManyTimesLabel);
+        panel.add(howManyTimes);
 
-        super.addActionListenerToAllButtons();
-        super.view = panel;
         super.buttonResponses.put(inputTimes, "0");
+        super.addActionListenerToAllButtons();
+        panel.setPreferredSize(new Dimension(486, 1060));
         super.view = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }

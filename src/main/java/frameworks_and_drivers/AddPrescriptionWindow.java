@@ -11,13 +11,13 @@ import java.util.Scanner;
 
 public class AddPrescriptionWindow extends PrescriptionWindow {
 
-    Window getMedicineWindow;
     JTextField name;
     JTextField numMedicine;
     private ArrayList<String> userInput;
     public AddPrescriptionWindow(Scanner scanner, ObservableFrame frame){
         super(scanner, frame);
-        getMedicineWindow = new AddMedicineWindow(scanner, frame);
+        userInput = new ArrayList<>();
+        createView();
     }
 
     @Override
@@ -37,10 +37,16 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
      */
     @Override
     public List<String[]> getUserPrescriptionInput(Window addMedicineWindow) {
+        AddMedicineWindow medicineWindow = null;
+        // This is always true:
+        if (addMedicineWindow instanceof AddMedicineWindow) {
+            medicineWindow = (AddMedicineWindow) addMedicineWindow;
+        }
         int accumulator = 0;
         List<String[]> medicines = new ArrayList<>();
         while(accumulator != Integer.parseInt(numMedicine.getText())){
-            medicines.add(getMedicineWindow.getUserInput());
+            assert medicineWindow != null;
+            medicines.add(medicineWindow.getUserInput());
             accumulator += 1;
         }
         return medicines;
@@ -62,6 +68,8 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
         JPanel panel = new JPanel();
         panel.setLayout(null);
         super.setPanelSize(panel);
+        name = new JTextField("");
+        numMedicine = new JTextField("");
 
         JLabel nameLabel = new JLabel("Name of Prescription:");
         JLabel numMedicineLabel = new JLabel("Number of medicine:");
@@ -72,8 +80,8 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
 
         numMedicineLabel.setSize(200, 40);
         numMedicine.setSize(200, 50);
-        numMedicineLabel.setLocation(100, 50);
-        numMedicine.setLocation(100, 100);
+        numMedicineLabel.setLocation(100, 150);
+        numMedicine.setLocation(100, 200);
 
         JButton login = new JButton("Create Medicines");
         login.setLocation(100, 150);
