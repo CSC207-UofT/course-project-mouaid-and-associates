@@ -40,10 +40,12 @@ public class Main {
         windows.put("Set Sleep Timings Window", new SetSleepTimingsWindow(scanner, frame));
         windows.put("Set Meal Timings Window", new SetMealTimingsWindow(scanner, frame));
 
+
         // Add the windows as observers for the frame.
         for (Window observer: windows.values()){
             frame.addObserver(observer);
         }
+        frame.addObserver(selectTimesWindow);
 
         appManagerFacade.run(windows, dataAccess, accountFile);
 

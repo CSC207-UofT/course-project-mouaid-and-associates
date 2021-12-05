@@ -83,13 +83,19 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
         numMedicineLabel.setLocation(100, 150);
         numMedicine.setLocation(100, 200);
 
-        JButton login = new JButton("Create Medicines");
-        login.setLocation(100, 150);
-        login.setSize(100, 70);
+        JButton create = new JButton("Create Medicines");
+        create.setLocation(100, 250);
+        create.setSize(100, 70);
 
         panel.add(name);
         panel.add(nameLabel);
         panel.add(numMedicineLabel);
         panel.add(numMedicine);
+        panel.add(create);
+
+        super.buttonResponses.put(create, "0");
+
+        super.view = panel;
+
     }
 }

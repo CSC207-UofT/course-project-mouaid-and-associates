@@ -44,6 +44,8 @@ public abstract class Window implements FrameObserver{
      */
     public void updateFrame(){
         frame.updateView(view);
+
+        userResponded = false;
     }
 
     /**

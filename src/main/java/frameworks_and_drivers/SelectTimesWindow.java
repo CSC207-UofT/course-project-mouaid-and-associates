@@ -5,6 +5,7 @@ import interface_adapters.Window;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -41,32 +42,35 @@ public class SelectTimesWindow extends Window {
     public void setNumTimes(int times){
         numTimes = times;
         createView();
+        System.out.println("View Created");
     }
 
 
     @Override
     public void update(ObservableFrame frame, Object source) {
-        if (super.buttonResponses.containsKey(source)){
-            super.userResponded = true;
+        if (super.buttonResponses.containsKey((JButton) source)){
             for (int i = 0; i < numTimes; i++ ){
                 userInput.add(textLabels.get(i).getText());
             }
+            super.userResponded = true;
         }
     }
 
     @Override
     public String[] getUserInput() {
         String[] returnList = new String[numTimes];
-        while (!(super.userResponded && userInput.size() >= numTimes)){
-
+        while (!(super.userResponded && userInput.size() == numTimes)){
             // Only when we have a valid number of inputs do
             // we get all the user input.
-            if (userInput.size() >= numTimes) {
+            if (userInput.size() == numTimes) {
                 for (int i = 0; i < numTimes; i++){
                     returnList[i] = userInput.get(i);
                 }
             }
         }
+
+        userInput.clear();
+
         return returnList;
     }
 
@@ -78,9 +82,6 @@ public class SelectTimesWindow extends Window {
      */
     @Override
     public void createView() {
-        // Ensure our precondition.
-        assert (numTimes > 0);
-
         // Initialize a JPanel and gives it a size.
         panel = new JPanel();
         panel.setLayout(null);

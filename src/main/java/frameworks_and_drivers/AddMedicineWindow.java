@@ -7,6 +7,7 @@ import interface_adapters.Window;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,7 +30,7 @@ public class AddMedicineWindow extends Window {
     private String[] times;
 
 
-    public AddMedicineWindow(Scanner scanner, ObservableFrame frame) {
+    public AddMedicineWindow(Scanner scanner, ObservableFrame frame, SelectTimesWindow selectTimes) {
         super(scanner, frame);
         this.selectTimes = selectTimes;
         createView();
@@ -82,7 +83,6 @@ public class AddMedicineWindow extends Window {
     @Override
     public void update(ObservableFrame frame, Object source) {
         if (super.buttonResponses.containsKey(source)){
-            super.userResponded = true;
             userInput.add(name.getText());
             userInput.add(methodOfAdministration.getText());
             userInput.add(unitOfMeasurement.getText());
