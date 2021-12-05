@@ -108,10 +108,14 @@ public class AppManagerMedicine {
     public String addMedicine(){
         //Done: call AddMedicineWindow to display the fields to enter data about the medicine
         Window addMedicineWindow = windows.get("Add Medicine Window");
+        addMedicineWindow.updateFrame();
 
-        String[] data = addMedicineWindow.getUserInput();
+        String[] inputInfo = new String[5];
+        while (!addMedicineWindow.userResponded) {
+            inputInfo = windows.get("Add Medicine Window").getUserInput();      // Currently, placeholder.
+        }
 
-        appManagerHelpers.addMedicineHelper(data);
+        appManagerHelpers.addMedicineHelper(inputInfo);
 
         //Done: call showAccountWindow
         return "View Account Window";
