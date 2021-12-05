@@ -1,44 +1,111 @@
 package frameworks_and_drivers;
 
 import interface_adapters.ObservableFrame;
-import interface_adapters.ScheduleInputWindow;
 import interface_adapters.Window;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 public class SelectTimesWindow extends Window {
     /**
-     * This is the window where you can create the times you want to take a medicine
+     * This is a window that is called inside AddMedicineWindow, EditMedicineWindow, and SetMealTimingsWindow
+     * in order to set the times and dates that those events should take place.
+     *
+     * Instance Attributes:
+     * -panel: It represents where everything will be displayed and contains all the components of the window.
+     * -userInput: The text the user entered into the text boxes
+     * -medTimesLabel: All the times of the medicine
+     * -numTimes: Represents the number of text boxes we need
      */
-    private ArrayList<String> userInput;
-    private JTextField selectTimes = new JTextField();
     private JPanel panel;
+    private List<String> userInput;
+    private int numTimes;
+    private List<JTextField> textLabels;
 
     public SelectTimesWindow(Scanner scanner, ObservableFrame frame){
-        super(scanner, frame);
-        createView();
+        super(scanner,frame);
+        // Rather than creating a view at the beginning, we will create a view
+        // after we have set numTimes.
         userInput = new ArrayList<>();
+        this.numTimes = 0;
+        textLabels = new ArrayList<>();
+    }
+
+    /**
+     * Sets the number of times we need to ask for user input and
+     * creates a view accordingly.
+     * @param times     The number of new text boxes to be created.
+     */
+    public void setNumTimes(int times){
+        numTimes = times;
+        createView();
+    }
+
+
+    @Override
+    public void update(ObservableFrame frame, Object source) {
+        if (super.buttonResponses.containsKey(source)){
+            super.userResponded = true;
+            for (int i = 0; i < numTimes; i++ ){
+                userInput.add(textLabels.get(i).getText());
+            }
+        }
     }
 
     @Override
-    public String[] getUserInput(){
-        String[] userInput = new String[1];
-        return userInput;
+    public String[] getUserInput() {
+        String[] returnList = new String[numTimes];
+        while (!(super.userResponded && userInput.size() >= numTimes)){
+
+            // Only when we have a valid number of inputs do
+            // we get all the user input.
+            if (userInput.size() >= numTimes) {
+                for (int i = 0; i < numTimes; i++){
+                    returnList[i] = userInput.get(i);
+                }
+            }
+        }
+        return returnList;
     }
 
     @Override
-    public void createView(){
+    public void createView() {
+        // Ensure our precondition.
+        assert (numTimes > 0);
+
+        // Initialize a JPanel and gives it a size.
         panel = new JPanel();
         panel.setLayout(null);
         super.setPanelSize(panel);
+
+        for (int i = 0; i < numTimes; i++ ){
+            JLabel timesLabel = new JLabel("For the " + i + "'st time what time do you need to take it? " +
+                    "Enter in form XX:XX");
+            JTextField textField = new JTextField("");
+            timesLabel.setSize(200, 60);
+            textField.setSize(200, 60);
+            textField.setLocation(100, i * 100 + 100);
+            timesLabel.setLocation(100, i *  150 + 150);
+            textLabels.add(textField);
+            panel.add(timesLabel);
+            panel.add(textField);
+        }
+
+        JButton saveButton = new JButton("SAVE AND RETURN TO ACCOUNT PAGE");
+        saveButton.setSize(400, 70);
+        saveButton.setLocation(100, numTimes * 150 + 150);
+        panel.add(saveButton);
+        // Add the button to the button map.
+        super.buttonResponses.put(saveButton, "0");
+
+        // Add an action listener for each button.
+        super.addActionListenerToAllButtons();
+
+        super.view = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
     }
 
-
-    @Override
-    public void update(Object source) {
-
-    }
 }
