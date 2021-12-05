@@ -50,7 +50,6 @@ public class RemoveMedicineWindow extends Window implements DisplayEntityInforma
     /**
      * Notify the observer of a change
      *
-     * @param frame
      * @param source
      */
     @Override
@@ -59,6 +58,7 @@ public class RemoveMedicineWindow extends Window implements DisplayEntityInforma
             super.userResponded = true;
             userInput[0] = presName.getText();
         }
+
     }
 
     @Override

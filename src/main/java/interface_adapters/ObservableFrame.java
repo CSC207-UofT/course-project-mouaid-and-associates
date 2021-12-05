@@ -13,6 +13,7 @@ import java.util.List;
  * Instance Attributes:
  * - currentView: The current view that is being shown on the frame.
  * - observers: All the observers that will be affected by an action identified by action listener.
+ *              In this case, it's all the windows in the program.
  * -
  */
 public class ObservableFrame extends JFrame implements ActionListener {
@@ -83,7 +84,7 @@ public class ObservableFrame extends JFrame implements ActionListener {
         for (FrameObserver observer: observers){
             // Sends an instance of this observable class and the source (i.e. the button)
             // that caused the ActionEvent e.
-            observer.update(this, e.getSource());
+            observer.update(e.getSource());
         }
         repaint();
     }

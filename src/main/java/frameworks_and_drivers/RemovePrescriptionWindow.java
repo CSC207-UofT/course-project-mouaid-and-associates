@@ -27,16 +27,15 @@ public class RemovePrescriptionWindow extends Window {
     /**
      * Notify the observer of a change
      *
-     * @param frame
      * @param source
      */
     @Override
+
     public void update(ObservableFrame frame, Object source) {
         if (super.buttonResponses.containsKey(source)){
             super.userResponded = true;
             userInput[0] = medicineName.getText();
         }
-
     }
 
 

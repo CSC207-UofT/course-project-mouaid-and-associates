@@ -231,14 +231,18 @@ public class AppManagerFacade {
     public String showFinalSchedule() {
         Window window = windows.get("TimeTable Window");
         //Done: call managementSystemFacade.makeSchedule
-        String[] schedule = new String[]{managementSystemFacade.makeSchedule()};
+        String[] schedule = managementSystemFacade.makeSchedule();
+
+        // Update the view of the window
+        window.updateFrame();
 
         if (window instanceof DisplayEntityInformation)
             ((DisplayEntityInformation) window).displayInfo(schedule);
 
         //Done: get user input from TimeTableWindow and call ViewAccountWindow.
-        windows.get("TimeTable Window").getUserInput();
-
+        while(!window.userResponded) {
+            windows.get("TimeTable Window").getUserInput();
+        }
         // For now, we only have one option, which is to take the user back to the account page.
 
         return "View Account Window";
