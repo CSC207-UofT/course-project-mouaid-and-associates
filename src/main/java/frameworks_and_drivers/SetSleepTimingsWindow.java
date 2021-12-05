@@ -66,14 +66,25 @@ public class SetSleepTimingsWindow extends Window {
     }
 
     /**
-     * Notify the observer of a change
-     *
-     * @param frame
-     * @param source
+     * Sets userInput if the source is the save button in this view.
+     * This method is synchronized so that when multiple threads
+     * access this variable, we can ensure that only one thread
+     * can access this method at a time.
+     * @param source   The source of the event.
      */
     @Override
-    public void update(ObservableFrame frame, Object source) {
+    public void update(Object source) {
+        if (super.buttonResponses.containsKey((JButton) source)){
+            // Since changes is an ordered list of text boxes, thus
+            // we just add the items to the userInput.
 
+            for (int i = 0; i < changes.size(); i++) {
+                userInput.add(changes.get(i).getText());
+            }
+
+            // Best to do this after you make all your changes.
+            super.userResponded = true;
+        }
     }
 
     @Override
