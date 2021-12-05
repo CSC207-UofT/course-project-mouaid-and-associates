@@ -20,11 +20,10 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Map<String, Window> windows = new HashMap<>();
         UserDataAccess dataAccess = new UserDataAccess();
-        SelectTimesWindow selectTimes = new SelectTimesWindow(scanner, frame);
         String accountFile = "src/main/data/users.ser";
 
         // Create all the different windows.
-        windows.put("Add Medicine Window", new AddMedicineWindow(scanner, frame, selectTimes));
+        windows.put("Add Medicine Window", new AddMedicineWindow(scanner, frame));
         windows.put("Add Prescription Window", new AddPrescriptionWindow(scanner, frame));
         windows.put("Remove Prescription Window", new RemovePrescriptionWindow(scanner, frame));
         windows.put("Create Account Window", new CreateAccountWindow(scanner, frame));

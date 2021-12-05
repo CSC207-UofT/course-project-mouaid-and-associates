@@ -15,7 +15,7 @@ public class AddMedicineWindow extends Window {
      * The window that displays the Add a Medicine page.
      */
     private ArrayList<String> userInput = new ArrayList<>();
-    SelectTimesWindow selectTimes;
+    private SelectTimesWindow selectTimes;
     private JTextField name;
     private JTextField methodOfAdministration;
     private JTextField unitOfMeasurement;
@@ -27,9 +27,9 @@ public class AddMedicineWindow extends Window {
     private JTextField startMonth;
 
 
-    public AddMedicineWindow(Scanner scanner, ObservableFrame frame, SelectTimesWindow selectTimesWindow) {
+    public AddMedicineWindow(Scanner scanner, ObservableFrame frame) {
         super(scanner, frame);
-        selectTimes = selectTimesWindow;
+        SelectTimesWindow selectTimes = new SelectTimesWindow(scanner, frame);
         createView();
 
     }
