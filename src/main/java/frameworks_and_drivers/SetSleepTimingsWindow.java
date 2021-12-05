@@ -122,6 +122,7 @@ public class SetSleepTimingsWindow extends Window {
         JButton saveButton = new JButton("SAVE AND RETURN TO ACCOUNT PAGE");
         saveButton.setFont(buttonFont);
         saveButton.setSize(400, 70);
+        saveButton.setLocation(43, 400);
 
         panel.add(saveButton);
 

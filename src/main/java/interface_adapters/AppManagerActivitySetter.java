@@ -27,6 +27,9 @@ public class AppManagerActivitySetter {
         // Call SetSleepTimingsWindow to display the fields to enter the sleep and wakeup times
         Window setSleepTimingsWindow = windows.get("Set Sleep Timings Window");
 
+        // Update the view of the frame
+        setSleepTimingsWindow.updateFrame();
+
         String[] stringTimings = setSleepTimingsWindow.getUserInput();
 
         String sleepTime = stringTimings[0];
