@@ -20,6 +20,7 @@ public class AddMedicineWindow extends Window {
     private JTextField unitOfMeasurement = new JTextField();
     private JTextField amount = new JTextField();
     private JTextField extra = new JTextField();
+    private JTextField times = new JTextField();
 
 
     public AddMedicineWindow(Scanner scanner, ObservableFrame frame) {
@@ -40,13 +41,13 @@ public class AddMedicineWindow extends Window {
      */
     @Override
     public String[] getUserInput() {
-        String[] returnList = new String[5];
-        while (!(super.userResponded && userInput.size() >= 5)){
+        String[] returnList = new String[6];
+        while (!(super.userResponded && userInput.size() >= 6)){
 
             // Only when we have a valid number of inputs do
             // we get all the user input.
-            if (userInput.size() >= 5) {
-                for (int i = 0; i < 5; i++){
+            if (userInput.size() >= 6) {
+                for (int i = 0; i < 6; i++){
                     returnList[i] = userInput.get(i);
                 }
             }
@@ -68,6 +69,7 @@ public class AddMedicineWindow extends Window {
             userInput.add(unitOfMeasurement.getText());
             userInput.add(amount.getText());
             userInput.add(extra.getText());
+            userInput.add(times.getText());
         }
 
     }
@@ -83,6 +85,7 @@ public class AddMedicineWindow extends Window {
         JLabel unitOfMeasurementLabel = new JLabel("Unit of measurement (e.g. pill, mL, tsp, mg, etc.: ");
         JLabel amountLabel = new JLabel("Enter the amount as an integer: ");
         JLabel extraLabel = new JLabel("Additional information");
+        JLabel timesLabel = new JLabel("Enter how many times you want to take the medecine in a day");
 
         nameLabel.setSize(200, 40);
         name.setSize(200, 50);
@@ -109,9 +112,15 @@ public class AddMedicineWindow extends Window {
         extraLabel.setLocation(100, 550);
         extra.setLocation(100, 600);
 
+        times.setSize(200, 50);
+        timesLabel.setSize(200, 40);
+        times.setLocation(100, 750);
+        timesLabel.setLocation(100, 800);
+
         JButton inputTimes = new JButton("Input Times");
-        inputTimes.setLocation(100, 700);
-        inputTimes.setSize(100, 70);
+        inputTimes.setLocation(100, 850);
+        inputTimes.setSize(100, 900);
+
 
         panel.add(nameLabel);
         panel.add(name);
