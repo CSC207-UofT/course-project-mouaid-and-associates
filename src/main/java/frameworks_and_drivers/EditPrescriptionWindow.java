@@ -5,6 +5,7 @@ import interface_adapters.ObservableFrame;
 import interface_adapters.ScheduleInputWindow;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,8 +65,8 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
 //            }
 //        }
 //
-//        return change.toArray(new String[0]);
-        return userInput;
+       return change.toArray(new String[change.toArray().length]);
+        //return userInput;
     }
 
     /**
@@ -77,41 +78,38 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
     public void update(Object source) {
 
         if (super.buttonResponses.containsKey((JButton) source)){
-            switch (((JButton) source).getText()) {
-                case "Name of the prescription": {
+            String text = ((JButton) source).getText();
+            if (text.equals("Name of the prescription")) {
                     displayEditName();
                 }
-                case "Remove a medicine from the prescription": {
+            else if (text.equals("Remove a medicine from the prescription")){
                     displayRemove(validInputs);
-                    userInput[1] = ((JButton) source).getText();
+                    //userInput[1] = ((JButton) source).getText();
                     change.set(1, "remove");
                 }
-                case "Add a medicine to this prescription":{
+            else if (text.equals( "Add a medicine to this prescription") ){
                     /*JLabel add = new JLabel("You'll be prompted to the add new medicine form after you click option 4");
                     add.setLocation(20, 200);
                     panel.add(add);*/
-                    userInput[2] = "1";
+                    //userInput[2] = "1";
                     /*super.view = panel;*/
 
                     change.set(2, "Add Medicine");
+                }
+            else if (text.equals("Go back to the account page")) {
+                    userResponded = true;
 
                 }
-                case "Go back to the account page":{
-                    userInput = new String[3];
-                }
-                case "Send":{
-                    userInput[0] = name2.getText();
-                    System.out.println(123);
+           else if (text.equals("Send")) {
+                    //userInput[0] = name2.getText();
+                    change.set(0, name2.getText());
                     userResponded = true;
                 }
-                case "Back":{
-                    System.out.println(234);
-                    userResponded = true;
-                }
-
-                //change.add(((JButton) source).getText());
-
-
+           else{
+                change.add(text);
+                ((JButton) source).setBackground(Color.RED);
+                ((JButton) source).setOpaque(true);
+                updateFrame();
 
             }
 
@@ -228,29 +226,32 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
 
 
     private void displayRemove(String [] medicines){
+        super.buttonResponses.clear();
         //adds the label
-        JLabel remove = new JLabel("Type the name of the medicine that you would like to remove");
-        remove.setLocation(20, 450);
+        JLabel remove = new JLabel(" Select the medicines to remove");
+        remove.setLocation(20, 625);
         remove.setSize(150*3,15);
         panel.add(remove);
 
         //adds the back button
-        JButton back = new JButton("Back");
-        back.setLocation(0, ObservableFrame.FRAME_HEIGHT-80);
-        back.setSize(80,80);
+        JButton back = new JButton("Go back to the account page");
+        back.setLocation(OFFSET_X, OFFSET_Y + 4*(120) - (3)*30 );
+        back.setSize(380,90);
+        back.setBackground(Color.RED);
+        back.setOpaque(true);
         panel.add(back);
 
-        int info_count = 0;
+        int i = 1;
         for (String pieceOfInfo : medicines){
             System.out.println(pieceOfInfo);
 
-            JButton label = new JButton();
-            label.setText(pieceOfInfo);
-            label.setLocation(20, 480 + 15*info_count);
-            label.setSize(152*3,15);
+            JButton button = new JButton(pieceOfInfo);
+            button.setSize(152, 90);
+            button.setLocation(7+ (((i-1)%3))*(152), 650 + (i-1)/3*(190) );
+            i++;
+            panel.add(button);
+            super.buttonResponses.put(button, button.getText());
 
-            panel.add(label);
-            info_count ++;
             //System.out.println(info_count);
         }
 

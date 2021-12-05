@@ -5,6 +5,7 @@ import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Scanner;
 
 public class ViewAccountWindow extends Window implements DisplayEntityInformation {
@@ -76,18 +77,17 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
         int i = 1;
         for (JButton button: buttons){
             button.setSize(152, 90);
-            button.setLocation(OFFSET_X + (((i-1)%3))*(182) - (i-1)%3*30, OFFSET_Y + (i-1)/3*(120) - (i-1)/3*30 + info_count*15 );
+            button.setLocation(OFFSET_X + (((i-1)%3))*(152), OFFSET_Y + (i-1)/3*(90) );
             i++;
             panel.add(button);
             super.buttonResponses.put(button, button.getText());
 
         }
         logout.setSize(200, 80);
-        logout.setLocation(ObservableFrame.FRAME_WIDTH/2 -100, ObservableFrame.FRAME_HEIGHT/2 - 90 + info_count*15);
+        logout.setLocation(ObservableFrame.FRAME_WIDTH/2 -100, ObservableFrame.FRAME_HEIGHT/2 - 90 );
         panel.add(logout);
 
         //reset the count
-        info_count = 0;
         super.buttonResponses.put(logout, logout.getText());
 
         // Add an action listener for each button.
@@ -100,16 +100,26 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
 
     @Override
     public void displayInfo(String[] info) {
+        JLabel label1 = new JLabel();
+        label1.setText("Welcome " + info[0].substring(5) + "!");
+        label1.setLocation(110, 40);
+        label1.setSize(152*3,30);
+        label1.setFont(new Font("Serif", Font.PLAIN, 28));
+        panel.add(label1);
+
+
+        int j = 0;
         for (String pieceOfInfo : info){
             System.out.println(pieceOfInfo);
 
+
             JLabel label = new JLabel();
             label.setText(pieceOfInfo);
-            label.setLocation(20, 30 + 15*info_count);
+            label.setLocation(20, OFFSET_Y + 4*90 + 30*j + 30);
             label.setSize(152*3,15);
+            j++;
 
             panel.add(label);
-            info_count ++;
             //System.out.println(info_count);
         }
 
