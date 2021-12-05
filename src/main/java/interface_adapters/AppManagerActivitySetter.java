@@ -53,6 +53,8 @@ public class AppManagerActivitySetter {
         // Call SetMealTimingsWindow to display the fields to enter the Meal times
         Window setMealTimingsWindow = windows.get("Set Meal Timings Window");
 
+        setMealTimingsWindow.updateFrame();
+
         String[] stringTimings = setMealTimingsWindow.getUserInput();
         List<String> times = new ArrayList<>();
 

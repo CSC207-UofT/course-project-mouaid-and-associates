@@ -15,18 +15,15 @@ public class SetSleepTimingsWindow extends Window {
      */
 
     private List<JTextField> changes;
-    private List<JLabel> changeLabels;
     private JPanel panel;
     private volatile List<String> userInput;
-    private Font labelFont;
-    private List<JLabel> infoOfTimes;
+
 
     public SetSleepTimingsWindow(Scanner scanner, ObservableFrame frame){
         super(scanner, frame);
         createView();
         userInput = new ArrayList<>();
-        labelFont = new Font("SansSerif", Font.BOLD, 16);
-        infoOfTimes = new ArrayList<>();
+
     }
 
     /**
@@ -54,15 +51,6 @@ public class SetSleepTimingsWindow extends Window {
 
         // Return user input.
         return userResponse;
-
-//        String[] returnList = new String[2];
-//        System.out.println("Please enter your sleep time?");
-//        String sleepTime = scanner.nextLine();
-//        System.out.println("Please enter your wake up time");
-//        String wakeUpTime = scanner.nextLine();
-//        returnList[0] = sleepTime;
-//        returnList[1] = wakeUpTime;
-//        return returnList;
     }
 
     /**
@@ -94,28 +82,24 @@ public class SetSleepTimingsWindow extends Window {
         panel.setLayout(null);
         super.setPanelSize(panel);
 
-        // Create a list of messages to print onto the labels:
-        String[] labels = new String[]{"Please enter your sleep time?", "Please enter your wake up time?"};
+        // Instantiate the two text boxes
+        JLabel sleepLabel = new JLabel("Please enter your Sleep time: ");
+        sleepLabel.setSize(286, 40);
+        sleepLabel.setLocation(100, 50);
+        JTextField sleepTime = new JTextField();
+        sleepTime.setSize(286, 50);
+        sleepTime.setLocation(100, 100);
 
-        // Create all the text boxes but don't set their locations yet.
+        JLabel wakeUpLabel = new JLabel("Please enter your Wake up time: ");
+        wakeUpLabel.setSize(286, 40);
+        wakeUpLabel.setLocation(100, 250);
+        JTextField wakeUpTime = new JTextField();
+        wakeUpTime.setSize(286, 50);
+        wakeUpTime.setLocation(100, 300);
+
         changes = new ArrayList<>();
-        for (int i = 0; i < 2; i++){
-            JTextField textField = new JTextField("");
-            textField.setSize(286, 60);
-            changes.add(textField);
-            panel.add(textField);
-        }
-
-        // Create all the corresponding labels but don't set their locations yet.
-        changeLabels = new ArrayList<>();
-        for (String label: labels){
-            JLabel changeLabel = new JLabel(label);
-            changeLabel.setSize(466, 60);
-            changeLabel.setFont(labelFont);
-
-            changeLabels.add(changeLabel);
-            panel.add(changeLabel);
-        }
+        changes.add(sleepTime);
+        changes.add(wakeUpTime);
 
         // Create the button.
         Font buttonFont = new Font("SansSerif", Font.BOLD, 15);
@@ -124,6 +108,12 @@ public class SetSleepTimingsWindow extends Window {
         saveButton.setSize(400, 70);
         saveButton.setLocation(43, 400);
 
+
+        // Add the items to the panel
+        panel.add(sleepLabel);
+        panel.add(sleepTime);
+        panel.add(wakeUpLabel);
+        panel.add(wakeUpTime);
         panel.add(saveButton);
 
         // Add the button to the button map.
@@ -132,33 +122,9 @@ public class SetSleepTimingsWindow extends Window {
         // Add an action listener for each button.
         super.addActionListenerToAllButtons();
 
+        // Set the view for this window.
+        super.view = panel;
 
-    }
-
-    /**
-     * Sets the locations for all the attributes of this class, specifically
-     * changes, changeLabels, and saveButton. Since we don't know how much information
-     * will need to be printed for the medicine, we need the location of the lowest
-     * label on the panel to build of the rest.
-     *
-     * @param y     The y coordinate of the last label.
-     */
-    private void setLocations(int y){
-        // Ensures there are the same number of labels as there are text boxes.
-        assert (changes.size() == changeLabels.size());
-
-        for (int i = 0; i < changes.size(); i++){
-            changeLabels.get(i).setLocation(20, y + 20 + 140 * i);
-            changes.get(i).setLocation(20, y + 80 + 140 * i);
-        }
-
-        for (JButton button: super.buttonResponses.keySet()){
-            button.setLocation(43, y + 40 + 140 * changes.size());
-        }
-
-        panel.setPreferredSize(new Dimension(486, y + 160 + 140 * changes.size()));
-
-        super.view.revalidate();
     }
 
     /**
