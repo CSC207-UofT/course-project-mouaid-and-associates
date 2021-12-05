@@ -70,6 +70,12 @@ public class SelectTimesWindow extends Window {
         return returnList;
     }
 
+    /**
+     * Creates a view for this window.
+     *
+     * Preconditions:
+     * - numTimes > 0
+     */
     @Override
     public void createView() {
         // Ensure our precondition.
