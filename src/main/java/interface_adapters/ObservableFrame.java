@@ -49,6 +49,8 @@ public class ObservableFrame extends JFrame implements ActionListener {
         this.pack();
     }
 
+
+
     /**
      * Adds a new observer to this class
      * @param newObserver   The new observer.

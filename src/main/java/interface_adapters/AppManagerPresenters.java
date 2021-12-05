@@ -1,3 +1,6 @@
+
+
+
 package interface_adapters;
 
 import application_business_rules.ManagementSystemFacade;
@@ -70,33 +73,48 @@ public class AppManagerPresenters {
         for(int i = userInfo.length + 2; i < formattedUserInfo.length; i++){
             formattedUserInfo[i] = (" - " + prescriptionsIDS.get(accumulator));
         }
+
+        // Update the frame to show the new view
+
         if (viewAccountWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) viewAccountWindow).displayInfo(formattedUserInfo);
         }
 
+        viewAccountWindow.updateFrame();
+        String choice = new String();
+        while(!viewAccountWindow.userResponded) {      // Keep asking for userInput until we get something.
+            choice = viewAccountWindow.getUserInput()[0];
 
-        String choice = viewAccountWindow.getUserInput()[0];
+            // For some reason, we don't exit the loop unless I add this line.
+            System.out.print("");
+        }
+        System.out.println(choice);
+
+
+
+
+
 
         //Done: Add conditional flow statements so that the user can select between logging out,
         //      adding medication and viewing the timetable.
 
-        if (choice.equals("add")){
+        if (choice.equals("Add Medicine")){
             return "Add Medicine Window";
-        } else if (choice.equals("view")){
+        } else if (choice.equals("View Timetable")){
             return "TimeTable Window";
-        } else if (choice.equals("edit")){
+        } else if (choice.equals("Edit Medicine")){
             return "Edit Medicine Window";
-        }else if (choice.equals("edit pres")) {
+        }else if (choice.equals("Edit Prescription")) {
             return "Edit Prescription Window";
-        } else if (choice.equals("pres")){
+        } else if (choice.equals("Add Prescription")){
             return "Add Prescription Window";
-        } else if (choice.equals("remove pres")){
+        } else if (choice.equals("Remove Prescription")){
             return "Remove Prescription Window";
-        } else if (choice.equals("remove")) {
+        } else if (choice.equals("Remove Medicine")) {
             return "Remove Medicine Window";
-        } else if (choice.equals("set sleep times")) {
+        } else if (choice.equals("Set Sleep Times")) {
             return "Set Sleep Timings Window";
-        } else if (choice.equals("set meal times")){
+        } else if (choice.equals("Set Meal Times")){
             return "Set Meal Timings Window";
         }else {
             return "Log Out";
