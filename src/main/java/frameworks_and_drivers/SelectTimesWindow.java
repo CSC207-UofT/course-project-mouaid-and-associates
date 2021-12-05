@@ -4,8 +4,8 @@ import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,7 +23,7 @@ public class SelectTimesWindow extends Window {
     private JPanel panel;
     private List<String> userInput;
     private int numTimes;
-    private List<JTextField> textLabels;
+    private List<JTextField> textFields;
 
     public SelectTimesWindow(Scanner scanner, ObservableFrame frame){
         super(scanner,frame);
@@ -31,7 +31,7 @@ public class SelectTimesWindow extends Window {
         // after we have set numTimes.
         userInput = new ArrayList<>();
         this.numTimes = 0;
-        textLabels = new ArrayList<>();
+        textFields = new ArrayList<>();
     }
 
     /**
@@ -42,15 +42,15 @@ public class SelectTimesWindow extends Window {
     public void setNumTimes(int times){
         numTimes = times;
         createView();
-        System.out.println("View Created");
     }
 
 
     @Override
     public void update(ObservableFrame frame, Object source) {
+        userInput = new ArrayList<>();
         if (super.buttonResponses.containsKey((JButton) source)){
             for (int i = 0; i < numTimes; i++ ){
-                userInput.add(textLabels.get(i).getText());
+                userInput.add(textFields.get(i).getText());
             }
             super.userResponded = true;
         }
@@ -62,13 +62,24 @@ public class SelectTimesWindow extends Window {
         while (!(super.userResponded && userInput.size() == numTimes)){
             // Only when we have a valid number of inputs do
             // we get all the user input.
-            if (userInput.size() == numTimes) {
+
+            //Checks to see if the input is valid
+            if (super.userResponded && userInput.size() == numTimes){
+                for (int i = 0; i < numTimes; i++){
+                    if(!isValidTime(userInput.get(i))){
+                        super.userResponded = false;
+                        textFields.get(i).setForeground(Color.RED);
+                        userInput = new ArrayList<>();
+                        break;
+                    }
+                }
+            }
+            if (userInput.size() == numTimes && super.userResponded) {
                 for (int i = 0; i < numTimes; i++){
                     returnList[i] = userInput.get(i);
                 }
             }
         }
-
         userInput.clear();
 
         return returnList;
@@ -87,15 +98,15 @@ public class SelectTimesWindow extends Window {
         panel.setLayout(null);
         super.setPanelSize(panel);
 
-        for (int i = 0; i < numTimes; i++ ){
+        for (int i = 1; i < numTimes + 1; i++ ){
             JLabel timesLabel = new JLabel("For the " + i + "'st time what time do you need to take it? " +
                     "Enter in form XX:XX");
             JTextField textField = new JTextField("");
             timesLabel.setSize(200, 60);
             textField.setSize(200, 60);
-            textField.setLocation(100, i * 100 + 100);
-            timesLabel.setLocation(100, i *  150 + 150);
-            textLabels.add(textField);
+            textField.setLocation(100, i * 100);
+            timesLabel.setLocation(100, (i - 1) *  100 + 50);
+            textFields.add(textField);
             panel.add(timesLabel);
             panel.add(textField);
         }
@@ -112,6 +123,43 @@ public class SelectTimesWindow extends Window {
 
         super.view = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+    }
+
+
+    /**
+     * Checks to see whether str can be converted into a double
+     * @param str what it will check to see if it can be converted to a string
+     * @return Whether the str can be converted to a double
+     */
+    protected boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
+
+    /**
+     * Checks to see if the user inputted time correctly
+     * @param time a string given that should represent the time
+     * @return Whether time is of the right format
+     */
+    public boolean isValidTime(String time){
+        if (time.length() != 5 || !isNumeric(String.valueOf(time.charAt(0))) ||
+                !isNumeric(String.valueOf(time.charAt(1))) || !isNumeric(String.valueOf(time.charAt(3))) ||
+                !isNumeric(String.valueOf(time.charAt(4))) || time.charAt(2) != ':'){
+            return false;
+        }
+        else if (Character.getNumericValue(time.charAt(0)) * 10 + Character.getNumericValue(time.charAt(1)) >= 24 ||
+                Character.getNumericValue(time.charAt(3)) * 10 + Character.getNumericValue(time.charAt(4)) > 59){
+            return false;
+        }
+        else{
+            return true;
+        }
+
 
     }
 
