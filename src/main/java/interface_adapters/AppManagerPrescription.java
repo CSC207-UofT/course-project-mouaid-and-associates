@@ -90,7 +90,13 @@ public class AppManagerPrescription {
             }
         }else if(!change[2].equals("")){
             Window addMedicineWindow = windows.get("Add Medicine Window");
-            String[] data = addMedicineWindow.getUserInput();
+            String[] data = new String[5];
+            addMedicineWindow.updateFrame();
+            while(!addMedicineWindow.userResponded) {
+                data = editPrescriptionWindow.getUserInput();
+                // For some reason, we don't exit the loop unless I add this line.
+                System.out.print("");
+            }
             this.appManagerHelpers.addMedicineHelper(data);
             managementSystemFacade.addMedicineToPres(presName, data[0]);
         }
