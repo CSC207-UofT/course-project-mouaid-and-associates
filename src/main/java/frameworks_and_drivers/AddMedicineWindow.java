@@ -4,11 +4,13 @@ import interface_adapters.ObservableFrame;
 import interface_adapters.ScheduleInputWindow;
 import interface_adapters.Window;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import java.util.Scanner;
 
 public class AddMedicineWindow extends Window {
@@ -122,7 +124,7 @@ public class AddMedicineWindow extends Window {
      * @param source
      */
     @Override
-    public void update(ObservableFrame frame, Object source) {
+    public void update(Object source) {
         if (super.buttonResponses.containsKey(source)){
             for (int i = 0; i < 8; i ++){
                 userInput.add(textList.get(i).getText());
@@ -130,6 +132,7 @@ public class AddMedicineWindow extends Window {
 
             super.userResponded = true;
         }
+
 
     }
 

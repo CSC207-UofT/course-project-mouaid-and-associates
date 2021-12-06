@@ -4,7 +4,6 @@ import interface_adapters.ObservableFrame;
 import interface_adapters.PrescriptionWindow;
 import interface_adapters.Window;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -55,11 +54,10 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
     /**
      * Notify the observer of a change
      *
-     * @param frame
      * @param source
      */
     @Override
-    public void update(ObservableFrame frame, Object source) {
+    public void update(Object source) {
         userInput.add(name.getText());
     }
 

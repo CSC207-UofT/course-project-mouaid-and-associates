@@ -89,24 +89,21 @@ public class Schedule implements Serializable {
      *
      * @return  A string representation of the Schedule.
      */
-    @Override
-    public String toString() {
+    public String[] convertToString() {
         Map<String, List<Event>> sortedEvents = sortEvents();
-        StringBuilder scheduleRep = new StringBuilder();
+        List<String> scheduleRep = new ArrayList<>();
         List<String> days = getOrderedEventDays(events);
         for (String day: days){
-            scheduleRep.append(day).append(": \n");
+            scheduleRep.add(day + ":");
             for (Event event: sortedEvents.get(day)){
-                String eventDescription = new String(event.getDescription() + " \n");
+                String eventDescription = new String(event.getDescription() + " ");
                 String eventHour = event.getTime();
                 // Add the strings to the string builder.
-                scheduleRep.append(eventHour);
-                scheduleRep.append(" - ").append(eventDescription);
-
+                scheduleRep.add(eventHour + " - " + eventDescription);
             }
         }
 
-        return scheduleRep.toString();
+        return scheduleRep.toArray(new String[0]);
     }
 
     /**
