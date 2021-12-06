@@ -6,11 +6,8 @@ import interface_adapters.Window;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-
-import java.util.Scanner;
 
 public class AddMedicineWindow extends Window {
     /**
@@ -24,7 +21,8 @@ public class AddMedicineWindow extends Window {
      * - times: represents the times to take the medicine, which is taken from selectTimesWindow
      * - textList: stores all the textboxes that are on the panel
      * - labelList: stores all the labels that are on the panel
-     * - LABELTEXT: represents what will be in the labels and the order they are in
+     * - labelText: represents what will be in the labels and the order they are in
+
      **/
     private ArrayList<String> userInput;
     private SelectTimesWindow selectTimes;
@@ -32,7 +30,7 @@ public class AddMedicineWindow extends Window {
     private String[] times;
     private List<JTextField> textList;
     private List<JLabel> labelList;
-    static String[] LABELTEXT = {"Medicine Name: ", "How are you taking the medicine? ",
+    static String[] labelText = {"Medicine Name: ", "How are you taking the medicine? ",
             "Unit of measurement (e.g. pill, mL, tsp, mg, etc.): ", "Enter the amount as an integer: ",
             "Additional information", "Do you need to take it weekly or daily?",
             "What day of the month would you like to start?",
@@ -64,36 +62,47 @@ public class AddMedicineWindow extends Window {
         String[] returnList = new String[0];
         boolean askedTimes = false;
         while (!(super.userResponded && returnList.length >= 9)){
-            if (super.userResponded && !isNumeric(textList.get(8).getText())) {
+
+            //Ensures that the number of times to ask for the time is an integer
+            if (super.userResponded && !super.checker.isNumeric(textList.get(8).getText())) {
                 super.userResponded = false;
                 labelList.get(8).setForeground(Color.RED);
                 userInput.clear();
             }
 
-            if (super.userResponded && (!isNumeric(textList.get(3).getText()) ||
+            //Ensures that the amount of medicine is an integer
+            if (super.userResponded && (!super.checker.isNumeric(textList.get(3).getText()) ||
                     Integer.parseInt(textList.get(3).getText()) <= 0)){
                 super.userResponded = false;
                 labelList.get(3).setForeground(Color.RED);
                 userInput.clear();
             }
 
-            if (super.userResponded && !isNumeric(textList.get(6).getText())){
-                super.userResponded = false;
-                labelList.get(6).setForeground(Color.RED);
-                userInput.clear();
-            }
-            if (super.userResponded && (!isNumeric(textList.get(7).getText()))){
+            //Ensures that the month is an integer and is a valid one
+            if (super.userResponded && (!super.checker.isNumeric(textList.get(7).getText()) ||
+                    !super.checker.isValidMonth(textList.get(7).getText()))){
                 super.userResponded = false;
                 labelList.get(7).setForeground(Color.RED);
+
                 userInput.clear();
             }
 
-            if (super.userResponded && !textList.get(5).getText().equals("daily") &&
-                    !textList.get(5).getText().equals("weekly")){
+            //Ensures that the day is actually a day of the month
+            if (super.userResponded && (!super.checker.isNumeric(textList.get(6).getText()) ||
+                    !checker.isValidDay(textList.get(6).getText(), textList.get(7).getText()))){
+                super.userResponded = false;
+                labelList.get(6).setForeground(Color.RED);
+
+                userInput.clear();
+            }
+
+            //Ensures that the user selects daily or weekly
+            if (super.userResponded && !checker.isWeekOrDaily(textList.get(5).getText())){
                 super.userResponded = false;
                 labelList.get(5).setForeground(Color.RED);
                 userInput.clear();
             }
+            //If we have not asked the user for times, ask now
             if (super.userResponded && !askedTimes){
                 selectTimes.setNumTimes(Integer.parseInt(textList.get(8).getText()));
                 selectTimes.updateFrame();
@@ -152,7 +161,7 @@ public class AddMedicineWindow extends Window {
             JTextField texts = new JTextField("");
             texts.setSize(200, 50);
             texts.setLocation(100, 100 * i + 100 );
-            JLabel label = new JLabel(LABELTEXT[i]);
+            JLabel label = new JLabel(labelText[i]);
             label.setSize(400, 40);
             label.setLocation(43, 100 * i + 50);
 
@@ -178,7 +187,6 @@ public class AddMedicineWindow extends Window {
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }
 
-
     /**
      * Resets all the text fields to contain an empty string.
      */
@@ -187,18 +195,6 @@ public class AddMedicineWindow extends Window {
             textField.setText("");
         }
     }
-    /**
-     * Checks to see whether str can be converted into a double
-     * @param text what it will check to see if it can be converted to a string
-     * @return Whether the str can be converted to a double
-     */
-    private boolean isNumeric(String text) {
-        try {
-            Double.parseDouble(text);
-            return true;
-        } catch(NumberFormatException e){
-            return false;
-        }
-    }
+
 }
 

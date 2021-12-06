@@ -1,5 +1,6 @@
 package application_business_rules;
 
+import entities.Medicine;
 import entities.User;
 
 import java.time.LocalDateTime;
@@ -74,5 +75,14 @@ public class ManagementSystemMedicine {
         if (!info[0].equals("")){
             userManager.changeMedicineNameInMapping(medName, info[0]);
         }
+    }
+
+    /**
+     * Checks to see if medicineName is a medicine the user has
+     * @param medicineName The name that we want to check
+     * @return Whether it is in the medicine list
+     */
+    public boolean verifyMedicine(String medicineName){
+        return userManager.getMedicineList().containsKey(medicineName);
     }
 }

@@ -22,6 +22,7 @@ public abstract class Window implements FrameObserver{
     private ObservableFrame frame;
     protected Component view;
     protected Map<JButton, String> buttonResponses;
+    public static ValidInputChecker checker = new ValidInputChecker();
 
     // The volatile keyword is used to ensure that multiple threads (in this case the frame
     // and the main program run on separate threads, can use the same object safely.

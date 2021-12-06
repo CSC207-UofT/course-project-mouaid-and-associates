@@ -1,57 +1,52 @@
 package frameworks_and_drivers;
 
 import interface_adapters.ObservableFrame;
-import interface_adapters.PrescriptionWindow;
 import interface_adapters.Window;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-public class AddPrescriptionWindow extends PrescriptionWindow {
-
+public class AddPrescriptionWindow extends Window {
+    /**
+     * This is the window where the user can add a prescription, which groups pre-existing medicine together.
+     *
+     * Instance Attributes:
+     * - name: The text field where the user can put information
+     * - medicineNames: The text field where the user can put the medicine names
+     * - userInput: An ArrayList that stores all of the user's input for the current try
+     * - nameLabel: the label for the name
+     * - medicineNamesLabel: the label for user input
+     *
+     */
     JTextField name;
-    JTextField numMedicine;
+    JTextField medicineNames;
     private ArrayList<String> userInput;
+    private JLabel nameLabel;
+    private JLabel medicineNamesLabel;
+
     public AddPrescriptionWindow(Scanner scanner, ObservableFrame frame){
         super(scanner, frame);
         userInput = new ArrayList<>();
         createView();
     }
 
+    /**
+     * Gets the user input for the current try.
+     * @return An array that represents the name of the prescription in the first index and the medicine names that
+     * should be added to the prescription separated by commas in the second
+     */
     @Override
     public String[] getUserInput() {
-        String[] returnList =  {name.getText()};
+        String[] returnList = new String[2];
+        if (super.userResponded && userInput.size() == 2){
+                returnList[0] = userInput.get(0);
+                returnList[1] = userInput.get(1);
+            }
         return returnList;
     }
 
-    /**
-     * Return the user input on their new prescription.
-     *
-     * Preconditions:
-     *  - addMedicineWindow is an instance of AddMedicineWindow.
-     *
-     * @param addMedicineWindow  The window that allows users to add a medicine
-     * @return   The user's new prescription information.
-     */
-    @Override
-    public List<String[]> getUserPrescriptionInput(Window addMedicineWindow) {
-        AddMedicineWindow medicineWindow = null;
-        // This is always true:
-        if (addMedicineWindow instanceof AddMedicineWindow) {
-            medicineWindow = (AddMedicineWindow) addMedicineWindow;
-        }
-        int accumulator = 0;
-        List<String[]> medicines = new ArrayList<>();
-        while(accumulator != Integer.parseInt(numMedicine.getText())){
-            assert medicineWindow != null;
-            medicines.add(medicineWindow.getUserInput());
-            accumulator += 1;
-        }
-        return medicines;
 
-    }
     /**
      * Notify the observer of a change
      *
@@ -59,40 +54,53 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
      */
     @Override
     public void update(Object source) {
-        userInput.add(name.getText());
+        userInput = new ArrayList<>();
+        if (super.buttonResponses.containsKey(source)){
+            userInput.add(name.getText());
+            userInput.add(medicineNames.getText());
+            super.userResponded = true;
+        }
     }
 
+    /**
+     * Creates the view for this window, which contains a place to enter the name of the prescription and
+     * input the medicine names
+     */
     @Override
     public void createView() {
         JPanel panel = new JPanel();
         panel.setLayout(null);
         super.setPanelSize(panel);
         name = new JTextField("");
-        numMedicine = new JTextField("");
+        medicineNames = new JTextField("");
 
-        JLabel nameLabel = new JLabel("Name of Prescription:");
-        JLabel numMedicineLabel = new JLabel("Number of medicine:");
+        //Create the labels and set the locations
+        nameLabel = new JLabel("Name of Prescription:");
+        medicineNamesLabel = new JLabel("Name of existing medicines. Separate by comma:");
         nameLabel.setSize(200, 40);
         name.setSize(200, 50);
         nameLabel.setLocation(100, 50);
         name.setLocation(100, 100);
 
-        numMedicineLabel.setSize(200, 40);
-        numMedicine.setSize(200, 50);
-        numMedicineLabel.setLocation(100, 150);
-        numMedicine.setLocation(100, 200);
+        medicineNamesLabel.setSize(400, 40);
+        medicineNames.setSize(200, 50);
+        medicineNamesLabel.setLocation(50, 150);
+        medicineNames.setLocation(100, 200);
 
+        //Create a button so that the program knows when they are done and can check and return to the home page
         JButton create = new JButton("Create Medicines");
         create.setLocation(100, 250);
         create.setSize(100, 70);
 
+        //Add the labels and text fields to the panels
         panel.add(name);
         panel.add(nameLabel);
-        panel.add(numMedicineLabel);
-        panel.add(numMedicine);
+        panel.add(medicineNames);
+        panel.add(medicineNamesLabel);
         panel.add(create);
-
         super.buttonResponses.put(create, "0");
+        super.addActionListenerToAllButtons();
+
 
         super.view = panel;
 

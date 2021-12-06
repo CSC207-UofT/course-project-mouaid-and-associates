@@ -27,16 +27,21 @@ public class AppManagerPrescription {
      */
     public String addPrescription(){
         Window addPrescriptionWindow = windows.get("Add Prescription Window");
-        Window addMedicineWindow = windows.get("Add Medicine Window");
-        List<String[]> data = ((PrescriptionWindow) addPrescriptionWindow).getUserPrescriptionInput(addMedicineWindow);
-        List<String> medicinesNames = new ArrayList<>();
-        for(String[] medicine : data){
-            if(medicine.length > 1){
-                this.appManagerHelpers.addMedicineHelper(medicine);
-                medicinesNames.add(medicine[0]);
+        addPrescriptionWindow.updateFrame();
+        String[] inputInfo = new String[2];
+        // Wait until the user has actually responded.
+        List<String> medicinesNamesReturn = new ArrayList<>();
+        while (!addPrescriptionWindow.userResponded) {
+            inputInfo = windows.get("Add Prescription Window").getUserInput();      // Currently, placeholder.
+        }
+        String[] medicineNames = inputInfo[1].split(",");
+        for(String medicine : medicineNames){
+            if(managementSystemFacade.verifyMedicineList(medicine.trim())){
+                medicinesNamesReturn.add(medicine);
             }
         }
-        managementSystemFacade.addNewPrescription(medicinesNames, data.get(0)[0]);
+
+        managementSystemFacade.addNewPrescription(medicinesNamesReturn, inputInfo[0]);
         return "View Account Window";
 
     }
