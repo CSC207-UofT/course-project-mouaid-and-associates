@@ -31,6 +31,11 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
         createView();
     }
 
+    /**
+     * Gets the medicines in the prescription
+     *
+     * @param info the medicines in the prescription
+     */
     public void displayInfo(String[] info) {
         // Also add the list of medicine names as valid inputs to verify user input.
         setValidInputs(Arrays.copyOfRange(info, 0, info.length));
@@ -47,7 +52,7 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
     /**
      * Notify the observer of a change
      *
-     * @param source
+     * @param source the button clicked
      */
     @Override
     public void update(Object source) {
@@ -146,6 +151,12 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
         super.view = panel;
         updateFrame();
     }
+
+    /**
+     * displays medicines as a button
+     *
+     * @param medicines the button clicked
+     */
 
     private void displayRemove(String [] medicines){
         super.buttonResponses.clear();
