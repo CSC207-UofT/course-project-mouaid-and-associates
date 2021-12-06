@@ -73,9 +73,12 @@ public class AppManagerPrescription {
         String[] presList = this.appManagerHelpers.getFormattedList("List of prescriptions to choose from: ",
                 prescriptions, 0, prescriptions.length);
 
+        choosePrescriptionToEditWindow.updateFrame();
+
         if (choosePrescriptionToEditWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) choosePrescriptionToEditWindow).displayInfo(presList);
         }
+
         String presName = choosePrescriptionToEditWindow.getUserInput()[0];
         String[] change = editPrescriptionWindow.getUserInput();
         if(!change[0].equals("")){

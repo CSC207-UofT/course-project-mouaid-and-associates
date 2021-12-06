@@ -90,7 +90,7 @@ public class AddPrescriptionWindow extends Window {
         //Create a button so that the program knows when they are done and can check and return to the home page
         JButton create = new JButton("Create Medicines");
         create.setLocation(100, 250);
-        create.setSize(100, 70);
+        create.setSize(200, 70);
 
         //Add the labels and text fields to the panels
         panel.add(name);
