@@ -46,7 +46,7 @@ public class SelectTimesWindow extends Window {
 
 
     @Override
-    public void update(ObservableFrame frame, Object source) {
+    public void update(Object source) {
         userInput = new ArrayList<>();
         if (super.buttonResponses.containsKey((JButton) source)){
             for (int i = 0; i < numTimes; i++ ){
