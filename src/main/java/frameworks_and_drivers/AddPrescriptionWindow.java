@@ -4,6 +4,7 @@ import interface_adapters.ObservableFrame;
 import interface_adapters.PrescriptionWindow;
 import interface_adapters.Window;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
