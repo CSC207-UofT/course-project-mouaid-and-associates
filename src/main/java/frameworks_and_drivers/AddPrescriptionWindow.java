@@ -76,8 +76,9 @@ public class AddPrescriptionWindow extends Window {
         panel.add(medicineNames);
         panel.add(medicineNamesLabel);
         panel.add(create);
-
         super.buttonResponses.put(create, "0");
+        super.addActionListenerToAllButtons();
+
 
         super.view = panel;
 

@@ -45,6 +45,7 @@ public class AddMedicineWindow extends Window {
     public AddMedicineWindow(Scanner scanner, ObservableFrame frame, SelectTimesWindow selectTimes) {
         super(scanner, frame);
         this.selectTimes = selectTimes;
+        userInput = new ArrayList<>();
         createView();
         times = new String[0];
 
