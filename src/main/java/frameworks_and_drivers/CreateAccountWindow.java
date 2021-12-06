@@ -68,6 +68,7 @@ public class CreateAccountWindow extends Window {
 
 
         super.buttonResponses.put(submit, "1");
+        super.view = panel;
 
         super.addActionListenerToAllButtons();
 

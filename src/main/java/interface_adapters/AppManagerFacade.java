@@ -13,7 +13,6 @@ public class AppManagerFacade {
      * - windows: A mapping of a string name for a window to a Window object.
      * - accounts: A mapping of usernames to passwords. Will likely be changed to be stored in a database
      *             in the future.
-     * - DAYS: A string array of the days of the week.
      *
      * Representation Invariants:
      * - The keys of windows are {"Login Window", "Create Account Window", "Start Screen Window",
@@ -28,8 +27,6 @@ public class AppManagerFacade {
 
     private ManagementSystemFacade managementSystemFacade;
     private Map<String, Window> windows;
-    private static final String[] DAYS = new String[]{"Monday", "Tuesday", "Wednesday",
-    "Thursday", "Friday", "Saturday", "Sunday"};
     private AppManagerActivitySetter appManagerActivitySetter;
     private AppManagerMedicine appManagerMedicine;
     private AppManagerPrescription appManagerPrescription;
