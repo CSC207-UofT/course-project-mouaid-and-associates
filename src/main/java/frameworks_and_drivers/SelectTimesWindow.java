@@ -69,7 +69,7 @@ public class SelectTimesWindow extends Window {
             // Only when we have a valid number of inputs do
             // we get all the user input.
             //Checks to see if the input is valid
-            System.out.println("");
+            System.out.print("");
             if (super.userResponded && userInput.size() == numTimes){
                 for (int i = 0; i < numTimes; i++){
                     if(!super.checker.isValidTime(userInput.get(i))){
