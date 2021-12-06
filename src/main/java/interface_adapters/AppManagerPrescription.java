@@ -27,16 +27,21 @@ public class AppManagerPrescription {
      */
     public String addPrescription(){
         Window addPrescriptionWindow = windows.get("Add Prescription Window");
-        Window addMedicineWindow = windows.get("Add Medicine Window");
-        List<String[]> data = ((PrescriptionWindow) addPrescriptionWindow).getUserPrescriptionInput(addMedicineWindow);
-        List<String> medicinesNames = new ArrayList<>();
-        for(String[] medicine : data){
-            if(medicine.length > 1){
-                this.appManagerHelpers.addMedicineHelper(medicine);
-                medicinesNames.add(medicine[0]);
+        addPrescriptionWindow.updateFrame();
+        String[] inputInfo = new String[2];
+        // Wait until the user has actually responded.
+        List<String> medicinesNamesReturn = new ArrayList<>();
+        while (!addPrescriptionWindow.userResponded) {
+            inputInfo = windows.get("Add Prescription Window").getUserInput();      // Currently, placeholder.
+        }
+        String[] medicineNames = inputInfo[1].split(",");
+        for(String medicine : medicineNames){
+            if(managementSystemFacade.verifyMedicineList(medicine.trim())){
+                medicinesNamesReturn.add(medicine);
             }
         }
-        managementSystemFacade.addNewPrescription(medicinesNames, data.get(0)[0]);
+
+        managementSystemFacade.addNewPrescription(medicinesNamesReturn, inputInfo[0]);
         return "View Account Window";
 
     }
@@ -46,8 +51,15 @@ public class AppManagerPrescription {
      */
     public String removePrescription(){
         Window removePrescriptionWindow = windows.get("Remove Prescription Window");
-        String[] data = removePrescriptionWindow.getUserInput();
-        managementSystemFacade.removePrescription(data[0]);
+        // Change the view of the screen.
+        removePrescriptionWindow.updateFrame();
+
+        String[] inputInfo = new String[1];
+        // Wait until the user has actually responded.
+        while (!removePrescriptionWindow.userResponded) {
+            inputInfo = windows.get("Remove Prescription Window").getUserInput();      // Currently, placeholder.
+        }
+        managementSystemFacade.removePrescription(inputInfo[0]);
         return "View Account Window";
     }
 
@@ -64,18 +76,40 @@ public class AppManagerPrescription {
         if (choosePrescriptionToEditWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) choosePrescriptionToEditWindow).displayInfo(presList);
         }
+        choosePrescriptionToEditWindow.updateFrame();
         String presName = choosePrescriptionToEditWindow.getUserInput()[0];
-        String[] change = editPrescriptionWindow.getUserInput();
+
+        String[] prescription_meds = managementSystemFacade.getPrescription(presName).getPresMedicines();
+        if (choosePrescriptionToEditWindow instanceof DisplayEntityInformation){
+            ((DisplayEntityInformation) editPrescriptionWindow).displayInfo(prescription_meds);
+        }
+
+        editPrescriptionWindow.updateFrame();
+        String[] change = new String[3];
+
+        while(!editPrescriptionWindow.userResponded) {
+            change = editPrescriptionWindow.getUserInput();
+            // For some reason, we don't exit the loop unless I add this line.
+            System.out.print("");
+        }
         if(!change[0].equals("")){
             managementSystemFacade.changePrescriptionName(presName, change[0]);
         }else if(!change[1].equals("")){
             managementSystemFacade.removeMedicineFromPres(presName, change[1]);
-            String[] medToRemove = new String[1];
-            medToRemove[0] = change[1];
-            managementSystemFacade.removeMedicines(medToRemove);
+            for(String med : change) {
+                String[] medToRemove = new String[1];
+                medToRemove[0] = med;
+                managementSystemFacade.removeMedicines(medToRemove);
+            }
         }else if(!change[2].equals("")){
             Window addMedicineWindow = windows.get("Add Medicine Window");
-            String[] data = addMedicineWindow.getUserInput();
+            String[] data = new String[5];
+            addMedicineWindow.updateFrame();
+            while(!addMedicineWindow.userResponded) {
+                data = editPrescriptionWindow.getUserInput();
+                // For some reason, we don't exit the loop unless I add this line.
+                System.out.print("");
+            }
             this.appManagerHelpers.addMedicineHelper(data);
             managementSystemFacade.addMedicineToPres(presName, data[0]);
         }

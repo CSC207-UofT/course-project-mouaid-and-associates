@@ -40,19 +40,26 @@ public class AppManagerMedicine {
         String[] medList = this.appManagerHelpers.getFormattedList("List of medicines to choose from: ", bigList,
                 2, bigList.length);
         // First, instantiate a variable to store the name of the medicine the user would like to remove.
-        String medName;
+        String medName = "";
         String[] medInfo;
         String[] changes; // Represents the changes the user wants to make.
         List<LocalDateTime> newTimes = new ArrayList<>();
 
         // Check if ChooseMedicineToEditWindow is an instance of DisplayEntityInformation to print
         // out the list of medicine names, like in removeMedicine()
+
+        // Update the view on the frame.
+        chooseMedicineToEditWindow.updateFrame();
+
         if (chooseMedicineToEditWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) chooseMedicineToEditWindow).displayInfo(medList);
         }
 
+        // Get the medicine the user wants to edit.
+        while (!chooseMedicineToEditWindow.userResponded) {
+            medName = chooseMedicineToEditWindow.getUserInput()[0];
+        }
 
-        medName = chooseMedicineToEditWindow.getUserInput()[0];
 
         medInfo = managementSystemFacade.getMedicineInfo(medName);
 
@@ -93,12 +100,17 @@ public class AppManagerMedicine {
         if (removeMedWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) removeMedWindow).displayInfo(infoToPrint);
         }
+        // Change the view of the screen.
+        removeMedWindow.updateFrame();
 
-        // Get the list of medicine names the user wants to remove
-        String[] inputs = removeMedWindow.getUserInput();
+        String[] inputInfo = new String[1];
+        // Wait until the user has actually responded.
+        while (!removeMedWindow.userResponded) {
+            inputInfo = windows.get("Remove Medicine Window").getUserInput();      // Currently, placeholder.
+        }
 
         // Call management system to remove the medicines
-        managementSystemFacade.removeMedicines(inputs);
+        managementSystemFacade.removeMedicines(inputInfo);
 
         // go back to the account page.
         return "View Account Window";

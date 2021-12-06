@@ -146,6 +146,7 @@ public class EditMedicineWindow extends Window implements DisplayEntityInformati
         for (JLabel prevInfo: infoOfMed){
             panel.remove(prevInfo);
         }
+        infoOfMed.clear();
     }
 
     /**
@@ -303,6 +304,9 @@ public class EditMedicineWindow extends Window implements DisplayEntityInformati
      */
     private void resetTextFields(){
         for (JTextField textField: changes){
+            textField.setText("");
+        }
+        for (JTextField textField: timesInput){
             textField.setText("");
         }
     }

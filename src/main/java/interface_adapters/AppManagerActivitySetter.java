@@ -3,6 +3,7 @@ package interface_adapters;
 import application_business_rules.ManagementSystemFacade;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,9 @@ public class AppManagerActivitySetter {
         // Call SetSleepTimingsWindow to display the fields to enter the sleep and wakeup times
         Window setSleepTimingsWindow = windows.get("Set Sleep Timings Window");
 
+        // Update the view of the frame
+        setSleepTimingsWindow.updateFrame();
+
         String[] stringTimings = setSleepTimingsWindow.getUserInput();
 
         String sleepTime = stringTimings[0];
@@ -50,12 +54,11 @@ public class AppManagerActivitySetter {
         // Call SetMealTimingsWindow to display the fields to enter the Meal times
         Window setMealTimingsWindow = windows.get("Set Meal Timings Window");
 
-        String[] stringTimings = setMealTimingsWindow.getUserInput();
-        List<String> times = new ArrayList<>();
+        setMealTimingsWindow.updateFrame();
 
-        for (String timings: stringTimings){
-            times.add(timings);
-        }
+        String[] stringTimings = setMealTimingsWindow.getUserInput();
+
+        List<String> times = new ArrayList<>(Arrays.asList(stringTimings));
 
         this.managementSystemFacade.setMealTimes(times);
 
