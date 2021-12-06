@@ -76,6 +76,7 @@ public class AppManagerPrescription {
         if (choosePrescriptionToEditWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) choosePrescriptionToEditWindow).displayInfo(presList);
         }
+        choosePrescriptionToEditWindow.updateFrame();
         String presName = choosePrescriptionToEditWindow.getUserInput()[0];
 
         String[] prescription_meds = managementSystemFacade.getPrescription(presName).getPresMedicines();
