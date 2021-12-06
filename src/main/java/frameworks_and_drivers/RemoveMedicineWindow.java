@@ -53,7 +53,7 @@ public class RemoveMedicineWindow extends Window implements DisplayEntityInforma
      * @param source
      */
     @Override
-    public void update(ObservableFrame frame, Object source) {
+    public void update(Object source) {
         if (super.buttonResponses.containsKey(source)){
             super.userResponded = true;
             userInput[0] = presName.getText();

@@ -81,7 +81,18 @@ public class Event implements Comparable<Event>, Serializable {
      * @return  The hour this event takes place.
      */
     public String getTime(){
-        return timeStamp.getHour() + ":" + timeStamp.getMinute();
+
+        String hour = Integer.toString(timeStamp.getHour());
+        String minute = Integer.toString(timeStamp.getMinute());
+        if (hour.length() == 1){
+            hour = "0" + hour;
+        }
+        if (minute.length() == 1){
+            minute = "0" + minute;
+        }
+        return hour + ":" +     minute;
+
+
     }
 
     /**
