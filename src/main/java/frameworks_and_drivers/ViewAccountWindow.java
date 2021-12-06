@@ -6,6 +6,8 @@ import interface_adapters.Window;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ViewAccountWindow extends Window implements DisplayEntityInformation {
@@ -14,7 +16,7 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
     private static final int OFFSET_Y = 120;
     private final String[] userInput;
     private final JPanel panel;
-    private static int info_count;
+    private List<JLabel> displayedInfo;
 
 
     public ViewAccountWindow(Scanner scanner, ObservableFrame frame) {
@@ -22,6 +24,7 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
         panel = new JPanel();
         userInput = new String[1];
         createView();
+        displayedInfo = new ArrayList<>();
     }
 
     /**
@@ -92,6 +95,10 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
         label1.setFont(new Font("Serif", Font.PLAIN, 28));
         panel.add(label1);
 
+        if (!displayedInfo.isEmpty()){
+            removeInfo();
+        }
+
         int j = 0;
         for (String pieceOfInfo : info) {
             JLabel label = new JLabel();
@@ -101,7 +108,18 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
             j++;
 
             panel.add(label);
+            displayedInfo.add(label);
         }
+    }
+
+    /**
+     * Removes old pieces of info from the window.
+     */
+    public void removeInfo(){
+        for (JLabel label: displayedInfo){
+            panel.remove(label);
+        }
+        displayedInfo.clear();
     }
 
     /**

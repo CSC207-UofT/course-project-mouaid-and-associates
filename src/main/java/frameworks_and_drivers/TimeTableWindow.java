@@ -79,6 +79,9 @@ public class TimeTableWindow extends Window implements DisplayEntityInformation 
      * Removes the old info from this window.
      */
     private void removeOldInfo(){
+        for (JLabel label: currentSchedule){
+            panel.remove(label);
+        }
         currentSchedule.clear();
     }
 
