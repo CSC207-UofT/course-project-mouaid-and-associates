@@ -146,6 +146,7 @@ public class EditMedicineWindow extends Window implements DisplayEntityInformati
         for (JLabel prevInfo: infoOfMed){
             panel.remove(prevInfo);
         }
+        infoOfMed.clear();
     }
 
     /**
