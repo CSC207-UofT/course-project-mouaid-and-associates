@@ -73,13 +73,13 @@ public class RemoveMedicineWindow extends Window implements DisplayEntityInforma
 
         presLabel = new JLabel("Name of the medicine to be removed: ");
         presLabel.setSize(400, 50);
-        presLabel.setLocation(10,50);
+        presLabel.setLocation(93,50);
         presName = new JTextField();
-        presName.setSize(100, 50);
-        presName.setLocation(10, 110);
+        presName.setSize(300, 50);
+        presName.setLocation(93, 110);
         submit = new JButton("Submit");
-        submit.setSize(100, 50);
-        submit.setLocation(10, 170);
+        submit.setSize(300, 50);
+        submit.setLocation(93, 170);
 
 
         panel.add(presLabel);

@@ -118,7 +118,7 @@ public class SelectTimesWindow extends Window {
 
         JButton saveButton = new JButton("SAVE AND RETURN TO ACCOUNT PAGE");
         saveButton.setSize(400, 70);
-        saveButton.setLocation(100, numTimes * 150 + 150);
+        saveButton.setLocation(43, numTimes * 150 + 150);
         panel.add(saveButton);
         // Add the button to the button map.
         super.buttonResponses.put(saveButton, "0");

@@ -76,7 +76,8 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
         super.addActionListenerToAllButtons();
 
         // Set the view for this window.
-        super.view = panel;
+        super.view = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
     }
     /**
@@ -109,6 +110,10 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
             panel.add(label);
             displayedInfo.add(label);
         }
+
+        panel.setPreferredSize(new Dimension(486, OFFSET_Y + 390 + 30 * j + 25));
+        super.view.revalidate();
+        super.view.repaint();
     }
 
     /**

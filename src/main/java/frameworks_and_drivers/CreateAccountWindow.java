@@ -46,18 +46,18 @@ public class CreateAccountWindow extends Window {
         super.setPanelSize(panel);
 
         name = new JTextField("Name");       // A text box.
-        name.setSize(100, 50);
-        name.setLocation(100,100);
+        name.setSize(400, 50);
+        name.setLocation(43,100);
         userName = new JTextField("Username");
-        userName.setSize(100, 50);
-        userName.setLocation(100, 200);
+        userName.setSize(400, 50);
+        userName.setLocation(43, 200);
         password = new JTextField("Password");
-        password.setSize(100, 50);
-        password.setLocation(100, 300);
+        password.setSize(400, 50);
+        password.setLocation(43, 300);
 
         JButton submit = new JButton("Submit");
-        submit.setSize(100, 100);
-        submit.setLocation(100, 400);
+        submit.setSize(400, 100);
+        submit.setLocation(43, 400);
 
 
         panel.add(name);

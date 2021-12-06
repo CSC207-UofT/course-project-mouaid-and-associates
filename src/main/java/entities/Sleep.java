@@ -33,20 +33,20 @@ public class Sleep extends OtherActivities {
                 appendDay = String.valueOf(appendTo.getDayOfMonth());
                 appendMonth = String.valueOf(appendTo.getMonthValue());
                 appendYear = String.valueOf(appendTo.getYear());
-                for (String time : this.times) {
-                    if (appendDay.length() == 1) {
-                        appendDay = "0" + appendDay;
-                    }
-                    if (appendMonth.length() == 1) {
-                        appendMonth = "0" + appendMonth;
-                    }
 
-                    // Add the events to the schedule.
-                    schedule.addEvent("Sleep Time", "When you sleep",
-                            LocalDateTime.parse(appendYear + "-" + appendMonth + "-" + appendDay + "T" + times.get(0)));
-                    schedule.addEvent("Wake Up Time", "When you wake up",
-                            LocalDateTime.parse(appendYear + "-" + appendMonth + "-" + appendDay + "T" + times.get(1)));
+                if (appendDay.length() == 1) {
+                    appendDay = "0" + appendDay;
                 }
+                if (appendMonth.length() == 1) {
+                    appendMonth = "0" + appendMonth;
+                }
+
+                // Add the events to the schedule.
+                schedule.addEvent("Sleep Time", "When you sleep",
+                        LocalDateTime.parse(appendYear + "-" + appendMonth + "-" + appendDay + "T" + times.get(0)));
+                schedule.addEvent("Wake Up Time", "When you wake up",
+                        LocalDateTime.parse(appendYear + "-" + appendMonth + "-" + appendDay + "T" + times.get(1)));
+
             }
         }
 

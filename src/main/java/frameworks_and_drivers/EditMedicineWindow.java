@@ -236,7 +236,7 @@ public class EditMedicineWindow extends Window implements DisplayEntityInformati
         }
 
         // Create the button to return to edit medicine.
-        Font buttonFont = new Font("SansSerif", Font.BOLD, 13);
+        Font buttonFont = new Font("SansSerif", Font.BOLD, 10);
         JButton saveButton = new JButton("SAVE AND RETURN TO ACCOUNT PAGE");
         saveButton.setFont(buttonFont);
         saveButton.setSize(200, 70);

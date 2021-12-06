@@ -176,7 +176,6 @@ public class EditPrescriptionWindow extends Window implements DisplayEntityInfor
 
         int i = 1;
         for (String pieceOfInfo : medicines){
-            System.out.println(pieceOfInfo);
 
             JButton button = new JButton(pieceOfInfo);
             button.setSize(152, 90);
