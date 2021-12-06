@@ -76,13 +76,14 @@ public class AppManagerPresenters {
 
         // Update the frame to show the new view
 
+
         if (viewAccountWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) viewAccountWindow).displayInfo(formattedUserInfo);
         }
         viewAccountWindow.updateFrame();
 
-        viewAccountWindow.updateFrame();
-        String choice = new String();
+
+        String choice = "";
         while(!viewAccountWindow.userResponded) {      // Keep asking for userInput until we get something.
             choice = viewAccountWindow.getUserInput()[0];
 

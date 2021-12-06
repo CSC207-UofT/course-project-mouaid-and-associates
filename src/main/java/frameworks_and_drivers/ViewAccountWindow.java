@@ -107,7 +107,6 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
         label1.setFont(new Font("Serif", Font.PLAIN, 28));
         panel.add(label1);
 
-
         int j = 0;
         for (String pieceOfInfo : info) {
             JLabel label = new JLabel();
@@ -117,11 +116,7 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
             j++;
 
             panel.add(label);
-            //System.out.println(info_count);
         }
-
-
-
     }
 
     @Override

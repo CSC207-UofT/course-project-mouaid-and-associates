@@ -58,31 +58,28 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
         if (super.buttonResponses.containsKey((JButton) source)){
             String text = ((JButton) source).getText();
             if (text.equals("Name of the prescription")) {
-                    displayEditName();
-                }
+                displayEditName();
+            }
             else if (text.equals("Remove a medicine from the prescription")){
-                    displayRemove(validInputs);
-                    //userInput[1] = ((JButton) source).getText();
-                    change.set(1, "remove");
-                }
+                displayRemove(validInputs);
+                //userInput[1] = ((JButton) source).getText();
+                change.set(1, "remove");
+            }
             else if (text.equals( "Add a medicine to this prescription") ){
                 change.set(2, "Add Medicine");
             }
             else if (text.equals("Go back to the account page")) {
-                    userResponded = true;
-
-                }
-           else if (text.equals("Send")) {
-                    //userInput[0] = name2.getText();
-                    change.set(0, name2.getText());
-                    userResponded = true;
-                }
-           else{
+                userResponded = true;
+            }
+            else if (text.equals("Send")) {
+                //userInput[0] = name2.getText();
+                change.set(0, name2.getText());
+                userResponded = true;
+            } else {
                 change.add(text);
                 ((JButton) source).setBackground(Color.RED);
                 ((JButton) source).setOpaque(true);
-                updateFrame();
-
+                this.updateFrame();
             }
         }
     }
