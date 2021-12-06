@@ -24,7 +24,6 @@ public class SelectTimesWindow extends Window {
     private List<String> userInput;
     private int numTimes;
     private List<JTextField> textFields;
-
     public SelectTimesWindow(Scanner scanner, ObservableFrame frame){
         super(scanner,frame);
         // Rather than creating a view at the beginning, we will create a view
@@ -44,9 +43,12 @@ public class SelectTimesWindow extends Window {
         createView();
     }
 
-
+    /**
+     * Updates the text field
+     * @param source The source that causes the update
+     */
     @Override
-    public void update(ObservableFrame frame, Object source) {
+    public void update(Object source) {
         userInput = new ArrayList<>();
         if (super.buttonResponses.containsKey((JButton) source)){
             for (int i = 0; i < numTimes; i++ ){
@@ -56,6 +58,10 @@ public class SelectTimesWindow extends Window {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String[] getUserInput() {
         String[] returnList = new String[numTimes];
@@ -66,7 +72,7 @@ public class SelectTimesWindow extends Window {
             //Checks to see if the input is valid
             if (super.userResponded && userInput.size() == numTimes){
                 for (int i = 0; i < numTimes; i++){
-                    if(!isValidTime(userInput.get(i))){
+                    if(!super.checker.isValidTime(userInput.get(i))){
                         super.userResponded = false;
                         textFields.get(i).setForeground(Color.RED);
                         userInput = new ArrayList<>();
@@ -97,7 +103,6 @@ public class SelectTimesWindow extends Window {
         panel = new JPanel();
         panel.setLayout(null);
         super.setPanelSize(panel);
-
         for (int i = 1; i < numTimes + 1; i++ ){
             JLabel timesLabel = new JLabel("For the " + i + "'st time what time do you need to take it? " +
                     "Enter in form XX:XX");
@@ -123,43 +128,6 @@ public class SelectTimesWindow extends Window {
 
         super.view = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-    }
-
-
-    /**
-     * Checks to see whether str can be converted into a double
-     * @param str what it will check to see if it can be converted to a string
-     * @return Whether the str can be converted to a double
-     */
-    protected boolean isNumeric(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch(NumberFormatException e){
-            return false;
-        }
-    }
-
-    /**
-     * Checks to see if the user inputted time correctly
-     * @param time a string given that should represent the time
-     * @return Whether time is of the right format
-     */
-    public boolean isValidTime(String time){
-        if (time.length() != 5 || !isNumeric(String.valueOf(time.charAt(0))) ||
-                !isNumeric(String.valueOf(time.charAt(1))) || !isNumeric(String.valueOf(time.charAt(3))) ||
-                !isNumeric(String.valueOf(time.charAt(4))) || time.charAt(2) != ':'){
-            return false;
-        }
-        else if (Character.getNumericValue(time.charAt(0)) * 10 + Character.getNumericValue(time.charAt(1)) >= 24 ||
-                Character.getNumericValue(time.charAt(3)) * 10 + Character.getNumericValue(time.charAt(4)) > 59){
-            return false;
-        }
-        else{
-            return true;
-        }
-
 
     }
 

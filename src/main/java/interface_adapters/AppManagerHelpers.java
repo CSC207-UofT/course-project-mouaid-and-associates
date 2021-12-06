@@ -4,6 +4,7 @@ import application_business_rules.ManagementSystemFacade;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class AppManagerHelpers {
@@ -12,10 +13,25 @@ public class AppManagerHelpers {
      */
 
     private ManagementSystemFacade managementSystemFacade;
+    static HashMap<String, Integer> monthNumDays;
 
     public AppManagerHelpers(ManagementSystemFacade managementSystemFacade){
         this.managementSystemFacade = managementSystemFacade;
+        monthNumDays = new HashMap<>();
+        monthNumDays.put("1", 31);
+        monthNumDays.put("2", 28);
+        monthNumDays.put("3", 31);
+        monthNumDays.put("4", 30);
+        monthNumDays.put("5", 31);
+        monthNumDays.put("6", 30);
+        monthNumDays.put("7", 31);
+        monthNumDays.put("8", 31);
+        monthNumDays.put("9", 30);
+        monthNumDays.put("10", 31);
+        monthNumDays.put("11", 30);
+        monthNumDays.put("12", 31);
     }
+
     public void addMedicineHelper(String[] data) {
         String name = data[0];
         String methodOfAdmin = data[1];
@@ -49,16 +65,31 @@ public class AppManagerHelpers {
      */
     public void formatTimes(String[] data, String wOrD, String startDay, String startMonth, List<LocalDateTime> times) {
         for(int i = 0; i < (data.length - 8); i++) {
-            if (startDay.length() == 1){
-                startDay = "0" + startDay;
-            }
             if (wOrD.equals("weekly")) {
+                if (startDay.length() == 1){
+                    startDay = "0" + startDay;
+                }
+                if (startMonth.length() == 1){
+                    startMonth = "0" + startMonth;
+                }
                 times.add(LocalDateTime.parse("2021-" + startMonth + "-" + startDay + "T" +  data[i + 8]));
-            } else {
+            }
+            else {
+                //Negate adding one in the for loop the first time
+                startDay = Integer.toString(Integer.parseInt(startDay) - 1);
                 for (int j = 0; j <8; j++) {
                     startDay = Integer.toString(Integer.parseInt(startDay) + 1);
+                    //Need to remove a 0 if there is one
+                    startMonth = Integer.toString(Integer.parseInt(startMonth));
+                    if (monthNumDays.get(startMonth) < Integer.parseInt(startDay) ){
+                        startDay = Integer.toString(Integer.parseInt(startDay) - monthNumDays.get(startMonth));
+                        startMonth = Integer.toString(Integer.parseInt(startMonth) + 1);
+                    }
                     if (startDay.length() == 1){
                         startDay = "0" + startDay;
+                    }
+                    if (startMonth.length() == 1){
+                        startMonth = "0" + startMonth;
                     }
                     times.add(LocalDateTime.parse("2021-" + startMonth + "-" + startDay + "T" +  data[i + 8]));
                 }
