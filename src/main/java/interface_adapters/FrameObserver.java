@@ -6,5 +6,5 @@ public interface FrameObserver {
     /**
      * Notify the observer of a change
      */
-    void update(ObservableFrame frame, Object source);
+    void update(Object source);
 }

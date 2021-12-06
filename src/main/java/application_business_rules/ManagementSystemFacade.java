@@ -3,7 +3,6 @@ package application_business_rules;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import entities.Medicine;
 import entities.Schedule;
 import entities.User;
 import entities.PrescriptionMedicine;
@@ -105,11 +104,11 @@ public class ManagementSystemFacade {
      * Uses the userManager to get a list of medicines and merges it with the master schedule
      * @return the compiled schedule.
      */
-    public String makeSchedule(){
+    public String[] makeSchedule(){
       
         List<Schedule> scheduleList = userManager.getSchedules();
 
-        return scheduleManager.compileSchedule(scheduleList).toString();
+        return scheduleManager.compileSchedule(scheduleList).convertToString();
     }
 
     /** Creates a new instance of Medicine. Takes in the parameters necessary

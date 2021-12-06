@@ -56,6 +56,9 @@ public class AppManagerMedicine {
 
         medInfo = managementSystemFacade.getMedicineInfo(medName);
 
+        // Update the view of the app.
+        editMedicineWindow.updateFrame();
+
         if (editMedicineWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) editMedicineWindow).displayInfo(medInfo);
         }
