@@ -124,6 +124,7 @@ public class AddMedicineWindow extends Window {
             }
         }
         resetTextFields();
+        userInput.clear();
         return returnList;
     }
 
