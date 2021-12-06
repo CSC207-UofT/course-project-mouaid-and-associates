@@ -48,6 +48,7 @@ public abstract class Window implements FrameObserver{
         // Update Frame is called when we want to update the window.
         // Thus we should reset userResponed so that we can get user
         // input again.
+
         userResponded = false;
     }
 
@@ -79,6 +80,7 @@ public abstract class Window implements FrameObserver{
             }
         }
     }
+
 }
 
 

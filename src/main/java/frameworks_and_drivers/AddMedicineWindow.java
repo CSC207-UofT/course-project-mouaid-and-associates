@@ -2,16 +2,52 @@ package frameworks_and_drivers;
 
 import interface_adapters.ObservableFrame;
 import interface_adapters.ScheduleInputWindow;
+import interface_adapters.Window;
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import java.util.Scanner;
 
-public class AddMedicineWindow extends ScheduleInputWindow {
-    /*
-     * The window that displays the Add a Medicine page.
-     */
+public class AddMedicineWindow extends Window {
+    /**
+     * The window that displays the add a Medicine page. It allows the user to input details about a medicine
+     * then it calls SelectTimesWindow to select the times for the medicine.
+     *
+     * Instance Attributes:
+     * - userInput: A list storing the user's responses
+     * - selectTimes: The selectTimes window that is called to get the times for the medicine
+     * - inputTimes: The button that is pressed to move to the selectTimesWindow
+     * - times: represents the times to take the medicine, which is taken from selectTimesWindow
+     * - textList: stores all the textboxes that are on the panel
+     * - labelList: stores all the labels that are on the panel
+     * - LABELTEST: represents what will be in the labels and the order they are in
+     **/
+    private ArrayList<String> userInput;
+    private SelectTimesWindow selectTimes;
+    private JButton inputTimes;
+    private String[] times;
+    private List<JTextField> textList;
+    private List<JLabel> labelList;
+    static String[] LABELTEXT = {"Medicine Name: ", "How are you taking the medicine? ",
+            "Unit of measurement (e.g. pill, mL, tsp, mg, etc.): ", "Enter the amount as an integer: ",
+            "Additional information", "Do you need to take it weekly or daily?",
+            "What day of the month would you like to start?",
+            "What month would you like to start? Input a number, like 1 for January",
+            "How many times do you need to take this medicine?"
+    };
 
-    public AddMedicineWindow(Scanner scanner, ObservableFrame frame) {
+
+    public AddMedicineWindow(Scanner scanner, ObservableFrame frame, SelectTimesWindow selectTimes) {
         super(scanner, frame);
+        this.selectTimes = selectTimes;
+        createView();
+        times = new String[0];
+
     }
 
     /**
@@ -25,41 +61,60 @@ public class AddMedicineWindow extends ScheduleInputWindow {
      */
     @Override
     public String[] getUserInput() {
-        // Ask the user for all the different values
-        System.out.println("What medicine do you want to take?");
-        String name = scanner.nextLine();
+        String[] returnList = new String[0];
+        boolean askedTimes = false;
+        while (!(super.userResponded && returnList.length >= 9)){
+            if (super.userResponded && !isNumeric(textList.get(8).getText())) {
+                super.userResponded = false;
+                labelList.get(8).setForeground(Color.RED);
+                userInput = new ArrayList<>();
+            }
 
-        System.out.println("How are you taking the medicine");
-        String methodOfAdministration = scanner.nextLine();
+            if (super.userResponded && (!isNumeric(textList.get(3).getText()) ||
+                    Integer.parseInt(textList.get(3).getText()) <= 0)){
+                super.userResponded = false;
+                labelList.get(3).setForeground(Color.RED);
+                userInput = new ArrayList<>();
+            }
 
-        System.out.println("What is the unit of measurement (e.g. pill, mL, tsp, mg, etc.)");
-        String unitOfMeasurement = scanner.nextLine();
+            if (super.userResponded && !isNumeric(textList.get(6).getText())){
+                super.userResponded = false;
+                labelList.get(6).setForeground(Color.RED);
+                userInput = new ArrayList<>();
+            }
+            if (super.userResponded && (!isNumeric(textList.get(7).getText()))){
+                super.userResponded = false;
+                labelList.get(7).setForeground(Color.RED);
+                userInput = new ArrayList<>();
+            }
 
-        System.out.println("How much medicine do you need to take each time, using the unit entered before");
-        String amount = scanner.nextLine();
+            if (super.userResponded && !textList.get(5).getText().equals("daily") &&
+                    !textList.get(5).getText().equals("weekly")){
+                super.userResponded = false;
+                labelList.get(5).setForeground(Color.RED);
+                userInput = new ArrayList<>();
+            }
+            if (super.userResponded && !askedTimes){
+                selectTimes.setNumTimes(Integer.parseInt(textList.get(8).getText()));
+                selectTimes.updateFrame();
+                times = selectTimes.getUserInput();
+                askedTimes = true;
+            }
 
-        System.out.println("Are there any additional instructions that should be noted?");
-        String extra = scanner.nextLine();
+            // Only when we have a valid number of inputs do
+            // we get all the user input.
+            if (userInput.size() >= 8 && askedTimes) {
 
-        String wdm = super.selectWD(scanner); // Weekly, daily
-        String startDay = selectDay(scanner);
-        String startMonth = selectMonth(scanner);
-        String[] times = super.getTimes(scanner);
-        String[] returnList = new String[8 + times.length];
-
-        // Format it to a specific order according to the documentation.
-        returnList[0] = name;
-        returnList[1] = methodOfAdministration;
-        returnList[2] = unitOfMeasurement;
-        returnList[3] = amount;
-        returnList[4] = extra;
-        returnList[5] = wdm;
-        returnList[6] = startDay;
-        returnList[7] = startMonth;
-        for (int i = 8; i < (times.length + 8); i++){
-            returnList[i] = times[i - 8];
+                returnList = new String[times.length + userInput.size()];
+                for (int i = 0; i < userInput.size(); i++){
+                    returnList[i] = userInput.get(i);
+                }
+                for (int i = userInput.size(); i < userInput.size() + times.length; i++){
+                    returnList[i] = times[i - userInput.size()];
+                }
+            }
         }
-
+        resetTextFields();
         return returnList;
     }
 
@@ -70,12 +125,80 @@ public class AddMedicineWindow extends ScheduleInputWindow {
      */
     @Override
     public void update(Object source) {
+        if (super.buttonResponses.containsKey(source)){
+            for (int i = 0; i < 8; i ++){
+                userInput.add(textList.get(i).getText());
+            }
+
+            super.userResponded = true;
+        }
+
 
     }
 
+    /**
+     * Creates the panel where it asks users to input times
+     */
     @Override
     public void createView() {
+        // Create a new panel
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
 
+        textList = new ArrayList<>();
+        labelList = new ArrayList<>();
+        //Create the text boxes and labels and store them
+        for (int i = 0; i < 9; i++){
+            JTextField texts = new JTextField("");
+            texts.setSize(200, 50);
+            texts.setLocation(100, 100 * i + 100 );
+            JLabel label = new JLabel(LABELTEXT[i]);
+            label.setSize(400, 40);
+            label.setLocation(43, 100 * i + 50);
+
+
+            textList.add(texts);
+            panel.add(texts);
+            labelList.add(label);
+            panel.add(label);
+        }
+
+        //Create the button
+        inputTimes = new JButton("Input Times");
+        inputTimes.setLocation(100, 970);
+        inputTimes.setSize(100, 70);
+        panel.add(inputTimes);
+
+
+
+        super.buttonResponses.put(inputTimes, "0");
+        super.addActionListenerToAllButtons();
+        panel.setPreferredSize(new Dimension(486, 1080));
+        super.view = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    }
+
+
+    /**
+     * Resets all the text fields to contain an empty string.
+     */
+    private void resetTextFields(){
+        for (JTextField textField: textList){
+            textField.setText("");
+        }
+    }
+    /**
+     * Checks to see whether str can be converted into a double
+     * @param text what it will check to see if it can be converted to a string
+     * @return Whether the str can be converted to a double
+     */
+    private boolean isNumeric(String text) {
+        try {
+            Double.parseDouble(text);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
 }
 
