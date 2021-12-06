@@ -22,6 +22,7 @@ public class AddMedicineWindow extends Window {
      * - textList: stores all the textboxes that are on the panel
      * - labelList: stores all the labels that are on the panel
      * - labelText: represents what will be in the labels and the order they are in
+
      **/
     private ArrayList<String> userInput;
     private SelectTimesWindow selectTimes;
@@ -82,6 +83,7 @@ public class AddMedicineWindow extends Window {
                     !super.checker.isValidMonth(textList.get(7).getText()))){
                 super.userResponded = false;
                 labelList.get(7).setForeground(Color.RED);
+
                 userInput.clear();
             }
 
@@ -90,6 +92,7 @@ public class AddMedicineWindow extends Window {
                     !checker.isValidDay(textList.get(6).getText(), textList.get(7).getText()))){
                 super.userResponded = false;
                 labelList.get(6).setForeground(Color.RED);
+
                 userInput.clear();
             }
 
@@ -176,7 +179,7 @@ public class AddMedicineWindow extends Window {
         panel.add(inputTimes);
 
 
-
+        // Add an action listener to the button and resize the window.
         super.buttonResponses.put(inputTimes, "0");
         super.addActionListenerToAllButtons();
         panel.setPreferredSize(new Dimension(486, 1080));

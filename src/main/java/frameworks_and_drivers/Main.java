@@ -1,12 +1,10 @@
 package frameworks_and_drivers;
 
 import interface_adapters.AppManagerFacade;
-import interface_adapters.FrameObserver;
 import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -35,10 +33,10 @@ public class Main {
         windows.put("Remove Medicine Window", new RemoveMedicineWindow(scanner, frame));
         windows.put("Choose Medicine To Edit Window", new ChooseMedicineToEditWindow(scanner, frame));
         windows.put("Choose Prescription To Edit Window", new ChoosePrescriptionToEditWindow(scanner, frame));
-        windows.put("Edit Medicine Window", new EditMedicineWindow(scanner, frame));
+        windows.put("Edit Medicine Window", new EditMedicineWindow(scanner, frame, selectTimesWindow));
         windows.put("Edit Prescription Window", new EditPrescriptionWindow(scanner, frame));
         windows.put("Set Sleep Timings Window", new SetSleepTimingsWindow(scanner, frame));
-        windows.put("Set Meal Timings Window", new SetMealTimingsWindow(scanner, frame));
+        windows.put("Set Meal Timings Window", new SetMealTimingsWindow(scanner, frame, selectTimesWindow));
 
 
         // Add the windows as observers for the frame.
