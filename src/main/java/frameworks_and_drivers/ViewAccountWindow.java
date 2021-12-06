@@ -12,10 +12,8 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
 
     private static final int OFFSET_X = 7;
     private  static final int OFFSET_Y = 120;
-    private JButton[] buttons = new JButton[10];
-    private String[] userInput;
-    private JButton logout;
-    private JPanel panel;
+    private final String[] userInput;
+    private final JPanel panel;
     private static int info_count;
 
 
@@ -30,23 +28,7 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
      * @return "no" if user doesn't want an action, "add", "edit", or "remove" if user wants any of those actions.
      */
     @Override
-    public String[] getUserInput() {
-
-           /* System.out.println("Type 'add' to add a new medicine \n" +
-                    "Type 'pres' to add a new prescription \n" +
-                    "Type 'remove pres' to remove a prescription \n" +
-                    "Type 'edit pres' to edit your prescriptions \n" +
-                    "Type 'edit' to edit a medicine\n" +
-                    "Type 'remove' to remove a medicine\n" +
-                    "Type 'set sleep times' to set your sleep and wakeup times \n" +
-                    "Type 'set meal times' to set your meal times \n" +
-                    "Type 'view' to view the timetable \n" +
-                    "Type 'logout' to logout. \n");*/
-        return userInput;
-
-
-
-    }
+    public String[] getUserInput() {return userInput;}
 
 
     @Override
@@ -61,9 +43,9 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
         super.setPanelSize(panel);
 
         JButton pres = new JButton("Add Prescription");
-        logout = new JButton("Logout");
+        JButton logout = new JButton("Logout");
 
-
+        //adds the buttons
         JButton rem_pres = new JButton("Remove Prescription");
         JButton edit_pres = new JButton("Edit Prescription");
         JButton edit_med = new JButton("Edit Medicine");
@@ -73,7 +55,7 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
         JButton view = new JButton("View Timetable");
         JButton meal = new JButton("Set Meal Times");
 
-        buttons = new JButton[]{pres, add_med, sleep, rem_pres, rem_med, view, edit_pres, edit_med, meal};
+        JButton[] buttons = new JButton[]{pres, add_med, sleep, rem_pres, rem_med, view, edit_pres, edit_med, meal};
         int i = 1;
         for (JButton button: buttons){
             button.setSize(152, 90);
@@ -97,7 +79,11 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
         super.view = panel;
 
     }
-
+    /**
+     * prints the user information at the panel
+     *
+     * @param info the user information
+     */
     @Override
     public void displayInfo(String[] info) {
         panel.setLayout(null);
@@ -119,7 +105,11 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
             panel.add(label);
         }
     }
-
+    /**
+     * Notify the observer of a change
+     *
+     * @param source the button clicked
+     */
     @Override
     public void update(Object source) {
         if (super.buttonResponses.containsKey((JButton) source)){
