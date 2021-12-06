@@ -16,13 +16,11 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
     private static final int OFFSET_X = 50;
     private static final int OFFSET_Y = 90;
 
-    private JPanel panel;
+    private final JPanel panel;
     private JTextField name2;
     private String[] validInputs;
-    private JButton[] buttons = new JButton[4];
-    private String[] userInput;
-    private ArrayList<String> removeMedicines = new ArrayList<String>();
-    private List<String> change = new ArrayList<>(List.of(new String[]{"", "", ""}));
+    private final ArrayList<String> removeMedicines = new ArrayList<String>();
+    private final List<String> change = new ArrayList<>(List.of(new String[]{"", "", ""}));
     private int j;
 
 
@@ -30,7 +28,6 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
         super(scanner, frame);
         j = 0;
         panel = new JPanel();
-        userInput = new String[3];
         createView();
     }
 
@@ -103,7 +100,7 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
         JButton remove = new JButton("Remove a medicine from the prescription");
         JButton back = new JButton("Go back to the account page");
 
-        buttons = new JButton[]{name, add, remove, back};
+        JButton[] buttons = new JButton[]{name, add, remove, back};
         int i = 0;
 
         for (JButton button: buttons){

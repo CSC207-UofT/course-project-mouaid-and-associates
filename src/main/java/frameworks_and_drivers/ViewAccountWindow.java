@@ -100,6 +100,7 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
 
     @Override
     public void displayInfo(String[] info) {
+        panel.setLayout(null);
         JLabel label1 = new JLabel();
         label1.setText("Welcome " + info[0].substring(5) + "!");
         label1.setLocation(110, 40);
