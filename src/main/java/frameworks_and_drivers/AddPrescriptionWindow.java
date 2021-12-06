@@ -29,23 +29,16 @@ public class AddPrescriptionWindow extends Window {
                 returnList[1] = userInput.get(1);
             }
         return returnList;
-//        while (!(super.userResponded && userInput.size() == 2)) {
-//            if (super.userResponded && userInput.size() == 2){
-//                returnList[0] = userInput.get(0);
-//            }
-//        }
-//        return returnList;
     }
 
 
     /**
      * Notify the observer of a change
      *
-     * @param frame
      * @param source
      */
     @Override
-    public void update(ObservableFrame frame, Object source) {
+    public void update(Object source) {
         userInput = new ArrayList<>();
         if (super.buttonResponses.containsKey(source)){
             userInput.add(name.getText());
@@ -89,6 +82,4 @@ public class AddPrescriptionWindow extends Window {
         super.view = panel;
 
     }
-
-
 }
