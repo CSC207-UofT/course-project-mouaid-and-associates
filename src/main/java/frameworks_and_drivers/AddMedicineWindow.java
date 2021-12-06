@@ -1,7 +1,6 @@
 package frameworks_and_drivers;
 
 import interface_adapters.ObservableFrame;
-import interface_adapters.ScheduleInputWindow;
 import interface_adapters.Window;
 
 
@@ -25,7 +24,7 @@ public class AddMedicineWindow extends Window {
      * - times: represents the times to take the medicine, which is taken from selectTimesWindow
      * - textList: stores all the textboxes that are on the panel
      * - labelList: stores all the labels that are on the panel
-     * - LABELTEST: represents what will be in the labels and the order they are in
+     * - LABELTEXT: represents what will be in the labels and the order they are in
      **/
     private ArrayList<String> userInput;
     private SelectTimesWindow selectTimes;
@@ -45,6 +44,7 @@ public class AddMedicineWindow extends Window {
     public AddMedicineWindow(Scanner scanner, ObservableFrame frame, SelectTimesWindow selectTimes) {
         super(scanner, frame);
         this.selectTimes = selectTimes;
+        userInput = new ArrayList<>();
         createView();
         times = new String[0];
 
@@ -67,32 +67,32 @@ public class AddMedicineWindow extends Window {
             if (super.userResponded && !isNumeric(textList.get(8).getText())) {
                 super.userResponded = false;
                 labelList.get(8).setForeground(Color.RED);
-                userInput = new ArrayList<>();
+                userInput.clear();
             }
 
             if (super.userResponded && (!isNumeric(textList.get(3).getText()) ||
                     Integer.parseInt(textList.get(3).getText()) <= 0)){
                 super.userResponded = false;
                 labelList.get(3).setForeground(Color.RED);
-                userInput = new ArrayList<>();
+                userInput.clear();
             }
 
             if (super.userResponded && !isNumeric(textList.get(6).getText())){
                 super.userResponded = false;
                 labelList.get(6).setForeground(Color.RED);
-                userInput = new ArrayList<>();
+                userInput.clear();
             }
             if (super.userResponded && (!isNumeric(textList.get(7).getText()))){
                 super.userResponded = false;
                 labelList.get(7).setForeground(Color.RED);
-                userInput = new ArrayList<>();
+                userInput.clear();
             }
 
             if (super.userResponded && !textList.get(5).getText().equals("daily") &&
                     !textList.get(5).getText().equals("weekly")){
                 super.userResponded = false;
                 labelList.get(5).setForeground(Color.RED);
-                userInput = new ArrayList<>();
+                userInput.clear();
             }
             if (super.userResponded && !askedTimes){
                 selectTimes.setNumTimes(Integer.parseInt(textList.get(8).getText()));
@@ -170,7 +170,7 @@ public class AddMedicineWindow extends Window {
         panel.add(inputTimes);
 
 
-
+        // Add an action listener to the button and resize the window.
         super.buttonResponses.put(inputTimes, "0");
         super.addActionListenerToAllButtons();
         panel.setPreferredSize(new Dimension(486, 1080));

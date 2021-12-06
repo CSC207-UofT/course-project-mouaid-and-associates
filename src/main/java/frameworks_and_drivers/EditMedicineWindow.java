@@ -2,15 +2,16 @@ package frameworks_and_drivers;
 
 import interface_adapters.DisplayEntityInformation;
 import interface_adapters.ObservableFrame;
-import interface_adapters.ScheduleInputWindow;
+import interface_adapters.Window;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEntityInformation{
+public class EditMedicineWindow extends Window implements DisplayEntityInformation{
     /**
      * This is a window showing the edit medicine functionality. Allows the user to interact
      * with the program and edit the chosen medicine.
@@ -21,6 +22,9 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
      * - panel: The panel on to which we will put components for this window. We need a specific view
      *          for this class because we update the frame after creating it.
      * - userInput: Stores the text the user entered into the text boxes.
+     * - timesInputLabels: The labels for when the user decides to change the medicine times
+     * - timesInput: The text boxes for when the user decides to change the medicine times.
+     * - infoOfMed: The information of the medicine displayed onto the window.
      *
      * Precondition:
      *  - The displayInfo method is called before getUserInput.
@@ -28,17 +32,22 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
      */
     private List<JTextField> changes;
     private List<JLabel> changeLabels;
+    private JLabel[] timesInputLabels;
+    private JTextField[] timesInput;
     private JPanel panel;
     private volatile List<String> userInput;
     private Font labelFont;
     private List<JLabel> infoOfMed;
+    private boolean askedChangeTimes;
+    private SelectTimesWindow selectTimes;
 
-    public EditMedicineWindow(Scanner scanner, ObservableFrame frame) {
+    public EditMedicineWindow(Scanner scanner, ObservableFrame frame, SelectTimesWindow selectTimesWindow) {
         super(scanner, frame);
         createView();
         userInput = new ArrayList<>();
         labelFont = new Font("SansSerif", Font.BOLD, 16);
         infoOfMed = new ArrayList<>();
+        selectTimes = selectTimesWindow;
     }
 
     /**
@@ -49,7 +58,7 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
     @Override
     public String[] getUserInput() {
         String[] userResponse = new String[]{"", "", "", "", ""};
-
+        String[] times;
         // We want the returned user input to be have length greater than or equal to
         // 5 and for user to have clicked the save button (the variable userResponded is true)
         // Thus in order to wait, we use a while loop. We only set userResponse, the return value
@@ -59,7 +68,22 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
         // while userInput is modified in the 'window' thread, thus userInput might change while
         // getUserInput is running, thus we need to make sure the change is correct before setting
         // and returning userResponse.
-        while (!(super.userResponded && userInput.size() >= 5)){
+        while (!(super.userResponded && userInput.size() >= 5 && !askedChangeTimes)){
+            if (askedChangeTimes){
+                selectTimes.setNumTimes(Integer.parseInt(timesInput[3].getText()));
+                selectTimes.updateFrame();
+                times = selectTimes.getUserInput();
+
+                if (userInput.size() == 5){
+                    userInput.add(timesInput[0].getText());
+                    userInput.add(timesInput[1].getText());
+                    userInput.add(timesInput[2].getText());
+                    userInput.addAll(Arrays.asList(times));
+                }
+
+                // Set it to false to indicate that we have finished asking times.
+                askedChangeTimes = false;
+            }
 
             // Only when we have a valid number of inputs do
             // we get all the user input.
@@ -111,6 +135,9 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
             }
         }
 
+        // Set this boolean to false (i.e. the user did not ask to change the times)
+        askedChangeTimes = false;
+
         // Set the locations of the rest of the attributes.
         setLocations(lastLabelBottomBorder);
     }
@@ -133,9 +160,12 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
         if (super.buttonResponses.containsKey((JButton) source)){
             // Since changes is an ordered list of text boxes, thus
             // we just add the items to the userInput.
-
             for (int i = 0; i < changes.size(); i++) {
                 userInput.add(changes.get(i).getText());
+            }
+
+            if (super.buttonResponses.get((JButton) source).equals("add times")){
+                askedChangeTimes = true;
             }
 
             // Best to do this after you make all your changes.
@@ -160,6 +190,11 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
                 "Enter the number only, as it will be measured in the units specified:",
                 "New extra instructions:"};
 
+        String[] timeLabels = new String[]{"Do you want to take the medicine weekly or daily?",
+                "Enter the day of the month you will start taking the medication",
+                "Enter the month in terms of 01 for January, 10 for October, etc.",
+                "Enter the number of times you will take the medicine in a day:"};
+
         // Create all the text boxes but don't set their locations yet.
         changes = new ArrayList<>();
         for (int i = 0; i < 5; i++){
@@ -180,16 +215,43 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
             panel.add(changeLabel);
         }
 
-        // Create the button.
-        Font buttonFont = new Font("SansSerif", Font.BOLD, 15);
+        // Create the labels for the times, as well as their text boxes:
+        timesInput = new JTextField[timeLabels.length];
+        timesInputLabels = new JLabel[timeLabels.length];
+        for (int i = 0; i < timeLabels.length; i++) {
+            JLabel timeLabel = new JLabel(timeLabels[i]);
+            JTextField timeTextField = new JTextField("");
+            timeTextField.setSize(286, 60);
+            timeLabel.setSize(466, 60);
+            timeLabel.setFont(labelFont);
+
+            // Add time label and the time text field to the array
+            timesInput[i] = timeTextField;
+            timesInputLabels[i] = timeLabel;
+
+            // Add time label and the time text field to the panel
+            panel.add(timeLabel);
+            panel.add(timeTextField);
+        }
+
+        // Create the button to return to edit medicine.
+        Font buttonFont = new Font("SansSerif", Font.BOLD, 13);
         JButton saveButton = new JButton("SAVE AND RETURN TO ACCOUNT PAGE");
         saveButton.setFont(buttonFont);
-        saveButton.setSize(400, 70);
+        saveButton.setSize(200, 70);
 
+        // Create the button to edit the times of the medicine.
+        JButton addTimes = new JButton("Change Med Times");
+        addTimes.setFont(buttonFont);
+        addTimes.setSize(200, 70);
+
+        // Add the two buttons to the panel.
         panel.add(saveButton);
+        panel.add(addTimes);
 
         // Add the button to the button map.
-        super.buttonResponses.put(saveButton, "0");
+        super.buttonResponses.put(saveButton, "save and return");
+        super.buttonResponses.put(addTimes, "add times");
 
         // Add an action listener for each button.
         super.addActionListenerToAllButtons();
@@ -217,11 +279,21 @@ public class EditMedicineWindow extends ScheduleInputWindow implements DisplayEn
             changes.get(i).setLocation(20, y + 80 + 140 * i);
         }
 
-        for (JButton button: super.buttonResponses.keySet()){
-            button.setLocation(43, y + 40 + 140 * changes.size());
+        for (int i = 0; i < timesInput.length; i++){
+            timesInputLabels[i].setLocation(20, y + 20 + 140 * (changes.size() + i));
+            timesInput[i].setLocation(20, y + 80 + 140 * (changes.size() + i));
         }
 
-        panel.setPreferredSize(new Dimension(486, y + 160 + 140 * changes.size()));
+        for (JButton button: super.buttonResponses.keySet()){
+            if (super.buttonResponses.get(button).equals("add times")){
+                button.setLocation(245, y + 40 + 140 * (changes.size() + timesInput.length));
+            } else {
+                button.setLocation(43, y + 40 + 140 * (changes.size() + timesInput.length));
+            }
+        }
+
+        panel.setPreferredSize(new Dimension(486,
+                y + 160 + 140 * (changes.size() + timesInput.length)));
 
         super.view.revalidate();
     }
