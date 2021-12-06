@@ -79,6 +79,7 @@ public class AppManagerPresenters {
         if (viewAccountWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) viewAccountWindow).displayInfo(formattedUserInfo);
         }
+        viewAccountWindow.updateFrame();
 
         viewAccountWindow.updateFrame();
         String choice = new String();
@@ -88,12 +89,6 @@ public class AppManagerPresenters {
             // For some reason, we don't exit the loop unless I add this line.
             System.out.print("");
         }
-        System.out.println(choice);
-
-
-
-
-
 
         //Done: Add conditional flow statements so that the user can select between logging out,
         //      adding medication and viewing the timetable.

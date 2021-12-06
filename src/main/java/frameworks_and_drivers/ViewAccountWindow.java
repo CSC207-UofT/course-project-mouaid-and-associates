@@ -109,14 +109,11 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
 
 
         int j = 0;
-        for (String pieceOfInfo : info){
-            System.out.println(pieceOfInfo);
-
-
+        for (String pieceOfInfo : info) {
             JLabel label = new JLabel();
             label.setText(pieceOfInfo);
-            label.setLocation(20, OFFSET_Y + 4*90 + 30*j + 30);
-            label.setSize(152*3,15);
+            label.setLocation(20, OFFSET_Y + 4 * 90 + 30 * j + 30);
+            label.setSize(152 * 3, 15);
             j++;
 
             panel.add(label);

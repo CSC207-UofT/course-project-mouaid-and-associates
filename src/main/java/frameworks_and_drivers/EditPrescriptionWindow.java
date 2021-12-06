@@ -39,34 +39,12 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
         setValidInputs(Arrays.copyOfRange(info, 0, info.length));
     }
 
-
     private void setValidInputs(String[] inputs){
         validInputs = inputs;
     }
     @Override
     public String[] getUserInput() {
-//        userInput[0] = "Nothing";
-//        switch (userInput[0]) {
-//            case "Name of the prescription": {
-//                displayEditName();
-//                userInput[0] = name2.getText();
-//            }
-//            case "Remove a medicine from the prescription": {
-//                displayRemove(validInputs);
-//                change.set(1, "remove");
-//            }
-//            case "Add a medicine to this prescription":{
-//                JLabel add = new JLabel("You'll be prompted to the add new medicine form after you click option 4");
-//                add.setLocation(20, 200);
-//                panel.add(add);
-//                updateFrame();
-//                super.view = panel;
-//
-//            }
-//        }
-//
        return change.toArray(new String[change.toArray().length]);
-        //return userInput;
     }
 
     /**
@@ -88,14 +66,8 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
                     change.set(1, "remove");
                 }
             else if (text.equals( "Add a medicine to this prescription") ){
-                    /*JLabel add = new JLabel("You'll be prompted to the add new medicine form after you click option 4");
-                    add.setLocation(20, 200);
-                    panel.add(add);*/
-                    //userInput[2] = "1";
-                    /*super.view = panel;*/
-
-                    change.set(2, "Add Medicine");
-                }
+                change.set(2, "Add Medicine");
+            }
             else if (text.equals("Go back to the account page")) {
                     userResponded = true;
 
@@ -112,45 +84,7 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
                 updateFrame();
 
             }
-
-//            System.out.println(j);
-//            // Since changes is an ordered list of text boxes, thus
-//            // we just add the items to the userInput.
-//
-//
-//            if (j != 0) {
-//                if(userInput[0].equals("Name of the prescription")){
-//                    change.set(0, this.name2.getText());
-//                    super.userResponded = true;
-//                    j = 0;
-//                }
-//                else if(userInput[0].equals("Remove a medicine from the prescription") &&
-//                        !((JButton) source).getText().equals("Back")){
-//                    change.add(((JButton) source).getText());
-//                }
-//                else if(userInput[0].equals("Add a medicine to this prescription")){
-//                    change.set(2, "3");
-//                    super.userResponded = true;
-//                    j = 0;
-//                }
-//                else{
-//                    // goes back to ViewAccountWindow
-//                    super.userResponded = true;
-//                    j = 0;
-//                    if (change.get(1) != "") {
-//                        change = List.of(new String[]{"", "", ""});
-//                    }
-//                }
-//
-//
-//
-//            }
-//            else {
-//                userInput[0] = ((JButton) source).getText();
-//                j++;
-//            }
         }
-
     }
 
     @Override
@@ -183,7 +117,6 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
             if (j == 0) {
                 super.buttonResponses.put(button, button.getText());
             }
-
         }
 
     // Add an action listener for each button.
@@ -197,7 +130,6 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
         name.setLocation(20, 550);
         name.setSize(150*3,15);
         panel.add(name);
-
 
               // A text box.
         name2 = new JTextField();
@@ -216,14 +148,10 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
     // Add an action listener for each button.
         super.addActionListenerToAllButtons();
 
-
     // Set the view for this window.
         super.view = panel;
         updateFrame();
-
     }
-
-
 
     private void displayRemove(String [] medicines){
         super.buttonResponses.clear();
@@ -240,6 +168,7 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
         back.setBackground(Color.RED);
         back.setOpaque(true);
         panel.add(back);
+        super.buttonResponses.put(back, back.getText());
 
         int i = 1;
         for (String pieceOfInfo : medicines){
@@ -252,7 +181,6 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
             panel.add(button);
             super.buttonResponses.put(button, button.getText());
 
-            //System.out.println(info_count);
         }
 
         super.addActionListenerToAllButtons();
