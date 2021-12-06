@@ -102,10 +102,10 @@ public class SelectTimesWindow extends Window {
             JLabel timesLabel = new JLabel("For the " + i + "'st time what time do you need to take it? " +
                     "Enter in form XX:XX");
             JTextField textField = new JTextField("");
-            timesLabel.setSize(200, 60);
+            timesLabel.setSize(400, 60);
             textField.setSize(200, 60);
             textField.setLocation(100, i * 100);
-            timesLabel.setLocation(100, (i - 1) *  100 + 50);
+            timesLabel.setLocation(25, (i - 1) *  100 + 50);
             textFields.add(textField);
             panel.add(timesLabel);
             panel.add(textField);

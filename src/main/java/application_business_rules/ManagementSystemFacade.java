@@ -143,6 +143,14 @@ public class ManagementSystemFacade {
         return this.managementSystemPrescription.presNameChecker(presName);
     }
 
+    /**
+     * Verifies if the medicine name is a medicine of the user
+     * @param medicineName The name of the medicine to check
+     * @return Whether it is a medicine in the list
+     */
+    public boolean verifyMedicineList(String medicineName){
+        return this.managementSystemMedicine.verifyMedicine(medicineName);
+    }
     public void addNewPrescription(List<String> medicines, String presName){
        this.managementSystemPrescription.addNewPrescription(medicines, presName);
     }

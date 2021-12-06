@@ -231,4 +231,12 @@ public class UserManager {
     public Schedule getActivitySchedule(OtherActivities activity){
         return this.otherActivitiesManager.getActivitySchedule(activity);
     }
+
+    /**
+     * Get's the medicine list of the user
+     * @return A hashmap which maps the name of the medicine to the medicine object
+     */
+    public HashMap<String, Medicine> getMedicineList(){
+        return user.getMedicineList();
+    }
 }

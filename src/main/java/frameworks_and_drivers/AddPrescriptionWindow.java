@@ -1,19 +1,20 @@
 package frameworks_and_drivers;
 
 import interface_adapters.ObservableFrame;
-import interface_adapters.PrescriptionWindow;
 import interface_adapters.Window;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-public class AddPrescriptionWindow extends PrescriptionWindow {
+public class AddPrescriptionWindow extends Window {
 
     JTextField name;
-    JTextField numMedicine;
+    JTextField medicineNames;
     private ArrayList<String> userInput;
+    private JLabel nameLabel;
+    private JLabel medicineNamesLabel;
+
     public AddPrescriptionWindow(Scanner scanner, ObservableFrame frame){
         super(scanner, frame);
         userInput = new ArrayList<>();
@@ -22,36 +23,21 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
 
     @Override
     public String[] getUserInput() {
-        String[] returnList =  {name.getText()};
+        String[] returnList = new String[2];
+        if (super.userResponded && userInput.size() == 2){
+                returnList[0] = userInput.get(0);
+                returnList[1] = userInput.get(1);
+            }
         return returnList;
+//        while (!(super.userResponded && userInput.size() == 2)) {
+//            if (super.userResponded && userInput.size() == 2){
+//                returnList[0] = userInput.get(0);
+//            }
+//        }
+//        return returnList;
     }
 
-    /**
-     * Return the user input on their new prescription.
-     *
-     * Preconditions:
-     *  - addMedicineWindow is an instance of AddMedicineWindow.
-     *
-     * @param addMedicineWindow  The window that allows users to add a medicine
-     * @return   The user's new prescription information.
-     */
-    @Override
-    public List<String[]> getUserPrescriptionInput(Window addMedicineWindow) {
-        AddMedicineWindow medicineWindow = null;
-        // This is always true:
-        if (addMedicineWindow instanceof AddMedicineWindow) {
-            medicineWindow = (AddMedicineWindow) addMedicineWindow;
-        }
-        int accumulator = 0;
-        List<String[]> medicines = new ArrayList<>();
-        while(accumulator != Integer.parseInt(numMedicine.getText())){
-            assert medicineWindow != null;
-            medicines.add(medicineWindow.getUserInput());
-            accumulator += 1;
-        }
-        return medicines;
 
-    }
     /**
      * Notify the observer of a change
      *
@@ -60,7 +46,12 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
      */
     @Override
     public void update(ObservableFrame frame, Object source) {
-        userInput.add(name.getText());
+        userInput = new ArrayList<>();
+        if (super.buttonResponses.containsKey(source)){
+            userInput.add(name.getText());
+            userInput.add(medicineNames.getText());
+            super.userResponded = true;
+        }
     }
 
     @Override
@@ -69,19 +60,19 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
         panel.setLayout(null);
         super.setPanelSize(panel);
         name = new JTextField("");
-        numMedicine = new JTextField("");
+        medicineNames = new JTextField("");
 
-        JLabel nameLabel = new JLabel("Name of Prescription:");
-        JLabel numMedicineLabel = new JLabel("Number of medicine:");
+        nameLabel = new JLabel("Name of Prescription:");
+        medicineNamesLabel = new JLabel("Name of existing medicines. Separate by comma:");
         nameLabel.setSize(200, 40);
         name.setSize(200, 50);
         nameLabel.setLocation(100, 50);
         name.setLocation(100, 100);
 
-        numMedicineLabel.setSize(200, 40);
-        numMedicine.setSize(200, 50);
-        numMedicineLabel.setLocation(100, 150);
-        numMedicine.setLocation(100, 200);
+        medicineNamesLabel.setSize(400, 40);
+        medicineNames.setSize(200, 50);
+        medicineNamesLabel.setLocation(50, 150);
+        medicineNames.setLocation(100, 200);
 
         JButton create = new JButton("Create Medicines");
         create.setLocation(100, 250);
@@ -89,8 +80,8 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
 
         panel.add(name);
         panel.add(nameLabel);
-        panel.add(numMedicineLabel);
-        panel.add(numMedicine);
+        panel.add(medicineNames);
+        panel.add(medicineNamesLabel);
         panel.add(create);
 
         super.buttonResponses.put(create, "0");
@@ -98,4 +89,6 @@ public class AddPrescriptionWindow extends PrescriptionWindow {
         super.view = panel;
 
     }
+
+
 }
