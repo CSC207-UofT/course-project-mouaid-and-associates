@@ -297,6 +297,7 @@ public class EditMedicineWindow extends Window implements DisplayEntityInformati
                 y + 160 + 140 * (changes.size() + timesInput.length)));
 
         super.view.revalidate();
+        super.view.repaint();
     }
 
     /**

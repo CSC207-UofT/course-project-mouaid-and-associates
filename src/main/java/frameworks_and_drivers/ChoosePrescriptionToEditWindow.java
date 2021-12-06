@@ -107,11 +107,11 @@ public class ChoosePrescriptionToEditWindow extends Window implements DisplayEnt
 
         // Tell the view to know of all the new changes.
         super.view.revalidate();
+        super.view.repaint();
     }
 
     @Override
     public void createView() {
-
         panel1 = new JPanel();
 
         // Required for us to use pixel measurements.
