@@ -49,9 +49,9 @@ class ScheduleTest {
         events2.add(event3);
         // Now add the events to the schedule.
         schedule2.addEvents(events2);
-        assertEquals(true, schedule2.getEvents().contains(event1));
-        assertEquals(true, schedule2.getEvents().contains(event2));
-        assertEquals(true, schedule2.getEvents().contains(event3));
+        assertTrue(schedule2.getEvents().contains(event1));
+        assertTrue(schedule2.getEvents().contains(event2));
+        assertTrue(schedule2.getEvents().contains(event3));
     }
 
     @Test

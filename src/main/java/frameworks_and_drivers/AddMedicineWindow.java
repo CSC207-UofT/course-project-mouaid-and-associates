@@ -64,14 +64,14 @@ public class AddMedicineWindow extends Window {
         while (!(super.userResponded && returnList.length >= 9)){
 
             //Ensures that the number of times to ask for the time is an integer
-            if (super.userResponded && !super.checker.isNumeric(textList.get(8).getText())) {
+            if (super.userResponded && !checker.isNumeric(textList.get(8).getText())) {
                 super.userResponded = false;
                 labelList.get(8).setForeground(Color.RED);
                 userInput.clear();
             }
 
             //Ensures that the amount of medicine is an integer
-            if (super.userResponded && (!super.checker.isNumeric(textList.get(3).getText()) ||
+            if (super.userResponded && (!checker.isNumeric(textList.get(3).getText()) ||
                     Integer.parseInt(textList.get(3).getText()) <= 0)){
                 super.userResponded = false;
                 labelList.get(3).setForeground(Color.RED);
@@ -79,8 +79,8 @@ public class AddMedicineWindow extends Window {
             }
 
             //Ensures that the month is an integer and is a valid one
-            if (super.userResponded && (!super.checker.isNumeric(textList.get(7).getText()) ||
-                    !super.checker.isValidMonth(textList.get(7).getText()))){
+            if (super.userResponded && (!checker.isNumeric(textList.get(7).getText()) ||
+                    !checker.isValidMonth(textList.get(7).getText()))){
                 super.userResponded = false;
                 labelList.get(7).setForeground(Color.RED);
 
@@ -88,7 +88,7 @@ public class AddMedicineWindow extends Window {
             }
 
             //Ensures that the day is actually a day of the month
-            if (super.userResponded && (!super.checker.isNumeric(textList.get(6).getText()) ||
+            if (super.userResponded && (!checker.isNumeric(textList.get(6).getText()) ||
                     !checker.isValidDay(textList.get(6).getText(), textList.get(7).getText()))){
                 super.userResponded = false;
                 labelList.get(6).setForeground(Color.RED);
@@ -135,7 +135,7 @@ public class AddMedicineWindow extends Window {
      */
     @Override
     public void update(Object source) {
-        if (super.buttonResponses.containsKey(source)){
+        if (super.buttonResponses.containsKey((JButton) source)){
             for (int i = 0; i < 8; i ++){
                 userInput.add(textList.get(i).getText());
             }

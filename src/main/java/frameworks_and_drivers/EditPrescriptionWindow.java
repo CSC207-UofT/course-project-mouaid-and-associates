@@ -2,7 +2,7 @@ package frameworks_and_drivers;
 
 import interface_adapters.DisplayEntityInformation;
 import interface_adapters.ObservableFrame;
-import interface_adapters.ScheduleInputWindow;
+import interface_adapters.Window;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class EditPrescriptionWindow extends ScheduleInputWindow implements DisplayEntityInformation {
+public class EditPrescriptionWindow extends Window implements DisplayEntityInformation {
 
     private static final int OFFSET_X = 50;
     private static final int OFFSET_Y = 90;
@@ -19,7 +19,6 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
     private final JPanel panel;
     private JTextField name2;
     private String[] validInputs;
-    private final ArrayList<String> removeMedicines = new ArrayList<String>();
     private final List<String> change = new ArrayList<>(List.of(new String[]{"", "", ""}));
     private int j;
 
@@ -177,7 +176,6 @@ public class EditPrescriptionWindow extends ScheduleInputWindow implements Displ
 
         int i = 1;
         for (String pieceOfInfo : medicines){
-            System.out.println(pieceOfInfo);
 
             JButton button = new JButton(pieceOfInfo);
             button.setSize(152, 90);

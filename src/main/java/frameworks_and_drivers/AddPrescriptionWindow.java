@@ -55,7 +55,7 @@ public class AddPrescriptionWindow extends Window {
     @Override
     public void update(Object source) {
         userInput = new ArrayList<>();
-        if (super.buttonResponses.containsKey(source)){
+        if (super.buttonResponses.containsKey((JButton) source)){
             userInput.add(name.getText());
             userInput.add(medicineNames.getText());
             super.userResponded = true;
