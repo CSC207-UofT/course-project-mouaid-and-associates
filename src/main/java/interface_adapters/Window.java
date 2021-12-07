@@ -19,7 +19,7 @@ public abstract class Window implements FrameObserver{
      * - userResponded: Used to check if the user has responded.
      */
     protected Scanner scanner;
-    private ObservableFrame frame;
+    protected ObservableFrame frame;
     protected Component view;
     protected Map<JButton, String> buttonResponses;
     public static ValidInputChecker checker = new ValidInputChecker();
