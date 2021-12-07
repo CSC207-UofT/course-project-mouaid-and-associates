@@ -17,6 +17,7 @@ public abstract class Window implements FrameObserver{
      * - buttonResponses: Also related to the subclasses of this class. This is a map of the buttons
      *                    in the view of a Window to the response if that button is pressed.
      * - userResponded: Used to check if the user has responded.
+     * - checker: An object from ValidInputChecker that can check to see if input is valid.
      */
     protected Scanner scanner;
     protected ObservableFrame frame;
@@ -81,6 +82,7 @@ public abstract class Window implements FrameObserver{
             }
         }
     }
+
 
 }
 

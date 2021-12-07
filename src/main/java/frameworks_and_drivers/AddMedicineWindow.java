@@ -61,6 +61,7 @@ public class AddMedicineWindow extends Window {
     public String[] getUserInput() {
         String[] returnList = new String[0];
         boolean askedTimes = false;
+        //Keep asking until the user responds
         while (!(super.userResponded && returnList.length >= 9)){
 
             //Ensures that the number of times to ask for the time is an integer

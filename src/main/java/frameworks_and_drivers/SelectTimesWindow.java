@@ -15,10 +15,10 @@ public class SelectTimesWindow extends Window {
      * in order to set the times and dates that those events should take place.
      *
      * Instance Attributes:
-     * -panel: It represents where everything will be displayed and contains all the components of the window.
-     * -userInput: The text the user entered into the text boxes
-     * -medTimesLabel: All the times of the medicine
-     * -numTimes: Represents the number of text boxes we need
+     * - panel: It represents where everything will be displayed and contains all the components of the window.
+     * - userInput: The text the user entered into the text boxes
+     * - numTimes: Represents the number of text boxes we need
+     * - textFields: A list containing the text boxes where the user will enter input
      */
     private JPanel panel;
     private List<String> userInput;
@@ -71,6 +71,7 @@ public class SelectTimesWindow extends Window {
             //Checks to see if the input is valid
             System.out.println("");
             if (super.userResponded && userInput.size() == numTimes){
+                //Loop through the times and make sure they are valid
                 for (int i = 0; i < numTimes; i++){
                     if(!checker.isValidTime(userInput.get(i))){
                         super.userResponded = false;

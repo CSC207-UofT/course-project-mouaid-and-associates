@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class ValidInputChecker {
     /**
-     * An instance of this is in the windows class to make sure that the input is valid.
+     * A class that makes sure that strings meet certain requirements depending on the method
      */
     static HashMap<String, Integer> monthNumDays = new HashMap<>();
 
@@ -87,6 +87,11 @@ public class ValidInputChecker {
         }
     }
 
+    /**
+     * Checks to see if the user input weekly or daily
+     * @param occurrence The string to check
+     * @return Whether the string is equal to weekly or daily
+     */
     public boolean isWeekOrDaily(String occurrence){
         if (!occurrence.equals("daily") &&
                 !occurrence.equals("weekly")){
