@@ -20,7 +20,7 @@ public class ObservableFrame extends JFrame implements ActionListener {
     private Component currentView;
     private List<FrameObserver> observers;
     public static final int FRAME_WIDTH = 486;
-    public static final int FRAME_HEIGHT = 1000;
+    public static final int FRAME_HEIGHT = 800;
     public ObservableFrame(){
         super("Medicine Management App");
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));

@@ -76,18 +76,40 @@ public class AppManagerPrescription {
         if (choosePrescriptionToEditWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) choosePrescriptionToEditWindow).displayInfo(presList);
         }
+        choosePrescriptionToEditWindow.updateFrame();
         String presName = choosePrescriptionToEditWindow.getUserInput()[0];
-        String[] change = editPrescriptionWindow.getUserInput();
+
+        String[] prescription_meds = managementSystemFacade.getPrescription(presName).getPresMedicines();
+        if (choosePrescriptionToEditWindow instanceof DisplayEntityInformation){
+            ((DisplayEntityInformation) editPrescriptionWindow).displayInfo(prescription_meds);
+        }
+
+        editPrescriptionWindow.updateFrame();
+        String[] change = new String[3];
+
+        while(!editPrescriptionWindow.userResponded) {
+            change = editPrescriptionWindow.getUserInput();
+            // For some reason, we don't exit the loop unless I add this line.
+            System.out.print("");
+        }
         if(!change[0].equals("")){
             managementSystemFacade.changePrescriptionName(presName, change[0]);
         }else if(!change[1].equals("")){
             managementSystemFacade.removeMedicineFromPres(presName, change[1]);
-            String[] medToRemove = new String[1];
-            medToRemove[0] = change[1];
-            managementSystemFacade.removeMedicines(medToRemove);
+            for(String med : change) {
+                String[] medToRemove = new String[1];
+                medToRemove[0] = med;
+                managementSystemFacade.removeMedicines(medToRemove);
+            }
         }else if(!change[2].equals("")){
             Window addMedicineWindow = windows.get("Add Medicine Window");
-            String[] data = addMedicineWindow.getUserInput();
+            String[] data = new String[5];
+            addMedicineWindow.updateFrame();
+            while(!addMedicineWindow.userResponded) {
+                data = editPrescriptionWindow.getUserInput();
+                // For some reason, we don't exit the loop unless I add this line.
+                System.out.print("");
+            }
             this.appManagerHelpers.addMedicineHelper(data);
             managementSystemFacade.addMedicineToPres(presName, data[0]);
         }
