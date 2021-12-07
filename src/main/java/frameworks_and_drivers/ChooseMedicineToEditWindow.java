@@ -55,8 +55,8 @@ public class ChooseMedicineToEditWindow extends Window implements DisplayEntityI
     private void removeOldInfo(){
         for (JButton button: super.buttonResponses.keySet()){
             panel.remove(button);
-            super.buttonResponses.remove(button);
         }
+        super.buttonResponses.clear();
     }
 
     @Override
@@ -109,6 +109,7 @@ public class ChooseMedicineToEditWindow extends Window implements DisplayEntityI
 
         // Tell the view to know of all the new changes.
         super.view.revalidate();
+        super.view.repaint();
     }
 
 

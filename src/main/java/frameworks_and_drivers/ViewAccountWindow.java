@@ -18,7 +18,6 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
     private final JPanel panel;
     private List<JLabel> displayedInfo;
 
-
     public ViewAccountWindow(Scanner scanner, ObservableFrame frame) {
         super(scanner, frame);
         panel = new JPanel();
@@ -77,7 +76,8 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
         super.addActionListenerToAllButtons();
 
         // Set the view for this window.
-        super.view = panel;
+        super.view = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
     }
     /**
@@ -96,7 +96,7 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
         panel.add(label1);
 
         if (!displayedInfo.isEmpty()){
-            removeInfo();
+            removeOldInfo();
         }
 
         int j = 0;
@@ -110,12 +110,16 @@ public class ViewAccountWindow extends Window implements DisplayEntityInformatio
             panel.add(label);
             displayedInfo.add(label);
         }
+
+        panel.setPreferredSize(new Dimension(486, OFFSET_Y + 390 + 30 * j + 25));
+        super.view.revalidate();
+        super.view.repaint();
     }
 
     /**
-     * Removes old pieces of info from the window.
+     * Removes the old information from the window
      */
-    public void removeInfo(){
+    private void removeOldInfo() {
         for (JLabel label: displayedInfo){
             panel.remove(label);
         }

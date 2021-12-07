@@ -64,7 +64,7 @@ public class AddMedicineWindow extends Window {
         while (!(super.userResponded && returnList.length >= 9)){
 
             //Ensures that the number of times to ask for the time is an integer
-            if (super.userResponded && !super.checker.isNumeric(textList.get(8).getText())) {
+            if (super.userResponded && !checker.isNumeric(textList.get(8).getText())) {
                 super.userResponded = false;
                 //Create a pop-up to display the error message
                 JOptionPane.showMessageDialog(super.frame, "Please input an integer", "Warning for \"How many times to take medicine\"!",
@@ -73,7 +73,7 @@ public class AddMedicineWindow extends Window {
             }
 
             //Ensures that the amount of medicine is an integer
-            if (super.userResponded && (!super.checker.isNumeric(textList.get(3).getText()) ||
+            if (super.userResponded && (!checker.isNumeric(textList.get(3).getText()) ||
                     Integer.parseInt(textList.get(3).getText()) <= 0)){
                 super.userResponded = false;
                 JOptionPane.showMessageDialog(super.frame, "Amount of medicine should be an integer", "Warning for \"Enter Amount as Integer!\"",
@@ -82,8 +82,8 @@ public class AddMedicineWindow extends Window {
             }
 
             //Ensures that the month is an integer and is a valid one
-            if (super.userResponded && (!super.checker.isNumeric(textList.get(7).getText()) ||
-                    !super.checker.isValidMonth(textList.get(7).getText()))){
+            if (super.userResponded && (!checker.isNumeric(textList.get(7).getText()) ||
+                    !checker.isValidMonth(textList.get(7).getText()))){
                 super.userResponded = false;
                 JOptionPane.showMessageDialog(super.frame, "The month must be an integer from 1-12", "Warning for select month!",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -92,7 +92,7 @@ public class AddMedicineWindow extends Window {
             }
 
             //Ensures that the day is actually a day of the month
-            if (super.userResponded && (!super.checker.isNumeric(textList.get(6).getText()) ||
+            if (super.userResponded && (!checker.isNumeric(textList.get(6).getText()) ||
                     !checker.isValidDay(textList.get(6).getText(), textList.get(7).getText()))){
                 super.userResponded = false;
                 JOptionPane.showMessageDialog(super.frame, "The month doesn't have that many days", "Warning for select day of month!",
@@ -141,7 +141,7 @@ public class AddMedicineWindow extends Window {
      */
     @Override
     public void update(Object source) {
-        if (super.buttonResponses.containsKey(source)){
+        if (super.buttonResponses.containsKey((JButton) source)){
             for (int i = 0; i < 8; i ++){
                 userInput.add(textList.get(i).getText());
             }

@@ -3,6 +3,7 @@ package interface_adapters;
 import application_business_rules.ManagementSystemFacade;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -56,11 +57,8 @@ public class AppManagerActivitySetter {
         setMealTimingsWindow.updateFrame();
 
         String[] stringTimings = setMealTimingsWindow.getUserInput();
-        List<String> times = new ArrayList<>();
 
-        for (String timings: stringTimings){
-            times.add(timings);
-        }
+        List<String> times = new ArrayList<>(Arrays.asList(stringTimings));
 
         this.managementSystemFacade.setMealTimes(times);
 

@@ -59,8 +59,8 @@ public class SelectTimesWindow extends Window {
     }
 
     /**
-     *
-     * @return
+     * Get's user input on the times to do a certain activity in a day.
+     * @return      An array of strings denoting different times during the day.
      */
     @Override
     public String[] getUserInput() {
@@ -72,7 +72,7 @@ public class SelectTimesWindow extends Window {
             System.out.println("");
             if (super.userResponded && userInput.size() == numTimes){
                 for (int i = 0; i < numTimes; i++){
-                    if(!super.checker.isValidTime(userInput.get(i))){
+                    if(!checker.isValidTime(userInput.get(i))){
                         super.userResponded = false;
                         JOptionPane.showMessageDialog(super.frame, "Make sure the time is typed as \"XX:XX\"",
                                 "Warning: Invalid Time entered for" + i +"'st time!", JOptionPane.INFORMATION_MESSAGE);
@@ -118,7 +118,7 @@ public class SelectTimesWindow extends Window {
 
         JButton saveButton = new JButton("SAVE AND RETURN TO ACCOUNT PAGE");
         saveButton.setSize(400, 70);
-        saveButton.setLocation(100, numTimes * 150 + 150);
+        saveButton.setLocation(43, numTimes * 150 + 150);
         panel.add(saveButton);
         // Add the button to the button map.
         super.buttonResponses.put(saveButton, "0");

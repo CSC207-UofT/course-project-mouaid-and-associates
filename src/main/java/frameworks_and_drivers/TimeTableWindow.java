@@ -137,5 +137,6 @@ public class TimeTableWindow extends Window implements DisplayEntityInformation 
         panel.setPreferredSize(new Dimension(486, y + 80));
 
         super.view.revalidate();
+        super.view.repaint();
     }
 }

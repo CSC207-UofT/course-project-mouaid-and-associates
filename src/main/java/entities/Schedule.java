@@ -151,12 +151,6 @@ public class Schedule implements Serializable {
      *
      * @return The dictionary made from organizing the events by day.
      */
-    /**
-     * Sorts the events in the events attribute into a dictionary mapping a
-     * day to events taking place on that day.
-     *
-     * @return The dictionary made from organizing the events by day.
-     */
     private Map<String, List<Event>> sortEventsByDay() {
         // Start and accumulator collection. This is a dictionary mapping
         // days to events occurring on that day.

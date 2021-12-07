@@ -45,9 +45,9 @@ public class ObservableFrame extends JFrame implements ActionListener {
         // Set the current view to this new view.
         currentView = view;
         // Validate the change (or else the change won't show on the screen)
-//        this.validate();
-        // Validate the change and resize the window. Used to reliably update the frame.
-        this.pack();
+        this.revalidate();
+        // Repaint the window.
+        this.repaint();
     }
 
     /**

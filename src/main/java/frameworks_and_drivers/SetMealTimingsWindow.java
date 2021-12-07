@@ -58,7 +58,6 @@ public class SetMealTimingsWindow extends Window {
             // we get all the user input.
             if (userInput.size() == 1 && askedTimes) {
                 userResponse = times;
-                System.out.println(Arrays.toString(userResponse));
             }
 
         }
