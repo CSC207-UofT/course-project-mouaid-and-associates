@@ -66,7 +66,9 @@ public class AddMedicineWindow extends Window {
             //Ensures that the number of times to ask for the time is an integer
             if (super.userResponded && !super.checker.isNumeric(textList.get(8).getText())) {
                 super.userResponded = false;
-                labelList.get(8).setForeground(Color.RED);
+                //Create a pop-up to display the error message
+                JOptionPane.showMessageDialog(super.frame, "Please input an integer", "Warning for \"How many times to take medicine\"!",
+                        JOptionPane.INFORMATION_MESSAGE);
                 userInput.clear();
             }
 
@@ -74,7 +76,8 @@ public class AddMedicineWindow extends Window {
             if (super.userResponded && (!super.checker.isNumeric(textList.get(3).getText()) ||
                     Integer.parseInt(textList.get(3).getText()) <= 0)){
                 super.userResponded = false;
-                labelList.get(3).setForeground(Color.RED);
+                JOptionPane.showMessageDialog(super.frame, "Amount of medicine should be an integer", "Warning for \"Enter Amount as Integer!\"",
+                        JOptionPane.INFORMATION_MESSAGE);
                 userInput.clear();
             }
 
@@ -82,7 +85,8 @@ public class AddMedicineWindow extends Window {
             if (super.userResponded && (!super.checker.isNumeric(textList.get(7).getText()) ||
                     !super.checker.isValidMonth(textList.get(7).getText()))){
                 super.userResponded = false;
-                labelList.get(7).setForeground(Color.RED);
+                JOptionPane.showMessageDialog(super.frame, "The month must be an integer from 1-12", "Warning for select month!",
+                        JOptionPane.INFORMATION_MESSAGE);
 
                 userInput.clear();
             }
@@ -91,7 +95,8 @@ public class AddMedicineWindow extends Window {
             if (super.userResponded && (!super.checker.isNumeric(textList.get(6).getText()) ||
                     !checker.isValidDay(textList.get(6).getText(), textList.get(7).getText()))){
                 super.userResponded = false;
-                labelList.get(6).setForeground(Color.RED);
+                JOptionPane.showMessageDialog(super.frame, "The month doesn't have that many days", "Warning for select day of month!",
+                        JOptionPane.INFORMATION_MESSAGE);
 
                 userInput.clear();
             }
@@ -99,7 +104,8 @@ public class AddMedicineWindow extends Window {
             //Ensures that the user selects daily or weekly
             if (super.userResponded && !checker.isWeekOrDaily(textList.get(5).getText())){
                 super.userResponded = false;
-                labelList.get(5).setForeground(Color.RED);
+                JOptionPane.showMessageDialog(super.frame, "It must be weekly or daily", "Warning for weekly or daily!",
+                        JOptionPane.INFORMATION_MESSAGE);
                 userInput.clear();
             }
             //If we have not asked the user for times, ask now
@@ -178,7 +184,6 @@ public class AddMedicineWindow extends Window {
         inputTimes.setLocation(100, 970);
         inputTimes.setSize(100, 70);
         panel.add(inputTimes);
-
 
         // Add an action listener to the button and resize the window.
         super.buttonResponses.put(inputTimes, "0");

@@ -69,12 +69,13 @@ public class SelectTimesWindow extends Window {
             // Only when we have a valid number of inputs do
             // we get all the user input.
             //Checks to see if the input is valid
-            System.out.print("");
+            System.out.println("");
             if (super.userResponded && userInput.size() == numTimes){
                 for (int i = 0; i < numTimes; i++){
                     if(!super.checker.isValidTime(userInput.get(i))){
                         super.userResponded = false;
-                        textFields.get(i).setForeground(Color.RED);
+                        JOptionPane.showMessageDialog(super.frame, "Make sure the time is typed as \"XX:XX\"",
+                                "Warning: Invalid Time entered for" + i +"'st time!", JOptionPane.INFORMATION_MESSAGE);
                         userInput = new ArrayList<>();
                         break;
                     }
