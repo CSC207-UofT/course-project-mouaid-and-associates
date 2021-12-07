@@ -101,8 +101,7 @@ public class SelectTimesWindow extends Window {
     public void createView() {
         // Initialize a JPanel and gives it a size.
         panel = new JPanel();
-        panel.setLayout(null);
-        super.setPanelSize(panel);
+        panel.setLayout(null);;
         for (int i = 1; i < numTimes + 1; i++ ){
             JLabel timesLabel = new JLabel("For the " + i + "'st time what time do you need to take it? " +
                     "Enter in form XX:XX");
@@ -126,6 +125,7 @@ public class SelectTimesWindow extends Window {
         // Add an action listener for each button.
         super.addActionListenerToAllButtons();
 
+        panel.setPreferredSize(new Dimension(486, numTimes * 150 + 220));
         super.view = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
