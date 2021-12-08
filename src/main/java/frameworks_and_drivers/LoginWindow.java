@@ -53,10 +53,8 @@ public class LoginWindow extends Window implements DisplayEntityInformation {
         // a string of size 1.
 
         // Set the error message to the one passed in.
-        errorMessage.setText(info[0]);
-
-        // Set the text color to red.
-        errorMessage.setForeground(Color.RED);
+        JOptionPane.showMessageDialog(super.frame, "Password or Username is wrong!", "Incorrect Information",
+                JOptionPane.INFORMATION_MESSAGE);
 
         super.userResponded = false;
     }

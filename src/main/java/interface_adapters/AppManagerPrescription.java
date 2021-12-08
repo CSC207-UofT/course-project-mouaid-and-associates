@@ -1,6 +1,7 @@
 package interface_adapters;
 
 import application_business_rules.ManagementSystemFacade;
+import frameworks_and_drivers.AddPrescriptionWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,19 +30,34 @@ public class AppManagerPrescription {
         Window addPrescriptionWindow = windows.get("Add Prescription Window");
         addPrescriptionWindow.updateFrame();
         String[] inputInfo = new String[2];
+        //To see if the input is valid
+        boolean validInput = true;
         // Wait until the user has actually responded.
         List<String> medicinesNamesReturn = new ArrayList<>();
         while (!addPrescriptionWindow.userResponded) {
-            inputInfo = windows.get("Add Prescription Window").getUserInput();      // Currently, placeholder.
+            inputInfo = addPrescriptionWindow.getUserInput();
         }
+        //Set it back to false
+        addPrescriptionWindow.userResponded =false;
         String[] medicineNames = inputInfo[1].split(",");
+
         for(String medicine : medicineNames){
-            if(managementSystemFacade.verifyMedicineList(medicine.trim())){
-                medicinesNamesReturn.add(medicine);
+            if(!managementSystemFacade.verifyMedicineList(medicine.trim())){
+                if (addPrescriptionWindow instanceof AddPrescriptionWindow){
+                    ((AddPrescriptionWindow) addPrescriptionWindow).displayErrorMessage(medicine);
+                    validInput = false;
+                    break;
+
+                }
             }
+            else{
+                medicinesNamesReturn.add(medicine);
+                }
+        }
+        if (validInput){
+            managementSystemFacade.addNewPrescription(medicinesNamesReturn, inputInfo[0]);
         }
 
-        managementSystemFacade.addNewPrescription(medicinesNamesReturn, inputInfo[0]);
         return "View Account Window";
 
     }
