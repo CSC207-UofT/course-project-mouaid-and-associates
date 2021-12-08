@@ -159,6 +159,32 @@ public class UserManager {
     }
 
     /**
+     * gets all prescription names
+     * @return prescription names
+     */
+    public List<String> getPrescriptionNames(){
+        return List.copyOf(user.getPrescriptionList().keySet());
+    }
+    /**
+     * gets prescription entities
+     * @return prescription entities
+     */
+    public List<PrescriptionMedicine> getPrescriptionEntities(){
+        return List.copyOf(user.getPrescriptionList().values());
+    }
+    public void addPrescription(String name, PrescriptionMedicine prescription){
+        user.addPrescription(name, prescription);
+    }
+    public void removePrescription(String name){
+        user.removePrescription(name);
+    }
+    public PrescriptionMedicine getPrescription(String name){
+        return user.getPrescription(name);
+    }
+    public PrescriptionMedicine getPrescriptionEntity(String name){
+        return user.getPrescription(name);
+    }
+    /**
      * Sets the User for this UserManager.
      * @param user  The new User.
      */

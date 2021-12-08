@@ -21,7 +21,7 @@ public class LoginWindow extends Window implements DisplayEntityInformation {
 
     private String[] userInput;
     private JTextField username;
-    private JTextField password;
+    private JPasswordField password;
     private JLabel errorMessage;
 
     public LoginWindow(Scanner scanner, ObservableFrame frame) {
@@ -98,7 +98,7 @@ public class LoginWindow extends Window implements DisplayEntityInformation {
         JLabel passwordLabel = new JLabel("Password: ");
         passwordLabel.setSize(286, 40);
         passwordLabel.setLocation(100, 250);
-        password = new JTextField();
+        password = new JPasswordField();
         password.setSize(286, 50);
         password.setLocation(100, 300);
 
