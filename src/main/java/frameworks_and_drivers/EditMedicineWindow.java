@@ -75,15 +75,9 @@ public class EditMedicineWindow extends Window implements DisplayEntityInformati
                 times = selectTimes.getUserInput();
 
                 if (userInput.size() == 5){
-                    if (!checker.isWeekOrDaily(timesInput[0].getText())){
-                            userInput.add(timesInput[0].getText());
-                    }
-                    if (!checker.isValidDay(timesInput[1].getText(), timesInput[2].getText())){
-                        userInput.add(timesInput[1].getText());
-                    }
-                    if (!checker.isValidMonth(timesInput[2].getText())){
-                        userInput.add(timesInput[2].getText());
-                    }
+                    userInput.add(timesInput[0].getText());
+                    userInput.add(timesInput[1].getText());
+                    userInput.add(timesInput[2].getText());
                     userInput.addAll(Arrays.asList(times));
                 }
 
