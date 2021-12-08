@@ -8,6 +8,7 @@ import interface_adapters.Window;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -59,7 +60,7 @@ public class TimeTableWindow extends Window implements DisplayEntityInformation 
         if (!currentSchedule.isEmpty()){
             removeOldInfo();
         }
-
+        System.out.println(Arrays.toString(info));
         for (int i = 0; i < info.length; i++){
             JLabel label = new JLabel(info[i]);
             label.setSize(466, 40);

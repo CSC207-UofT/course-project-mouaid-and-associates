@@ -126,8 +126,10 @@ public class SelectTimesWindow extends Window {
         // Add an action listener for each button.
         super.addActionListenerToAllButtons();
 
+        panel.setPreferredSize(new Dimension(486, numTimes * 150 + 220));
         super.view = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
 
     }
 
