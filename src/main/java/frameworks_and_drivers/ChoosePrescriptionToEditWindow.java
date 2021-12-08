@@ -79,9 +79,9 @@ public class ChoosePrescriptionToEditWindow extends Window implements DisplayEnt
         return false;
     }
     /**
-     * Notify the observer of a change
+     * Update userInput based on if the event originated from this window.
      *
-     * @param source
+     * @param source    The button that is the source of the event.
      */
     @Override
     public void update(Object source) {

@@ -5,6 +5,6 @@ public interface DisplayEntityInformation {
      * from classes in the inner levels, and display that information.
      */
 
-    public void displayInfo(String[] info);
+    void displayInfo(String[] info);
 
 }

@@ -28,7 +28,7 @@ public class Sleep extends OtherActivities {
         // Checks if the sleep and wake up times isEmpty() which indicates that the SleepClass is being created for
         // the first time and therefore there are no set Sleep and wake up times so the SleepSchedule is empty
         if (!(times.isEmpty())) {
-            for (int i = 0; i <= 14; i++) {
+            for (int i = 0; i < 7; i++) {
                 appendTo = currentDate.plusDays(i);
                 appendDay = String.valueOf(appendTo.getDayOfMonth());
                 appendMonth = String.valueOf(appendTo.getMonthValue());

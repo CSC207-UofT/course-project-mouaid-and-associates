@@ -1,6 +1,5 @@
 package application_business_rules;
 
-import entities.PrescriptionMedicine;
 import entities.User;
 
 import java.util.*;

@@ -4,12 +4,14 @@ import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Scanner;
 
 public class StartScreenWindow extends Window {
     /**
      * The window that displays the Start Screen page.
+     *
+     * Instance Attributes:
+     * - userInput: The user's input.
      */
     String[] userInput;
 

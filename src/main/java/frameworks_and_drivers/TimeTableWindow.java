@@ -14,6 +14,12 @@ import java.util.Scanner;
 public class TimeTableWindow extends Window implements DisplayEntityInformation {
     /**
      * The window that displays the Timetable page.
+     *
+     * Instance Attributes:
+     * - userInput: The user's input.
+     * - panel: The view component on to which we add things.
+     * - currentSchedule: The current information/schedule being displayed.
+     * - font: The font of all the labels displayed
      */
     private volatile String[] userInput;
     private JPanel panel;
@@ -36,6 +42,7 @@ public class TimeTableWindow extends Window implements DisplayEntityInformation 
         // One way to wait until userResponded is true.
         while(!super.userResponded){
             try {
+                // If user has not responded yet, wait half a second and try again.
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -47,19 +54,23 @@ public class TimeTableWindow extends Window implements DisplayEntityInformation 
 
     /**
      * This is an interface that allows classes in frameworks_and_drivers to get information
-     * from classes in the inner levels, and display that information.
+     * from classes in the inner levels, and display that information. This method for this
+     * class is to display the schedule.
      *
      * @param info  Information to be displayed onto the screen.
      */
     @Override
     public void displayInfo(String[] info) {
+        // Set the x coordinate of all the labels, and the starting y coordinate
         int xCoord = 20;
         int startingY =  30;
 
+        // If there is other stuff on this window, clear the window first.
         if (!currentSchedule.isEmpty()){
             removeOldInfo();
         }
 
+        // Create a label and set a location for all the information.
         for (int i = 0; i < info.length; i++){
             JLabel label = new JLabel(info[i]);
             label.setSize(466, 40);
@@ -136,6 +147,7 @@ public class TimeTableWindow extends Window implements DisplayEntityInformation 
         // Resize the panel. y + 20 + 60 is the bottom of the window.
         panel.setPreferredSize(new Dimension(486, y + 80));
 
+        // Revalidate and repaint in order to update the view.
         super.view.revalidate();
         super.view.repaint();
     }

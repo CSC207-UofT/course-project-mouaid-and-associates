@@ -13,6 +13,7 @@ public class Main {
      * The main method.
      */
     public static void main(String[] args) {
+        // Create all the app runners and main frame.
         AppManagerFacade appManagerFacade = new AppManagerFacade();
         ObservableFrame frame = new ObservableFrame();
         Scanner scanner = new Scanner(System.in);
@@ -43,11 +44,16 @@ public class Main {
         for (Window observer: windows.values()){
             frame.addObserver(observer);
         }
+        // Add the last window to the frame.
         frame.addObserver(selectTimesWindow);
 
+        // Run the app
         appManagerFacade.run(windows, dataAccess, accountFile);
 
         scanner.close();
+
+        // Close the program
+        System.exit(0);
 
     }
 

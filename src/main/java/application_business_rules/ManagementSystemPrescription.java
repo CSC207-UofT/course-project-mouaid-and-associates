@@ -2,7 +2,6 @@ package application_business_rules;
 
 import entities.Medicine;
 import entities.PrescriptionMedicine;
-import entities.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;

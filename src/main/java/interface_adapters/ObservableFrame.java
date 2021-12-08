@@ -7,16 +7,25 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This class represents the frame and window used to display the app.
- *
- * Instance Attributes:
- * - currentView: The current view that is being shown on the frame.
- * - observers: All the observers that will be affected by an action identified by action listener.
- *              In this case, it's all the windows in the program.
- * -
- */
+
 public class ObservableFrame extends JFrame implements ActionListener {
+    /**
+     * DISCLAIMER: This class is NOT part of the Observer design pattern. Since both
+     *             the frame and it's observers (the windows) need to update each other,
+     *             the observer design pattern was not used, but the naming scheme stuck.
+     *
+     * This class represents the frame and window used to display the app.
+     *
+     * Instance Attributes:
+     * - currentView: The current view that is being shown on the frame.
+     * - observers: All the observers that will be affected by an action identified by action listener.
+     *              In this case, it's all the windows in the program.
+     *
+     * Static Attributes:
+     * - FRAME_WIDTH: The width of the frame
+     * - FRAME_HEIGHT: The height of the frame
+     *
+     */
     private Component currentView;
     private List<FrameObserver> observers;
     public static final int FRAME_WIDTH = 486;
@@ -26,9 +35,9 @@ public class ObservableFrame extends JFrame implements ActionListener {
         this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setMaximumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-        this.setResizable(false);
-        this.setVisible(true);
-        observers = new ArrayList<>();
+        this.setResizable(false);   // Don't allow the frame to be resized using the mouse
+        this.setVisible(true);      // Make the frame visible
+        observers = new ArrayList<>();      // list of observers
     }
 
     /**
@@ -56,13 +65,6 @@ public class ObservableFrame extends JFrame implements ActionListener {
      */
     public void addObserver(FrameObserver newObserver){
         observers.add(newObserver);
-    }
-
-    /**
-     * Removes all observers from this observable class
-     */
-    public void removeAllObservers(){
-        observers.clear();
     }
 
     /**

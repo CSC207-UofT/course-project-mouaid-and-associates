@@ -12,7 +12,6 @@ public class AppManagerPresenters {
 
     private Map<String, Window> windows;
     private ManagementSystemFacade managementSystemFacade;
-    private AppManagerHelpers appManagerHelpers;
 
     public AppManagerPresenters(Map<String, Window> windows, ManagementSystemFacade managementSystemFacade) {
         this.windows = windows;
@@ -32,7 +31,7 @@ public class AppManagerPresenters {
 
         // Wait until the user has actually responded.
         while (!window.userResponded) {
-            choice = windows.get("Start Screen Window").getUserInput();      // Currently, placeholder.
+            choice = window.getUserInput();
         }
 
         if (choice[0].equals("0")){
@@ -71,12 +70,12 @@ public class AppManagerPresenters {
             formattedUserInfo[i] = (" - " + prescriptionsIDS.get(accumulator));
         }
 
-        // Update the frame to show the new view
-
-
+        // Update the information on the window
         if (viewAccountWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) viewAccountWindow).displayInfo(formattedUserInfo);
         }
+
+        // Update the frame to show the new view
         viewAccountWindow.updateFrame();
 
 

@@ -103,7 +103,7 @@ public class SelectTimesWindow extends Window {
     public void createView() {
         // Initialize a JPanel and gives it a size.
         panel = new JPanel();
-        panel.setLayout(null);;
+        panel.setLayout(null);
         for (int i = 1; i < numTimes + 1; i++ ){
             JLabel timesLabel = new JLabel("For the " + i + "'st time what time do you need to take it? " +
                     "Enter in form XX:XX");

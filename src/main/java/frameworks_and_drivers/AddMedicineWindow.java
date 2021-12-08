@@ -130,15 +130,19 @@ public class AddMedicineWindow extends Window {
                 }
             }
         }
+
+        // Clear user input and reset the window
         resetTextFields();
         userInput.clear();
+
+        // Return user input
         return returnList;
     }
 
     /**
-     * Notify the observer of a change
+     * Update userInput based on if the event originated from this window.
      *
-     * @param source
+     * @param source    The button that is the source of the event.
      */
     @Override
     public void update(Object source) {

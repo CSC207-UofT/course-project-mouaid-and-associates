@@ -4,7 +4,6 @@ import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import javax.swing.*;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class CreateAccountWindow extends Window {

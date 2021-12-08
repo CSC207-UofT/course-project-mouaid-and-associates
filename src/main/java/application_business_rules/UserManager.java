@@ -9,8 +9,11 @@ public class UserManager {
     /**
      * A class that manages everything about the User Entity
      * Instance Attributes:
-     * user: the user object
-     * medicineManager: MedicineManager Object that we will use to manage the user's medicines
+     * - user: the user object
+     * - medicineManager: MedicineManager Object that we will use to manage the user's medicines
+     * - otherActivitiesManager: OtherActivitiesManager object to manage other activities like sleep
+     *                           and meal.
+     *
      * Representation Invariants:
      *  - user is a User Object
      *  - medicineManager is a MedicineManager Object

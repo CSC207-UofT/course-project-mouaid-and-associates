@@ -40,18 +40,26 @@ public class EditPrescriptionWindow extends Window implements DisplayEntityInfor
         setValidInputs(Arrays.copyOfRange(info, 0, info.length));
     }
 
+    /**
+     * Sets up the valid inputs for this window.
+     * @param inputs    The valid inputs
+     */
     private void setValidInputs(String[] inputs){
         validInputs = inputs;
     }
+
+    /**
+     * @return  The user's input
+     */
     @Override
     public String[] getUserInput() {
        return change.toArray(new String[change.toArray().length]);
     }
 
     /**
-     * Notify the observer of a change
+     * Update userInput based on if the event originated from this window.
      *
-     * @param source the button clicked
+     * @param source    The button that is the source of the event.
      */
     @Override
     public void update(Object source) {
@@ -85,6 +93,9 @@ public class EditPrescriptionWindow extends Window implements DisplayEntityInfor
         }
     }
 
+    /**
+     * Creates the main view for this window.
+     */
     @Override
     public void createView() {
         if( j == 0) {
@@ -122,14 +133,18 @@ public class EditPrescriptionWindow extends Window implements DisplayEntityInfor
 
     // Set the view for this window.
         super.view = panel;
-}
+    }
+
+    /**
+     * Displays the components to change the name of the prescription.
+     */
     private void displayEditName(){
         JLabel name = new JLabel("Enter the new name of prescription");
         name.setLocation(20, 550);
         name.setSize(150*3,15);
         panel.add(name);
 
-              // A text box.
+        // A text box.
         name2 = new JTextField();
         name2.setSize(300, 50);
         name2.setLocation(20,600);
@@ -156,7 +171,6 @@ public class EditPrescriptionWindow extends Window implements DisplayEntityInfor
      *
      * @param medicines the button clicked
      */
-
     private void displayRemove(String [] medicines){
         super.buttonResponses.clear();
         //adds the label

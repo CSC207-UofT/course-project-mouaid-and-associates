@@ -1,8 +1,6 @@
 package entities;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Meal extends OtherActivities{
     /**
@@ -34,7 +32,7 @@ public class Meal extends OtherActivities{
         // Checks if the meal times isEmpty() which indicates that the MealClass is being created for
         // the first time and therefore there are no set meal times so the ActivitiesSchedule is empty
         if (!(times.isEmpty())) {
-            for (int i = 0; i<14; i++) {
+            for (int i = 0; i < 7; i++) {
                 appendTo = currentDate.plusDays(i);
                 appendDay = String.valueOf(appendTo.getDayOfMonth());
                 appendMonth = String.valueOf(appendTo.getMonthValue());

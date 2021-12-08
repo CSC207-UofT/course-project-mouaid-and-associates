@@ -27,6 +27,7 @@ public abstract class Window implements FrameObserver{
 
     // The volatile keyword is used to ensure that multiple threads (in this case the frame
     // and the main program run on separate threads, can use the same object safely.
+    // Tells the compiler that userResponded may change unexpectedly.
     protected volatile boolean userResponded;
 
     public Window(Scanner scanner, ObservableFrame frame){
@@ -71,6 +72,7 @@ public abstract class Window implements FrameObserver{
 
     /**
      * Adds an action listener for all the buttons associated with this window.
+     * This allows us to know when a button has been clicked.
      */
     public void addActionListenerToAllButtons(){
         // As long as the map is not empty.

@@ -59,6 +59,7 @@ public class AppManagerFacade {
         //Done: Add a call to Start Screen Window
         next_window = showStartScreenWindow();
 
+        // The main switch-case block which calls the different functionalities and windows of the app.
         while(!next_window.equals("Log Out")){
             switch (next_window){
                 case "Login Window":
@@ -102,6 +103,8 @@ public class AppManagerFacade {
                     break;
             }
         }
+
+        // Save user information.
         saveAccounts(accountFile, readerAndWriter);
     }
 
@@ -227,12 +230,13 @@ public class AppManagerFacade {
      */
     public String showFinalSchedule() {
         Window window = windows.get("TimeTable Window");
-        //Done: call managementSystemFacade.makeSchedule
+        // Make the schedule to be displayed
         String[] schedule = managementSystemFacade.makeSchedule();
 
         // Update the view of the window
         window.updateFrame();
 
+        // Display the schedule.
         if (window instanceof DisplayEntityInformation)
             ((DisplayEntityInformation) window).displayInfo(schedule);
 
@@ -240,13 +244,9 @@ public class AppManagerFacade {
         while(!window.userResponded) {
             windows.get("TimeTable Window").getUserInput();
         }
-        // For now, we only have one option, which is to take the user back to the account page.
 
+        // There is only one option, which is to take the user back to the account page.
         return "View Account Window";
     }
 
-
-    public List<String> getPrescriptionNames(){
-        return managementSystemFacade.getPrescriptionsNames();
-    }
 }

@@ -25,15 +25,19 @@ public class EditMedicineWindow extends Window implements DisplayEntityInformati
      * - timesInputLabels: The labels for when the user decides to change the medicine times
      * - timesInput: The text boxes for when the user decides to change the medicine times.
      * - infoOfMed: The information of the medicine displayed onto the window.
+     * - labelFont: The font used for the labels on the window.
+     * - askedChangeTimes: A boolean regarding whether the user asked to change the times of the medicine.
+     * - selectTimes: The select times window used to enter times of an event, such as new
+     *                med times.
      *
      * Precondition:
-     *  - The displayInfo method is called before getUserInput.
-     *  - ChooseMedicineToEditMethod class is called before this class.
+     *  - ChooseMedicineToEditWindow class is called before this class.
      */
     private List<JTextField> changes;
     private List<JLabel> changeLabels;
     private JLabel[] timesInputLabels;
     private JTextField[] timesInput;
+    private JTextArea changeTimesWarning;
     private JPanel panel;
     private volatile List<String> userInput;
     private Font labelFont;
@@ -51,9 +55,14 @@ public class EditMedicineWindow extends Window implements DisplayEntityInformati
     }
 
     /**
-     * Returns user input
+     * Returns user input on the changes they would like to implement on the
+     * medicine.
+     *
      * @return  Returns a list of user input, must be of size greater than
      * or equal to 5.
+     *
+     * Preconditions:
+     * - The displayInfo method is called before getUserInput.
      */
     @Override
     public String[] getUserInput() {
@@ -69,21 +78,35 @@ public class EditMedicineWindow extends Window implements DisplayEntityInformati
         // getUserInput is running, thus we need to make sure the change is correct before setting
         // and returning userResponse.
         while (!(super.userResponded && userInput.size() >= 5 && !askedChangeTimes)){
-            if (askedChangeTimes){
+            if (askedChangeTimes){      // If the user has asked to change the med times.
+
+                // Set the number of text boxes to add
                 selectTimes.setNumTimes(Integer.parseInt(timesInput[3].getText()));
+
+                // Update the view of the frame to that of the select times window.
                 selectTimes.updateFrame();
+
+                // Get the new med times.
                 times = selectTimes.getUserInput();
 
-                if (userInput.size() == 5){
-                    if (!checker.isWeekOrDaily(timesInput[0].getText())){
-                            userInput.add(timesInput[0].getText());
+                if (userInput.size() == 5){         // As long as we have received all other required input.
+
+                    // If the user has entered the weekly or daily times properly, retrieve it.
+                    if (checker.isWeekOrDaily(timesInput[0].getText())){
+                        userInput.add(timesInput[0].getText());
                     }
-                    if (!checker.isValidDay(timesInput[1].getText(), timesInput[2].getText())){
+
+                    // If the day entered is valid.
+                    if (checker.isValidDay(timesInput[1].getText(), timesInput[2].getText())){
                         userInput.add(timesInput[1].getText());
                     }
-                    if (!checker.isValidMonth(timesInput[2].getText())){
+
+                    // if the month entered is valid.
+                    if (checker.isValidMonth(timesInput[2].getText())){
                         userInput.add(timesInput[2].getText());
                     }
+
+                    // Add all the input into userInput so that it can be returned.
                     userInput.addAll(Arrays.asList(times));
                 }
 
@@ -148,6 +171,9 @@ public class EditMedicineWindow extends Window implements DisplayEntityInformati
         setLocations(lastLabelBottomBorder);
     }
 
+    /**
+     * Removes the old information displayed on this window.
+     */
     private void removeOldMedInfo(){
         for (JLabel prevInfo: infoOfMed){
             panel.remove(prevInfo);
@@ -160,7 +186,7 @@ public class EditMedicineWindow extends Window implements DisplayEntityInformati
      * This method is synchronized so that when multiple threads
      * access this variable, we can ensure that only one thread
      * can access this method at a time.
-     * @param source   The source of the event.
+     * @param source   The button that triggered this event.
      */
     @Override
     public void update(Object source) {
@@ -180,7 +206,9 @@ public class EditMedicineWindow extends Window implements DisplayEntityInformati
         }
     }
 
-
+    /**
+     * Creates the view of this window.
+     */
     @Override
     public void createView() {
         // Create a new JPanel
@@ -221,6 +249,23 @@ public class EditMedicineWindow extends Window implements DisplayEntityInformati
             changeLabels.add(changeLabel);
             panel.add(changeLabel);
         }
+
+        // Before we enter the times input, we should add one more label to act
+        // as a disclaimer.
+        // Add a warning for when the user wants to change the med times.
+        changeTimesWarning = new JTextArea("Please enter the following information BEFORE selecting " +
+                "'Change Med Times'");
+
+        // Make the text area have a clear background and line wrapping.
+        changeTimesWarning.setWrapStyleWord(true);
+        changeTimesWarning.setLineWrap(true);
+        changeTimesWarning.setOpaque(false);
+
+        // Give the text area a big font
+        changeTimesWarning.setSize(426,60);
+
+        // Add the warning to the panel
+        panel.add(changeTimesWarning);
 
         // Create the labels for the times, as well as their text boxes:
         timesInput = new JTextField[timeLabels.length];
@@ -281,27 +326,36 @@ public class EditMedicineWindow extends Window implements DisplayEntityInformati
         // Ensures there are the same number of labels as there are text boxes.
         assert (changes.size() == changeLabels.size());
 
+        // Set the locations for the labels not including the times
         for (int i = 0; i < changes.size(); i++){
             changeLabels.get(i).setLocation(20, y + 20 + 140 * i);
             changes.get(i).setLocation(20, y + 80 + 140 * i);
         }
 
+        // Give the change times warning a location, and give the button a font.
+        changeTimesWarning.setFont(labelFont);
+        changeTimesWarning.setLocation(20, y + 20 + 140 * (changes.size()));
+
+        // Set the locations for the times labels and text boxes
         for (int i = 0; i < timesInput.length; i++){
-            timesInputLabels[i].setLocation(20, y + 20 + 140 * (changes.size() + i));
-            timesInput[i].setLocation(20, y + 80 + 140 * (changes.size() + i));
+            timesInputLabels[i].setLocation(20, y + 20 + 60 + 140 * (changes.size() + i));
+            timesInput[i].setLocation(20, y + 80 + 60 + 140 * (changes.size() + i));
         }
 
+        // Add the locations of the buttons
         for (JButton button: super.buttonResponses.keySet()){
             if (super.buttonResponses.get(button).equals("add times")){
-                button.setLocation(245, y + 40 + 140 * (changes.size() + timesInput.length));
+                button.setLocation(245, y + 40 + 60 + 140 * (changes.size() + timesInput.length));
             } else {
-                button.setLocation(43, y + 40 + 140 * (changes.size() + timesInput.length));
+                button.setLocation(43, y + 40 + 60 + 140 * (changes.size() + timesInput.length));
             }
         }
 
+        // Resize the panel so that it fits all the new content.
         panel.setPreferredSize(new Dimension(486,
-                y + 160 + 140 * (changes.size() + timesInput.length)));
+                y + 60 + 160 + 140 * (changes.size() + timesInput.length)));
 
+        // Revalidate the component hierarchy and redraw the panel.
         super.view.revalidate();
         super.view.repaint();
     }

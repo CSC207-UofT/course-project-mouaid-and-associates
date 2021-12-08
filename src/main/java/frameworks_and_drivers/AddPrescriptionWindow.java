@@ -5,7 +5,6 @@ import interface_adapters.Window;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class AddPrescriptionWindow extends Window {
@@ -57,7 +56,7 @@ public class AddPrescriptionWindow extends Window {
      * @param source The source of the change
      */
     @Override
-    public void update(Object source) {;
+    public void update(Object source) {
         if (super.buttonResponses.containsKey((JButton) source)){
             userInput.add(name.getText());
             userInput.add(medicineNames.getText());
