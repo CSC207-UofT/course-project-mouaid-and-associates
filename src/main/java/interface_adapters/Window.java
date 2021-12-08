@@ -17,15 +17,17 @@ public abstract class Window implements FrameObserver{
      * - buttonResponses: Also related to the subclasses of this class. This is a map of the buttons
      *                    in the view of a Window to the response if that button is pressed.
      * - userResponded: Used to check if the user has responded.
+     * - checker: An object from ValidInputChecker that can check to see if input is valid.
      */
     protected Scanner scanner;
-    private ObservableFrame frame;
+    protected ObservableFrame frame;
     protected Component view;
     protected Map<JButton, String> buttonResponses;
     public static ValidInputChecker checker = new ValidInputChecker();
 
     // The volatile keyword is used to ensure that multiple threads (in this case the frame
     // and the main program run on separate threads, can use the same object safely.
+    // Tells the compiler that userResponded may change unexpectedly.
     protected volatile boolean userResponded;
 
     public Window(Scanner scanner, ObservableFrame frame){
@@ -70,6 +72,7 @@ public abstract class Window implements FrameObserver{
 
     /**
      * Adds an action listener for all the buttons associated with this window.
+     * This allows us to know when a button has been clicked.
      */
     public void addActionListenerToAllButtons(){
         // As long as the map is not empty.
@@ -81,6 +84,7 @@ public abstract class Window implements FrameObserver{
             }
         }
     }
+
 
 }
 

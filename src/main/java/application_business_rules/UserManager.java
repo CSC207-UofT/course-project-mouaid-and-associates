@@ -9,8 +9,11 @@ public class UserManager {
     /**
      * A class that manages everything about the User Entity
      * Instance Attributes:
-     * user: the user object
-     * medicineManager: MedicineManager Object that we will use to manage the user's medicines
+     * - user: the user object
+     * - medicineManager: MedicineManager Object that we will use to manage the user's medicines
+     * - otherActivitiesManager: OtherActivitiesManager object to manage other activities like sleep
+     *                           and meal.
+     *
      * Representation Invariants:
      *  - user is a User Object
      *  - medicineManager is a MedicineManager Object
@@ -158,6 +161,32 @@ public class UserManager {
         medicineManager.editMedicine(med, newInfo);
     }
 
+    /**
+     * gets all prescription names
+     * @return prescription names
+     */
+    public List<String> getPrescriptionNames(){
+        return List.copyOf(user.getPrescriptionList().keySet());
+    }
+    /**
+     * gets prescription entities
+     * @return prescription entities
+     */
+    public List<PrescriptionMedicine> getPrescriptionEntities(){
+        return List.copyOf(user.getPrescriptionList().values());
+    }
+    public void addPrescription(String name, PrescriptionMedicine prescription){
+        user.addPrescription(name, prescription);
+    }
+    public void removePrescription(String name){
+        user.removePrescription(name);
+    }
+    public PrescriptionMedicine getPrescription(String name){
+        return user.getPrescription(name);
+    }
+    public PrescriptionMedicine getPrescriptionEntity(String name){
+        return user.getPrescription(name);
+    }
     /**
      * Sets the User for this UserManager.
      * @param user  The new User.

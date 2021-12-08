@@ -20,6 +20,7 @@ public class User implements Serializable {
     private String userName;
     private String password;
     private HashMap<String, Medicine> medicineList;
+    private HashMap<String, PrescriptionMedicine> prescriptionList;
     private Sleep sleepClass;
     private Meal mealClass;
 
@@ -28,6 +29,7 @@ public class User implements Serializable {
         this.userName = userName;
         this.medicineList = new HashMap<>();
         this.password = password;
+        this.prescriptionList = new HashMap<>();
     }
 
     /**
@@ -54,6 +56,39 @@ public class User implements Serializable {
         return this.userName;
     }
 
+    /**
+     * Gets prescription List
+     * @return prescriptions
+     */
+    public HashMap<String, PrescriptionMedicine> getPrescriptionList() {
+        return prescriptionList;
+    }
+
+    /**
+     * Adds a new prescriptio
+     * @param name name of the prescription
+     * @param prescription the prescription entity
+     */
+    public void addPrescription(String name, PrescriptionMedicine prescription){
+        prescriptionList.put(name, prescription);
+    }
+
+    /**
+     * removes a prescription
+     * @param name name of prescription
+     */
+    public void removePrescription(String name){
+        prescriptionList.remove(name);
+    }
+
+    /**
+     * gets prescription entity
+     * @param name name of the prescription
+     * @return the prescription identity
+     */
+    public PrescriptionMedicine getPrescription(String name){
+        return prescriptionList.get(name);
+    }
     /**
      * Gets the medicineList of the User.
      * @return The medicineList of the User.

@@ -4,7 +4,6 @@ import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import javax.swing.*;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class CreateAccountWindow extends Window {
@@ -14,7 +13,7 @@ public class CreateAccountWindow extends Window {
     String[] userInput;
     JTextField name;
     JTextField userName;
-    JTextField password;
+    JPasswordField password;
 
     public CreateAccountWindow(Scanner scanner, ObservableFrame frame) {
         super(scanner, frame);
@@ -44,14 +43,22 @@ public class CreateAccountWindow extends Window {
 
         // Set the size of the panel.
         super.setPanelSize(panel);
-
-        name = new JTextField("Name");       // A text box.
+        JLabel nameLabel = new JLabel("Name: ");
+        nameLabel.setSize(286, 40);
+        nameLabel.setLocation(43, 50);
+        name = new JTextField();       // A text box.
         name.setSize(400, 50);
         name.setLocation(43,100);
-        userName = new JTextField("Username");
+        JLabel usernameLabel = new JLabel("Username: ");
+        usernameLabel.setSize(286, 40);
+        usernameLabel.setLocation(43, 150);
+        userName = new JTextField();
         userName.setSize(400, 50);
         userName.setLocation(43, 200);
-        password = new JTextField("Password");
+        JLabel passwordLabel = new JLabel("Password: ");
+        passwordLabel.setSize(286, 40);
+        passwordLabel.setLocation(43, 250);
+        password = new JPasswordField();
         password.setSize(400, 50);
         password.setLocation(43, 300);
 
@@ -60,8 +67,11 @@ public class CreateAccountWindow extends Window {
         submit.setLocation(43, 400);
 
 
+        panel.add(nameLabel);
         panel.add(name);
+        panel.add(usernameLabel);
         panel.add(userName);
+        panel.add(passwordLabel);
         panel.add(password);
         panel.add(submit);
 

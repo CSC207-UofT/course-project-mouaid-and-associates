@@ -5,8 +5,6 @@ import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class RemoveMedicineWindow extends Window implements DisplayEntityInformation {
@@ -48,9 +46,9 @@ public class RemoveMedicineWindow extends Window implements DisplayEntityInforma
     }
 
     /**
-     * Notify the observer of a change
+     * Update userInput based on if the event originated from this window.
      *
-     * @param source
+     * @param source    The button that is the source of the event.
      */
     @Override
     public void update(Object source) {

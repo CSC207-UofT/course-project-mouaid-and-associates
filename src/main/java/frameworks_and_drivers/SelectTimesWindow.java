@@ -15,10 +15,10 @@ public class SelectTimesWindow extends Window {
      * in order to set the times and dates that those events should take place.
      *
      * Instance Attributes:
-     * -panel: It represents where everything will be displayed and contains all the components of the window.
-     * -userInput: The text the user entered into the text boxes
-     * -medTimesLabel: All the times of the medicine
-     * -numTimes: Represents the number of text boxes we need
+     * - panel: It represents where everything will be displayed and contains all the components of the window.
+     * - userInput: The text the user entered into the text boxes
+     * - numTimes: Represents the number of text boxes we need
+     * - textFields: A list containing the text boxes where the user will enter input
      */
     private JPanel panel;
     private List<String> userInput;
@@ -69,12 +69,14 @@ public class SelectTimesWindow extends Window {
             // Only when we have a valid number of inputs do
             // we get all the user input.
             //Checks to see if the input is valid
-            System.out.print("");
+            System.out.println("");
             if (super.userResponded && userInput.size() == numTimes){
+                //Loop through the times and make sure they are valid
                 for (int i = 0; i < numTimes; i++){
                     if(!checker.isValidTime(userInput.get(i))){
                         super.userResponded = false;
-                        textFields.get(i).setForeground(Color.RED);
+                        JOptionPane.showMessageDialog(super.frame, "Make sure the time is typed as \"XX:XX\"",
+                                "Warning: Invalid Time entered for" + i +"'st time!", JOptionPane.INFORMATION_MESSAGE);
                         userInput = new ArrayList<>();
                         break;
                     }
@@ -102,7 +104,6 @@ public class SelectTimesWindow extends Window {
         // Initialize a JPanel and gives it a size.
         panel = new JPanel();
         panel.setLayout(null);
-        super.setPanelSize(panel);
         for (int i = 1; i < numTimes + 1; i++ ){
             JLabel timesLabel = new JLabel("For the " + i + "'st time what time do you need to take it? " +
                     "Enter in form XX:XX");
@@ -126,6 +127,7 @@ public class SelectTimesWindow extends Window {
         // Add an action listener for each button.
         super.addActionListenerToAllButtons();
 
+        panel.setPreferredSize(new Dimension(486, numTimes * 150 + 220));
         super.view = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 

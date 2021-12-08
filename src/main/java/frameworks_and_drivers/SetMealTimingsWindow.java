@@ -6,7 +6,6 @@ import interface_adapters.Window;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -42,8 +41,13 @@ public class SetMealTimingsWindow extends Window {
 
         while (!(super.userResponded && userResponse.length >= 1)){
 
+            if (super.userResponded && !checker.isNumeric(mealNumber.getText())){
+                JOptionPane.showMessageDialog(super.frame, "Please input an integer",
+                        "Warning for \"Number of meals\"!", JOptionPane.INFORMATION_MESSAGE);
+                super.userResponded = false;
+                userInput.clear();
+            }
             if (super.userResponded && !askedTimes){
-//                selectTimes.setNumTimes(Integer.parseInt(changes.get(0).getText()));
                 selectTimes.setNumTimes(Integer.parseInt(mealNumber.getText()));
                 selectTimes.updateFrame();
                 times = selectTimes.getUserInput();

@@ -1,8 +1,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 import java.time.LocalDateTime;
 public class Event implements Comparable<Event>, Serializable {
     /**

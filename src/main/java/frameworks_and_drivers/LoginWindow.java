@@ -5,23 +5,22 @@ import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Scanner;
 
-/**
- * The window that displays the Login page.
- *
- * Instance Attributes:
- *  - userInput: The user's input, stored in an array.
- *  - username: A text box for the user to enter their username.
- *  - password: A text box for the user to enter their password.
- *  - errorMessage: An error message to show when the password is wrong.
- */
-public class LoginWindow extends Window implements DisplayEntityInformation {
 
+public class LoginWindow extends Window implements DisplayEntityInformation {
+    /**
+     * The window that displays the Login page.
+     *
+     * Instance Attributes:
+     *  - userInput: The user's input, stored in an array.
+     *  - username: A text box for the user to enter their username.
+     *  - password: A text box for the user to enter their password.
+     *  - errorMessage: An error message to show when the password is wrong.
+     */
     private String[] userInput;
     private JTextField username;
-    private JTextField password;
+    private JPasswordField password;
     private JLabel errorMessage;
 
     public LoginWindow(Scanner scanner, ObservableFrame frame) {
@@ -29,8 +28,6 @@ public class LoginWindow extends Window implements DisplayEntityInformation {
         createView();
         userInput = new String[2];
     }
-
-    //The user logs in.
 
     /**
      * Gets input from the user in order to login.
@@ -53,10 +50,9 @@ public class LoginWindow extends Window implements DisplayEntityInformation {
         // a string of size 1.
 
         // Set the error message to the one passed in.
-        errorMessage.setText(info[0]);
-
-        // Set the text color to red.
-        errorMessage.setForeground(Color.RED);
+        JOptionPane.showMessageDialog(super.frame, "Password or Username is wrong!",
+                "Incorrect Information",
+                JOptionPane.INFORMATION_MESSAGE);
 
         super.userResponded = false;
     }
@@ -69,8 +65,10 @@ public class LoginWindow extends Window implements DisplayEntityInformation {
     @Override
     public void update(Object source) {
         if (super.buttonResponses.containsKey((JButton) source)){
+            // Get the user's username and password if the button that was clicked
+            // is from this window.
             userInput[0] = username.getText();
-            userInput[1] = password.getText();
+            userInput[1] = String.valueOf(password.getPassword());
             super.userResponded = true;
         }
     }
@@ -100,7 +98,7 @@ public class LoginWindow extends Window implements DisplayEntityInformation {
         JLabel passwordLabel = new JLabel("Password: ");
         passwordLabel.setSize(286, 40);
         passwordLabel.setLocation(100, 250);
-        password = new JTextField();
+        password = new JPasswordField();
         password.setSize(286, 50);
         password.setLocation(100, 300);
 

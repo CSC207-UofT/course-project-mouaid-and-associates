@@ -42,6 +42,9 @@ public class AddPrescriptionWindow extends Window {
         if (super.userResponded && userInput.size() == 2){
                 returnList[0] = userInput.get(0);
                 returnList[1] = userInput.get(1);
+                userInput.clear();
+                //Only works multiple times with this
+                System.out.println("");
             }
         return returnList;
     }
@@ -50,14 +53,15 @@ public class AddPrescriptionWindow extends Window {
     /**
      * Notify the observer of a change
      *
-     * @param source
+     * @param source The source of the change
      */
     @Override
     public void update(Object source) {
-        userInput = new ArrayList<>();
         if (super.buttonResponses.containsKey((JButton) source)){
             userInput.add(name.getText());
             userInput.add(medicineNames.getText());
+            name.setText("");
+            medicineNames.setText("");
             super.userResponded = true;
         }
     }
@@ -104,5 +108,14 @@ public class AddPrescriptionWindow extends Window {
 
         super.view = panel;
 
+    }
+
+    /**
+     * Displays an error message if the medicine name could not be found
+     * @param medicineName The name of the medicine that could not be found
+     */
+    public void displayErrorMessage(String medicineName){
+        JOptionPane.showMessageDialog(super.frame, "Could not find " + medicineName, "Warning: Medicine not added!",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 }

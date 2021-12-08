@@ -2,7 +2,6 @@ package application_business_rules;
 
 import entities.Medicine;
 import entities.PrescriptionMedicine;
-import entities.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,12 +13,10 @@ public class ManagementSystemPrescription {
      */
 
     private UserManager userManager;
-    private HashMap<String, PrescriptionMedicine> prescriptionManager;
 
     public ManagementSystemPrescription(UserManager userManager,
                                         HashMap<String, PrescriptionMedicine> prescriptionManager){
         this.userManager = userManager;
-        this.prescriptionManager = prescriptionManager;
     }
     /**
      * Checks if the ID is in the hashmap
@@ -27,7 +24,7 @@ public class ManagementSystemPrescription {
      * @return Returns True if it is in the hashmap and false otherwise
      */
     public boolean presNameChecker(String presName){
-        return this.prescriptionManager.containsKey(presName);
+        return userManager.getPrescriptionNames().contains(presName);
     }
 
     public void addNewPrescription(List<String> medicines, String presName){
@@ -39,7 +36,7 @@ public class ManagementSystemPrescription {
             }
         }
         PrescriptionMedicine prescriptionMedicine = new PrescriptionMedicine(presMedicines, presName);
-        prescriptionManager.put(presName, prescriptionMedicine);
+        userManager.addPrescription(presName, prescriptionMedicine);
     }
 
     /**
@@ -48,7 +45,7 @@ public class ManagementSystemPrescription {
      * @return A prescriptionMedicine Object
      */
     public PrescriptionMedicine getPrescription(String presName){
-        return prescriptionManager.get(presName);
+        return userManager.getPrescription(presName);
     }
 
     /**
@@ -56,13 +53,13 @@ public class ManagementSystemPrescription {
      * @return A set of keys
      */
     public List<String> getPrescriptionsNames(){
-        return List.copyOf(prescriptionManager.keySet());
+        return List.copyOf(userManager.getPrescriptionNames());
     }
     public void addMedicineToPres(String presName, String medicine){
         List<Medicine> meds = userManager.getMedicineEntites();
         for(Medicine med : meds){
             if(med.getMedicineName().equals(medicine)){
-                prescriptionManager.get(presName).addMedicine(med);
+                userManager.getPrescriptionEntity(presName).addMedicine(med);
             }
         }
     }
@@ -73,7 +70,7 @@ public class ManagementSystemPrescription {
      * @param name the name of the medicine
      */
     public void removeMedicineFromPres(String presName, String name){
-        prescriptionManager.get(presName).removeMedicine(name);
+        userManager.getPrescriptionEntity(presName).removeMedicine(name);
     }
 
     /**
@@ -81,21 +78,23 @@ public class ManagementSystemPrescription {
      * @return a set of prescription names
      */
     public String[] getPrescriptions(){
-        return prescriptionManager.keySet().toArray(new String[0]);
+        return userManager.getPrescriptionNames().toArray(new String[0]);
     }
     /**
      * Removes a prescription from the user's list of prescriptions
      * @param presName The name of the prescription
      */
     public void removePrescription(String presName) {
-        PrescriptionMedicine prescription = prescriptionManager.get(presName);
+        PrescriptionMedicine prescription = userManager.getPrescription(presName);
         String[] medicines = prescription.getPresMedicines();
         userManager.removeMeds(medicines);
-        prescriptionManager.remove(presName);
+        userManager.removePrescription(presName);
     }
     public void changePrescriptionName(String oldPresName, String newPresName){
-        prescriptionManager.get(oldPresName).setPrescriptionName(newPresName);
-        PrescriptionMedicine prescription = prescriptionManager.remove(oldPresName);
-        prescriptionManager.put(newPresName, prescription);
+        userManager.getPrescription(oldPresName).setPrescriptionName(newPresName);
+        PrescriptionMedicine prescription = userManager.getPrescriptionEntity(oldPresName);
+        userManager.removePrescription(oldPresName);
+        userManager.addPrescription(newPresName, prescription);
+
     }
 }

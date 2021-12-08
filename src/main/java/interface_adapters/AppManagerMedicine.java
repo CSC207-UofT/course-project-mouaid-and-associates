@@ -51,6 +51,7 @@ public class AppManagerMedicine {
         // Update the view on the frame.
         chooseMedicineToEditWindow.updateFrame();
 
+        // Display the medicines
         if (chooseMedicineToEditWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) chooseMedicineToEditWindow).displayInfo(medList);
         }
@@ -60,16 +61,18 @@ public class AppManagerMedicine {
             medName = chooseMedicineToEditWindow.getUserInput()[0];
         }
 
-
+        // Retrieve that medicine's information from the system
         medInfo = managementSystemFacade.getMedicineInfo(medName);
 
         // Update the view of the app.
         editMedicineWindow.updateFrame();
 
+        // Display the med info and the input text boxes
         if (editMedicineWindow instanceof DisplayEntityInformation){
             ((DisplayEntityInformation) editMedicineWindow).displayInfo(medInfo);
         }
 
+        // Obtain user input
         changes = editMedicineWindow.getUserInput();
 
         // Format the given times.

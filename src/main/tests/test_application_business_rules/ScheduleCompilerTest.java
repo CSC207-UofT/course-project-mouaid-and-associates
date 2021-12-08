@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,10 +41,6 @@ class ScheduleCompilerTest {
             masterEventsList.addAll(schedule.getEvents());
             schedulesToTest.add(schedule);
         }
-    }
-
-    @AfterEach
-    void tearDown() {
     }
 
     @Test

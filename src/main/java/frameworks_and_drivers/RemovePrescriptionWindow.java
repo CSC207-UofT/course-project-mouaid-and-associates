@@ -4,7 +4,6 @@ import interface_adapters.ObservableFrame;
 import interface_adapters.Window;
 
 import javax.swing.*;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class RemovePrescriptionWindow extends Window {
@@ -25,9 +24,9 @@ public class RemovePrescriptionWindow extends Window {
     }
 
     /**
-     * Notify the observer of a change
+     * Update userInput based on if the event originated from this window.
      *
-     * @param source
+     * @param source    The button that is the source of the event.
      */
     @Override
 
