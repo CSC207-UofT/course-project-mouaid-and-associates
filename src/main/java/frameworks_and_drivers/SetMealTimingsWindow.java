@@ -39,14 +39,18 @@ public class SetMealTimingsWindow extends Window {
         String[] userResponse = new String[0];
         boolean askedTimes = false;
 
+        //Ensures that the user has responded and the length of the response is appropriate
         while (!(super.userResponded && userResponse.length >= 1)){
 
+            //Error message in case of any incorrect input
             if (super.userResponded && !checker.isNumeric(mealNumber.getText())){
                 JOptionPane.showMessageDialog(super.frame, "Please input an integer",
                         "Warning for \"Number of meals\"!", JOptionPane.INFORMATION_MESSAGE);
                 super.userResponded = false;
                 userInput.clear();
             }
+            //If the user has netered the number of meals they plan on having then the SelectTimesWindow is called to
+            //get the times
             if (super.userResponded && !askedTimes){
                 selectTimes.setNumTimes(Integer.parseInt(mealNumber.getText()));
                 selectTimes.updateFrame();
@@ -85,9 +89,6 @@ public class SetMealTimingsWindow extends Window {
             // we just add the items to the userInput.
 
             userInput.add(mealNumber.getText());
-//            for (int i = 0; i < changes.size(); i++) {
-//                userInput.add(changes.get(i).getText());
-//            }
 
             // Best to do this after you make all your changes.
             super.userResponded = true;
@@ -109,15 +110,13 @@ public class SetMealTimingsWindow extends Window {
         mealNumber.setLocation(100, 100);
 
 
-        // Create the button.
+        // Create the NEXT button.
         Font buttonFont = new Font("SansSerif", Font.BOLD, 15);
         JButton saveButton = new JButton("NEXT");
         saveButton.setFont(buttonFont);
         saveButton.setSize(400, 70);
         saveButton.setLocation(43, 400);
 
-//        changes = new ArrayList<>();
-//        changes.add(numberOfMeals);
 
         // Add the items to the panel
         panel.add(mealLabel);
@@ -134,13 +133,4 @@ public class SetMealTimingsWindow extends Window {
         super.view = panel;
 
     }
-
-//    /**
-//     * Resets all the text fields to contain an empty string.
-//     */
-//    private void resetTextFields(){
-//        for (JTextField textField: changes){
-//            textField.setText("");
-//        }
-//    }
 }
