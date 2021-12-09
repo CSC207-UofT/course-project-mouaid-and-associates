@@ -64,6 +64,8 @@ public class AppManagerHelpers {
      * @param times     The mapping on which we will save the formatted times.
      */
     public void formatTimes(String[] data, String wOrD, String startDay, String startMonth, List<LocalDateTime> times) {
+        //Use to change back later in the loop
+        String ogStartDay = startDay;
         for(int i = 0; i < (data.length - 8); i++) {
             if (wOrD.equals("weekly")) {
                 if (startDay.length() == 1){
@@ -93,6 +95,7 @@ public class AppManagerHelpers {
                     }
                     times.add(LocalDateTime.parse("2021-" + startMonth + "-" + startDay + "T" +  data[i + 8]));
                 }
+                startDay = ogStartDay;
             }
         }
     }

@@ -76,7 +76,7 @@ public class SelectTimesWindow extends Window {
                     if(!checker.isValidTime(userInput.get(i))){
                         super.userResponded = false;
                         JOptionPane.showMessageDialog(super.frame, "Make sure the time is typed as \"XX:XX\"",
-                                "Warning: Invalid Time entered for" + i +"'st time!", JOptionPane.INFORMATION_MESSAGE);
+                                "Warning: Invalid Time entered for " + (i+ 1)  +"'st time!", JOptionPane.INFORMATION_MESSAGE);
                         userInput = new ArrayList<>();
                         break;
                     }
@@ -119,7 +119,7 @@ public class SelectTimesWindow extends Window {
 
         JButton saveButton = new JButton("SAVE AND RETURN TO ACCOUNT PAGE");
         saveButton.setSize(400, 70);
-        saveButton.setLocation(43, numTimes * 150 + 150);
+        saveButton.setLocation(43, numTimes * 100 + 150);
         panel.add(saveButton);
         // Add the button to the button map.
         super.buttonResponses.put(saveButton, "0");
@@ -127,7 +127,7 @@ public class SelectTimesWindow extends Window {
         // Add an action listener for each button.
         super.addActionListenerToAllButtons();
 
-        panel.setPreferredSize(new Dimension(486, numTimes * 150 + 220));
+        panel.setPreferredSize(new Dimension(486, numTimes * 100 + 220));
         super.view = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
