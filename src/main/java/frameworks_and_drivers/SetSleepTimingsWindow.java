@@ -34,6 +34,7 @@ public class SetSleepTimingsWindow extends Window {
     public String[] getUserInput() {
         String[] userResponse = new String[]{"", ""};
 
+        //Ensures that the user has responded and the length of the response is appropriate
         while (!(super.userResponded && userInput.size() >= 2)){
 
             // Only when we have a valid number of inputs do
@@ -97,6 +98,7 @@ public class SetSleepTimingsWindow extends Window {
         wakeUpTime.setSize(286, 50);
         wakeUpTime.setLocation(100, 300);
 
+        // Add the two TextFields to changes
         changes = new ArrayList<>();
         changes.add(sleepTime);
         changes.add(wakeUpTime);
